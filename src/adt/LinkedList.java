@@ -40,7 +40,7 @@ public class LinkedList<T> {
     public boolean add(T newEntry) {
         Node newNode = new Node(newEntry);
         
-        if (num == 0) {
+        if (getSize() == 0) {
             firstNode = newNode;
             lastNode = newNode;
         } else {            
@@ -55,16 +55,9 @@ public class LinkedList<T> {
     }
     
     public boolean add(T newEntry, int position) {
-        if (position < 0 || position >= num) {
-            throw new IndexOutOfBoundsException();
-        }
+        Node currentNode = (Node) get(position, true);
         
         Node newNode = new Node(newEntry);
-        Node currentNode = firstNode;
-        
-        for (int i = 1; i < position; i++) {
-            currentNode = currentNode.nextNode;
-        }
         
         if (currentNode.previousNode != null) {
             newNode.previousNode = currentNode.previousNode;
@@ -76,8 +69,79 @@ public class LinkedList<T> {
         newNode.nextNode = currentNode;
         currentNode.previousNode = newNode;
 
+        num++;
+        return true;
+    }
+    
+    public T remove(int position) {       
+        Node currentNode = (Node) get(position, true);
+        
+        // changing the previous and next node
+        Node previous = currentNode.previousNode;
+        Node next = currentNode.nextNode;
+        
+        if (currentNode.previousNode != null) {
+            currentNode.previousNode.nextNode = next;
+        } else {
+            firstNode = currentNode.nextNode;
+        }
+        
+        if (currentNode.nextNode != null) {
+            currentNode.nextNode.previousNode = previous;
+        } else {
+            lastNode = currentNode.previousNode;
+        }
+        
+        num--;
+        
+        return (T) currentNode.entry;
+    }
+    
+    public T get(int position) {
+        return get(position, false);
+    }
+    
+    public T get(int position, boolean returnNode) {
+        if (position < 0 || position >= getSize()) {
+            throw new IndexOutOfBoundsException();
+        }
+        
+        Node currentNode = firstNode;
+        
+        for (int i = 1; i < position; i++) {
+            currentNode = currentNode.nextNode;
+        }
+        
+        return returnNode ? (T) currentNode : currentNode.entry;
+    }
+    
+    public boolean replace(T newEntry, int position) {
+        Node currentNode = (Node) get(position, true);
+        
+        Node newNode = new Node(newEntry);
+        
+        if (currentNode.previousNode != null) {
+            currentNode.previousNode.nextNode = newNode;
+        } else {
+            firstNode = newNode;
+        }
+        
+        if (currentNode.nextNode != null) {
+            currentNode.nextNode.previousNode = newNode;
+        } else {
+            lastNode = newNode;
+        }
+        
+        newNode.nextNode = currentNode.nextNode;
+        newNode.previousNode = currentNode.previousNode;
         
         return true;
+    }
+    
+    // public void sort();
+    
+    public int getSize() {
+        return num;
     }
     
     @Override
@@ -103,6 +167,18 @@ public class LinkedList<T> {
         
         System.out.println(list);
         System.out.println(list.lastNode.previousNode.previousNode.entry);
+        
+        System.out.println(list.getSize());
+        
+        System.out.println(list.remove(3));
+        System.out.println(list.get(3));
+        list.replace(4, 4);
+        
+        System.out.println(list);
+        System.out.println(list.firstNode.entry);
+        System.out.println(list.lastNode.entry);
+        
+        System.out.println(list.getSize());
     }
 }
 

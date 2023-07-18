@@ -32,7 +32,7 @@ public class ArrayList<T> implements Serializable {
     }
     
     public boolean add(T newEntry, int position) {
-        if (position < 0 || position >= num) {
+        if (position < 0 || position >= getSize()) {
             throw new ArrayIndexOutOfBoundsException();
         }
         
@@ -40,7 +40,7 @@ public class ArrayList<T> implements Serializable {
             expand();
         }
         
-        for (int i = num; i > position; i--) {
+        for (int i = getSize(); i > position; i--) {
             arr[i] = arr[i - 1];
         }
         
@@ -50,22 +50,60 @@ public class ArrayList<T> implements Serializable {
         return true;
     }
     
+    public T remove(int position) {
+        T removal = get(position);
+        
+        fillGap(position);
+        num--;
+        
+        return removal;
+    }
+    
+    public T get(int position) {
+        if (position < 0 || position >= getSize()) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        
+        return arr[position];
+    }
+    
+    public boolean replace(T newEntry, int position) {
+        arr[position] = newEntry;
+        
+        return true;
+    }
+    
+    // public void sort();
+    
+    public int getSize() {
+        return num;
+    }
+    
     @Override
     public String toString() {
         String str = "";
         
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < getSize(); i++) {
             str += arr[i];
         }
         
         return str;
     }
     
+    // utility methods
     private void expand() {        
         T[] oldArr = arr;
         arr = (T[]) new Object[oldArr.length * 2];
         
         System.arraycopy(oldArr, 0, arr, 0, oldArr.length);
+    }
+    
+    private void fillGap(int position) {
+        for (int i = position; i < getSize() - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+        
+        arr[num - 1] = null;
     }
     
     private boolean isFull() {
@@ -83,5 +121,15 @@ public class ArrayList<T> implements Serializable {
         list.add(3,2);
         
         System.out.println(list);
+        
+        System.out.println(list.getSize());
+        
+        System.out.println(list.remove(3));
+        System.out.println(list.get(3));
+        list.replace(4, 4);
+        
+        System.out.println(list);
+        
+        System.out.println(list.getSize());
     }
 }
