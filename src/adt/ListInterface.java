@@ -21,5 +21,4 @@ public interface ListInterface<T> {
     // Read
     public T get(int position);
     
-    public T 
 }
