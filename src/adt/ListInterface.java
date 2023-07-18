@@ -21,4 +21,14 @@ public interface ListInterface<T> {
     // Read
     public T get(int position);
     
+    public T get(T entry);
+    
+    // Update
+    public boolean replace(T entry, int position);
+    
+    // Sort
+    public void sort();
+    
+    // Count
+    public int getSize();
 }
