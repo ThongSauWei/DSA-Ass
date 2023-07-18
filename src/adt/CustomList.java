@@ -4,10 +4,11 @@
  */
 package adt;
 
+import java.io.Serializable;
 /**
  *
  * @author User
  */
-public class CustomList {
+public class CustomList<T> implements Serializable {
     
 }
