@@ -127,12 +127,11 @@ public class ArrayList<T extends Comparable<T>> implements Serializable {
         T pivot = arr[last];
         
         int i = first;
-        for (int j = first; j <= last;) {
+        for (int j = first; j <= last; j++) {
             if (arr[j].compareTo(pivot) < 0) { // if arr[j] < pivot
                 swap(i, j);
                 i++;
             }
-            j++;
         }
         swap(i,last);
         return i;

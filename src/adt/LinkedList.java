@@ -8,7 +8,7 @@ package adt;
  *
  * @author User
  */
-public class LinkedList<T> {
+public class LinkedList<T extends Comparable<T>> {
     private Node firstNode;
     private Node lastNode;
     private int num;
@@ -55,7 +55,7 @@ public class LinkedList<T> {
     }
     
     public boolean add(T newEntry, int position) {
-        Node currentNode = (Node) get(position, true);
+        Node currentNode = getNode(position);
         
         Node newNode = new Node(newEntry);
         
@@ -74,7 +74,7 @@ public class LinkedList<T> {
     }
     
     public T remove(int position) {       
-        Node currentNode = (Node) get(position, true);
+        Node currentNode = getNode(position);
         
         // changing the previous and next node
         Node previous = currentNode.previousNode;
@@ -98,25 +98,11 @@ public class LinkedList<T> {
     }
     
     public T get(int position) {
-        return get(position, false);
-    }
-    
-    public T get(int position, boolean returnNode) {
-        if (position < 0 || position >= getSize()) {
-            throw new IndexOutOfBoundsException();
-        }
-        
-        Node currentNode = firstNode;
-        
-        for (int i = 1; i < position; i++) {
-            currentNode = currentNode.nextNode;
-        }
-        
-        return returnNode ? (T) currentNode : currentNode.entry;
+        return getNode(position).entry;
     }
     
     public boolean replace(T newEntry, int position) {
-        Node currentNode = (Node) get(position, true);
+        Node currentNode = getNode(position);
         
         Node newNode = new Node(newEntry);
         
@@ -139,7 +125,7 @@ public class LinkedList<T> {
     }
     
     public void sort() {
-        quickSort(0, getSize() - 1);
+        quickSort(firstNode, lastNode);
     }
     
     public int getSize() {
@@ -149,42 +135,89 @@ public class LinkedList<T> {
     @Override
     public String toString() {
         Node currentNode = firstNode;
-        String str = firstNode.entry + "";
+        String str = firstNode.entry + " ";
         while (currentNode.nextNode != null) {
             currentNode = currentNode.nextNode;
-            str += currentNode.entry;
+            str += currentNode.entry + " ";
         }
         
         return str;
     }
     
     // utility method
-    private void swap(int i, int j) {
-        T temp = 
+    private Node getNode(int position) {
+        if (position < 1 || position > getSize()) {
+            throw new IndexOutOfBoundsException();
+        }
+        
+        Node currentNode = firstNode;
+        
+        for (int i = 1; i < position; i++) {
+            currentNode = currentNode.nextNode;
+        }
+        
+        return currentNode;
     }
     
-    private void quickSort(int first, int last) {
-        
+    private void swap(Node i, Node j) {
+        T tempEntry = i.entry;
+        i.entry = j.entry;
+        j.entry = tempEntry;
     }
     
-    private int partition(int first, int last) {
-        T pivot = lastNode.entry;
+    private boolean compareNode(Node first, Node second) {
+        if (first == null || second == null) {
+            return false;
+        }
         
-        int i = first;
-        return 0;
+        Node currentNode = firstNode;
+        
+        while (currentNode.nextNode != null) {
+            if (currentNode == first) {
+                return currentNode != second;
+            } else if (currentNode == second) {
+                return false;
+            }
+            
+            currentNode = currentNode.nextNode;
+        }
+        
+        return false;
+    }
+    
+    private void quickSort(Node first, Node last) {
+        if (compareNode(first, last)) { 
+            Node sorted = partition(first, last);
+            
+            quickSort(first, sorted.previousNode);
+            quickSort(sorted.nextNode, last);           
+        }
+    }
+    
+    private Node partition(Node first, Node last) {
+        T pivot = last.entry;
+        
+        Node i = first;
+        for (Node j = first; j != last; j = j.nextNode) {
+            if (j.entry.compareTo(pivot) < 0) {
+                swap(i, j);
+                i = i.nextNode;
+            }
+        }
+        swap(i, last);
+        return i;
     }
     
     public static void main(String[] args) {
         LinkedList<Integer> list = new LinkedList<>();
         list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(1,1);
-        list.add(2,2);
-        list.add(3,2);
-        
+        list.add(-7);
+        list.add(24);
+        list.add(6,1);
+        list.add(9,3);
+        list.add(13,2);
+
         System.out.println(list);
-        System.out.println(list.lastNode.previousNode.previousNode.entry);
         
         System.out.println(list.getSize());
         
@@ -193,10 +226,12 @@ public class LinkedList<T> {
         list.replace(4, 4);
         
         System.out.println(list);
-        System.out.println(list.firstNode.entry);
-        System.out.println(list.lastNode.entry);
         
         System.out.println(list.getSize());
+        
+        list.sort();
+        
+        System.out.println(list);
     }
 }
 
