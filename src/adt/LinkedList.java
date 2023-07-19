@@ -138,7 +138,9 @@ public class LinkedList<T> {
         return true;
     }
     
-    // public void sort();
+    public void sort() {
+        quickSort(0, getSize() - 1);
+    }
     
     public int getSize() {
         return num;
@@ -154,6 +156,22 @@ public class LinkedList<T> {
         }
         
         return str;
+    }
+    
+    // utility method
+    private void swap(int i, int j) {
+        T temp = 
+    }
+    
+    private void quickSort(int first, int last) {
+        
+    }
+    
+    private int partition(int first, int last) {
+        T pivot = lastNode.entry;
+        
+        int i = first;
+        return 0;
     }
     
     public static void main(String[] args) {

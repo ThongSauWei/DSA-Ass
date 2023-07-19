@@ -9,14 +9,14 @@ import java.io.Serializable;
  *
  * @author User
  */
-public class ArrayList<T> implements Serializable {
+public class ArrayList<T extends Comparable<T>> implements Serializable {
     
     private T[] arr;
     private int num;
     private static final int DEFAULT_SIZE = 5;
     
     public ArrayList() {
-        arr = (T[]) new Object[DEFAULT_SIZE];
+        arr = (T[]) new Comparable[DEFAULT_SIZE];
         num = 0;
     }
     
@@ -31,8 +31,8 @@ public class ArrayList<T> implements Serializable {
         return true;
     }
     
-    public boolean add(T newEntry, int position) {
-        if (position < 0 || position >= getSize()) {
+    public boolean add(T newEntry, int position) {        
+        if (position < 1 || position > getSize()) {
             throw new ArrayIndexOutOfBoundsException();
         }
         
@@ -40,11 +40,11 @@ public class ArrayList<T> implements Serializable {
             expand();
         }
         
-        for (int i = getSize(); i > position; i--) {
+        for (int i = getSize(); i > position - 1; i--) {
             arr[i] = arr[i - 1];
         }
         
-        arr[position] = newEntry;
+        arr[position - 1] = newEntry;
         num++;
         
         return true;
@@ -60,20 +60,22 @@ public class ArrayList<T> implements Serializable {
     }
     
     public T get(int position) {
-        if (position < 0 || position >= getSize()) {
+        if (position < 1 || position > getSize()) {
             throw new ArrayIndexOutOfBoundsException();
         }
         
-        return arr[position];
+        return arr[position - 1];
     }
     
     public boolean replace(T newEntry, int position) {
-        arr[position] = newEntry;
+        arr[position - 1] = newEntry;
         
         return true;
     }
     
-    // public void sort();
+    public void sort() {
+        quickSort(0, getSize() - 1);
+    }
     
     public int getSize() {
         return num;
@@ -84,7 +86,7 @@ public class ArrayList<T> implements Serializable {
         String str = "";
         
         for (int i = 0; i < getSize(); i++) {
-            str += arr[i];
+            str += arr[i] + " ";
         }
         
         return str;
@@ -93,33 +95,63 @@ public class ArrayList<T> implements Serializable {
     // utility methods
     private void expand() {        
         T[] oldArr = arr;
-        arr = (T[]) new Object[oldArr.length * 2];
+        arr = (T[]) new Comparable[oldArr.length * 2];
         
         System.arraycopy(oldArr, 0, arr, 0, oldArr.length);
     }
     
     private void fillGap(int position) {
-        for (int i = position; i < getSize() - 1; i++) {
+        for (int i = position - 1; i < getSize(); i++) {
             arr[i] = arr[i + 1];
         }
         
         arr[num - 1] = null;
     }
     
+    private void swap(int i, int j) {
+        T temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    
+    private void quickSort(int first, int last) {
+        if (first < last) {
+            int sorted = partition(first, last);
+            
+            quickSort(first, sorted - 1);
+            quickSort(sorted + 1, last);
+        }
+    }
+    
+    private int partition(int first, int last) {
+        T pivot = arr[last];
+        
+        int i = first;
+        for (int j = first; j <= last;) {
+            if (arr[j].compareTo(pivot) < 0) { // if arr[j] < pivot
+                swap(i, j);
+                i++;
+            }
+            j++;
+        }
+        swap(i,last);
+        return i;
+    }
+    
     private boolean isFull() {
         return arr.length == num;
     }
-    
+
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<>();
         
         list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(1,1);
-        list.add(2,2);
-        list.add(3,2);
-        
+        list.add(-7);
+        list.add(24);
+        list.add(6,1);
+        list.add(9,3);
+        list.add(13,2);
+
         System.out.println(list);
         
         System.out.println(list.getSize());
@@ -131,5 +163,9 @@ public class ArrayList<T> implements Serializable {
         System.out.println(list);
         
         System.out.println(list.getSize());
+        
+        list.sort();
+        
+        System.out.println(list);
     }
 }
