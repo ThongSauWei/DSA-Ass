@@ -7,9 +7,9 @@ package adt;
 import java.io.Serializable;
 /**
  *
- * @author User
+ * @author Benjamin
  */
-public class ArrayList<T extends Comparable<T>> implements Serializable {
+public class ArrayList<T extends Comparable<T>> implements Serializable, ListInterface<T> {
     
     private T[] arr;
     private int num;
@@ -20,8 +20,9 @@ public class ArrayList<T extends Comparable<T>> implements Serializable {
         num = 0;
     }
     
+    @Override
     public boolean add(T newEntry) {      
-        if (isFull()) {
+        if (isFull()) { // if the array is full, expand the array for new entries
             expand();
         }
         
@@ -31,16 +32,17 @@ public class ArrayList<T extends Comparable<T>> implements Serializable {
         return true;
     }
     
+    @Override
     public boolean add(T newEntry, int position) {        
         if (position < 1 || position > getSize()) {
             throw new ArrayIndexOutOfBoundsException();
         }
         
-        if (isFull()) {
+        if (isFull()) { // if the array is full, expand the array for new entries
             expand();
         }
         
-        for (int i = getSize(); i > position - 1; i--) {
+        for (int i = getSize(); i > position - 1; i--) { // moving the entries after the position one index to the right (back of the array)
             arr[i] = arr[i - 1];
         }
         
@@ -50,6 +52,7 @@ public class ArrayList<T extends Comparable<T>> implements Serializable {
         return true;
     }
     
+    @Override
     public T remove(int position) {
         T removal = get(position);
         
@@ -59,6 +62,7 @@ public class ArrayList<T extends Comparable<T>> implements Serializable {
         return removal;
     }
     
+    @Override
     public T get(int position) {
         if (position < 1 || position > getSize()) {
             throw new ArrayIndexOutOfBoundsException();
@@ -67,18 +71,30 @@ public class ArrayList<T extends Comparable<T>> implements Serializable {
         return arr[position - 1];
     }
     
+    @Override
     public boolean replace(T newEntry, int position) {
         arr[position - 1] = newEntry;
         
         return true;
     }
     
+    @Override
     public void sort() {
-        quickSort(0, getSize() - 1);
+        quickSort(0, getSize() - 1); // use quick sort for sorting
     }
     
+    @Override
     public int getSize() {
         return num;
+    }
+    
+    @Override
+    public void clear() {
+        for (int i = 0; i < num; i++) {
+            arr[i] = null;
+        }
+        
+        num = 0;
     }
     
     @Override
@@ -95,13 +111,13 @@ public class ArrayList<T extends Comparable<T>> implements Serializable {
     // utility methods
     private void expand() {        
         T[] oldArr = arr;
-        arr = (T[]) new Comparable[oldArr.length * 2];
+        arr = (T[]) new Comparable[oldArr.length * 2]; // create a new array which has double the size than the old array
         
-        System.arraycopy(oldArr, 0, arr, 0, oldArr.length);
+        System.arraycopy(oldArr, 0, arr, 0, oldArr.length); // copy the entries in the old array to the new array
     }
     
     private void fillGap(int position) {
-        for (int i = position - 1; i < getSize(); i++) {
+        for (int i = position - 1; i < getSize(); i++) { // moving the entries after the position one index to the left (front of the array)
             arr[i] = arr[i + 1];
         }
         
@@ -109,31 +125,38 @@ public class ArrayList<T extends Comparable<T>> implements Serializable {
     }
     
     private void swap(int i, int j) {
+        // swapping the entries between two indexes
         T temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
     
     private void quickSort(int first, int last) {
-        if (first < last) {
+        if (first < last) { // the sub-array must be exist / must not be empty array (e.g. from index 1 to index 1)
+            // get the node that is sorted
             int sorted = partition(first, last);
             
+            // sort both side from the sorted node
             quickSort(first, sorted - 1);
             quickSort(sorted + 1, last);
         }
     }
     
     private int partition(int first, int last) {
-        T pivot = arr[last];
+        T pivot = arr[last]; // select the last entry as the pivot
         
-        int i = first;
-        for (int j = first; j <= last; j++) {
-            if (arr[j].compareTo(pivot) < 0) { // if arr[j] < pivot
+        int i = first; // index that will be swapped
+        
+        for (int j = first; j <= last; j++) { // traverse through the sub-array to determine whether to swap or not
+            if (arr[j].compareTo(pivot) < 0) { // compare both pivot and the element traversed, if the element traversing is "less than" pivot, swap it with the element "i"
                 swap(i, j);
-                i++;
+                i++; // go to the next index (the element in the index will then be swapped)
             }
         }
+        // now on the left of index "i" will have all the elements that are "less than" the pivot, now swap the pivot index with the index "i"
         swap(i,last);
+        // after swapping we knew that the pivot index is sorted as all the elements on its left are "less than" it while all the elements on its right are "more than" it
+        // return the index that is sorted
         return i;
     }
     

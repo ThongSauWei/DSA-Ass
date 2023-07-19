@@ -6,9 +6,9 @@ package adt;
 
 /**
  *
- * @author User
+ * @author Benjamin
  */
-public interface ListInterface<T> {
+public interface ListInterface<T extends Comparable<T>> {
     
     // Create
     public boolean add(T newEntry);
@@ -29,4 +29,7 @@ public interface ListInterface<T> {
     
     // Count
     public int getSize();
+    
+    // Clear
+    public void clear();
 }
