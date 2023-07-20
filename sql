@@ -71,3 +71,27 @@ PRIMARY KEY (studentId),
 FOREIGN KEY (tutorialGroupId) REFERENCES TutorialGroup (tutorialGroupId),
 FOREIGN KEY (assignmentTeamId) REFERENCES AssignmentTeam (assignmentTeamId)
 );
+
+INSERT INTO COURSE VALUES('RSD', 'Bachelor In Software System Development', 'U will learn Data Structure and Algorithm, Software Engineering, Human Computer Interaction, etc...', 'R', 'FOCS', 3);
+INSERT INTO COURSE VALUES('DFT', 'Diploma In Information Technology', 'Go RSD in Degree and you will learn...', 'D', 'FOCS', 2);
+INSERT INTO COURSE VALUES('FBU', 'Foundation In Business', 'Actually I dont know what this course will learn but it is not FOCS one...', 'F', 'CPUS', 1);
+
+INSERT INTO PROGRAMME VALUES('BACS2063', 'Data Structure and Algorithm', 'Told u RSD will learn this...', '2023-07-03', '2023-10-20', 3);
+INSERT INTO PROGRAMME VALUES('BACS2053', 'Object-Oriented Analysis & Design', 'Ya, RSD will also need to learn this. NO ONE CAN ESCAPE FROM IT!!!!', '2023-07-03', '2023-10-20', 4);
+INSERT INTO PROGRAMME VALUES('BAIT2203', 'Human Computer Interaction', 'Ermmmm............................ Ya.', '2023-07-03', '2023-10-20', 5);
+
+INSERT INTO COURSEPROGRAMME VALUES('RSD101', 'RSD', 'BACS2063');
+INSERT INTO COURSEPROGRAMME VALUES('RSD102', 'RSD', 'BACS2053');
+INSERT INTO COURSEPROGRAMME VALUES('RSD103', 'RSD', 'BAIT2203');
+
+INSERT INTO TUTORIALGROUP VALUES('RSDG01', 1, 25, 'RSD');
+INSERT INTO TUTORIALGROUP VALUES('RSDG02', 2, 24, 'RSD');
+INSERT INTO TUTORIALGROUP VALUES('RSDG03', 3, 24, 'RSD');
+
+INSERT INTO ASSIGNMENTTEAM VALUES('AT1001', 'RSDG01', 'BACS2063');
+INSERT INTO ASSIGNMENTTEAM VALUES('AT1002', 'RSDG01', 'BACS2063');
+INSERT INTO ASSIGNMENTTEAM VALUES('AT1003', 'RSDG01', 'BACS2063');
+
+INSERT INTO STUDENT VALUES('23WMR09297', 'Random Name Number 1', '010101010101', 'randomnn1-wm23@student.tarc.edu.my', '0123456789', '2', '1', 'RSDG01', 'AT1001');
+INSERT INTO STUDENT VALUES('23WMR09295', 'This Name Not Random 1', '011001100110', 'thisnnr-wm23@student.tarc.edu.my', '0198765432', '2', '1', 'RSDG01', 'AT1001');
+INSERT INTO STUDENT VALUES('22WMR09999', 'All Nine', '020909099999', 'alln-wm22@student.tarc.edu.my', '0199999999', '2', '1', 'RSDG01', 'AT1001');
