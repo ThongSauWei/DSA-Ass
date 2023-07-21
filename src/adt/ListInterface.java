@@ -8,7 +8,7 @@ package adt;
  *
  * @author Benjamin
  */
-public interface ListInterface<T extends Comparable<T>> {
+public interface ListInterface<T extends Comparable<T>> extends Iterable<T> {
     
     // Create
     public boolean add(T newEntry);

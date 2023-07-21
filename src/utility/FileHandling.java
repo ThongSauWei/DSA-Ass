@@ -54,8 +54,8 @@ public class FileHandling {
         createOrOpenFile(filePath);
         
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            for (int i = 1; i <= dataList.getSize(); i++) { // can be enhanced to for-each loop
-                writer.write(dataList.get(i));
+            for (String data : dataList) {
+                writer.write(data);
                 writer.newLine();
             }
         } catch (IOException ex) {
@@ -73,8 +73,8 @@ public class FileHandling {
             writeFile.add("4 ........");
             writeFile("Course", writeFile);
         } else {
-            for (int i = 1; i <= dataList.getSize(); i++) {
-                System.out.println(dataList.get(i));
+            for (String data : dataList) {
+                System.out.println(data);
             }
         }
     }

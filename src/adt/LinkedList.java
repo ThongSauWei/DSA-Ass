@@ -5,6 +5,7 @@
 package adt;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 import utility.ExceptionHandling;
 
@@ -47,7 +48,7 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     }
     
     // Custom iterator class implementation
-    public class CustomIterator {
+    public class CustomIterator implements Iterator<T>{
         private Node currentNode;
         
         public CustomIterator() {
@@ -58,6 +59,7 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
             currentNode = getNode(position);
         }
         
+        @Override
         public boolean hasNext() {
             return compareNode(currentNode, lastNode);
         }
@@ -66,19 +68,26 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
             return compareNode(firstNode, currentNode);
         }
         
-        public void next() {
+        @Override
+        public T next() {
             if (hasNext()) {
+                T data = currentNode.entry;
                 currentNode = currentNode.nextNode;
+                return data;
             } else {
                 ExceptionHandling.endOfList();
+                return null;
             }
         }
         
-        public void previous() {
-            if (hasPrevious()) {              
+        public T previous() {
+            if (hasPrevious()) {    
+                T data = currentNode.entry;
                 currentNode = currentNode.previousNode;
+                return data;
             } else {
                 ExceptionHandling.endOfList();
+                return null;
             }
         }
         
@@ -87,11 +96,12 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
         }
     }
     
-    public CustomIterator placeIterator() {
+    @Override
+    public Iterator<T> iterator() {
         return new CustomIterator(1);
     }
     
-    public CustomIterator placeIterator(int position) {
+    public Iterator<T> iterator(int position) {
         return new CustomIterator(position);
     }
     

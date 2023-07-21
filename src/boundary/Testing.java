@@ -36,7 +36,7 @@ public class Testing {
         
         System.out.println(list);
         
-        CustomIterator iterator = list.placeIterator(1);
+        CustomIterator iterator = (CustomIterator) list.iterator();
         
         System.out.println(iterator.getCurrent());
         while (iterator.hasNext()) {

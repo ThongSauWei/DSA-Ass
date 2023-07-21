@@ -5,6 +5,8 @@
 package adt;
 
 import java.io.Serializable;
+import java.util.Iterator;
+
 import utility.ExceptionHandling;
 /**
  *
@@ -22,7 +24,7 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
     }
     
     // Custom iterator class implementation
-    public class CustomIterator {
+    public class CustomIterator implements Iterator<T> {
         private int currentPosition;
         
         public CustomIterator() {
@@ -33,6 +35,7 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
             currentPosition = position;
         }
         
+        @Override
         public boolean hasNext() {
             return currentPosition < getSize();
         }
@@ -41,32 +44,40 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
             return currentPosition > 1;
         }
         
-        public void next() {
+        @Override
+        public T next() {
             if (hasNext()) {
+                T data = get(currentPosition);
                 currentPosition++;
+                return data;
             } else {
                 ExceptionHandling.endOfList();
+                return null;
             }
         }
         
-        public void previous() {
-            if (hasPrevious()) {              
+        public T previous() {
+            if (hasPrevious()) {   
+                T data = get(currentPosition);
                 currentPosition--;
+                return data;
             } else {
                 ExceptionHandling.endOfList();
+                return null;
             }
         }
         
         public T getCurrent() {
-            return arr[currentPosition - 1];
+            return get(currentPosition);
         }
     }
     
-    public CustomIterator placeIterator() {
+    @Override
+    public Iterator<T> iterator() {
         return new CustomIterator(1);
     }
     
-    public CustomIterator placeIterator(int position) {
+    public Iterator<T> iterator(int position) {
         return new CustomIterator(position);
     }
     
