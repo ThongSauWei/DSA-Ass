@@ -43,6 +43,10 @@ public class ExceptionHandling {
     }
     
     public static void endOfList() {
-        JOptionPane.showMessageDialog(null, "Reached end of the list!", "Error!", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Reached end of the list.", "Error!", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public static void dateParseException() {
+        JOptionPane.showMessageDialog(null, "Error parsing date.", "Error!", JOptionPane.ERROR_MESSAGE);
     }
 }

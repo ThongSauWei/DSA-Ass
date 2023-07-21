@@ -6,7 +6,6 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import adt.ListInterface;
 
 /**
  *
@@ -19,8 +18,6 @@ public class Programme implements Serializable, Comparable<Programme> {
     private Date startDate;
     private Date endDate;
     private int assignmentNum;
-    private ListInterface<CourseProgramme> courseProgrammeList;
-    private ListInterface<AssignmentTeam> assignmentTeamList;
 
     public Programme() {
     }
@@ -90,22 +87,6 @@ public class Programme implements Serializable, Comparable<Programme> {
         this.assignmentNum = assignmentNum;
     }
 
-    public ListInterface<CourseProgramme> getCourseProgrammeList() {
-        return courseProgrammeList;
-    }
-
-    public void setCourseProgrammeList(ListInterface<CourseProgramme> courseProgrammeList) {
-        this.courseProgrammeList = courseProgrammeList;
-    }
-
-    public ListInterface<AssignmentTeam> getAssignmentTeamList() {
-        return assignmentTeamList;
-    }
-
-    public void setAssignmentTeamList(ListInterface<AssignmentTeam> assignmentTeamList) {
-        this.assignmentTeamList = assignmentTeamList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -135,6 +116,10 @@ public class Programme implements Serializable, Comparable<Programme> {
         } else {
             return -1;
         }
+    }
+    
+    public String saveToFile() {
+        return programmeCode + "|" + programmeName + "|" + programmeDetail + "|" + startDate + "|" + endDate + "|" + assignmentNum;
     }
 
     @Override

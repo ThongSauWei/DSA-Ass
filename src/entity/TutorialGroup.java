@@ -5,7 +5,6 @@
 package entity;
 
 import java.io.Serializable;
-import adt.ListInterface;
 
 /**
  *
@@ -16,8 +15,6 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
     private int groupNo;
     private int numOfStudent;
     private Course courseCode;
-    private ListInterface<Student> studentList;
-    private ListInterface<AssignmentTeam> assignmentTeamList;
 
     public TutorialGroup() {
     }
@@ -61,28 +58,12 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
         this.numOfStudent = numOfStudent;
     }
 
-    public ListInterface<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(ListInterface<Student> studentList) {
-        this.studentList = studentList;
-    }
-
     public Course getCoursecode() {
         return courseCode;
     }
 
     public void setCoursecode(Course courseCode) {
         this.courseCode = courseCode;
-    }
-
-    public ListInterface<AssignmentTeam> getAssignmentTeamList() {
-        return assignmentTeamList;
-    }
-
-    public void setAssignmentTeamList(ListInterface<AssignmentTeam> assignmentTeamList) {
-        this.assignmentTeamList = assignmentTeamList;
     }
 
     @Override
@@ -114,6 +95,10 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
         } else {
             return -1;
         }
+    }
+    
+    public String saveToFile() {
+        return tutorialGroupId + "|" + groupNo + "|" + numOfStudent + "|" + courseCode.getCourseCode();
     }
 
     @Override

@@ -5,7 +5,6 @@
 package entity;
 
 import java.io.Serializable;
-import adt.ListInterface;
 
 /**
  *
@@ -15,7 +14,6 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
     private String assignmentTeamId;
     private Programme programmeCode;
     private TutorialGroup tutorialGroupId;
-    private ListInterface<Student> studentList;
 
     public AssignmentTeam() {
     }
@@ -36,14 +34,6 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
 
     public void setAssignmentTeamId(String assignmentTeamId) {
         this.assignmentTeamId = assignmentTeamId;
-    }
-
-    public ListInterface<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(ListInterface<Student> studentList) {
-        this.studentList = studentList;
     }
 
     public Programme getProgrammeCode() {
@@ -92,10 +82,14 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
             return -1;
         }
     }
+    
+    public String saveToFile() {
+        return assignmentTeamId + "|" + programmeCode.getProgrammeCode() + "|" + tutorialGroupId.getTutorialGroupId();
+    }
 
     @Override
     public String toString() {
-        return programmeCode.getProgrammeCode() + "\t" + tutorialGroupId.getTutorialGroupId() + "\t" + studentList + "\n";
+        return programmeCode.getProgrammeCode() + "" + tutorialGroupId.getTutorialGroupId() + "\n";
     }
     
 }

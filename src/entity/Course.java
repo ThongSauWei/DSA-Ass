@@ -5,7 +5,6 @@
 package entity;
 
 import java.io.Serializable;
-import adt.ListInterface;
 
 /**
  *
@@ -18,8 +17,6 @@ public class Course implements Serializable, Comparable<Course> {
     private Character courseLevel;
     private String faculty;
     private int duration;
-    private ListInterface<CourseProgramme> courseProgrammeList;
-    private ListInterface<TutorialGroup> tutorialGroupList;
 
     public Course() {
     }
@@ -89,22 +86,6 @@ public class Course implements Serializable, Comparable<Course> {
         this.duration = duration;
     }
 
-    public ListInterface<CourseProgramme> getCourseProgrammeList() {
-        return courseProgrammeList;
-    }
-
-    public void setCourseProgrammeList(ListInterface<CourseProgramme> courseProgrammeList) {
-        this.courseProgrammeList = courseProgrammeList;
-    }
-
-    public ListInterface<TutorialGroup> getTutorialGroupList() {
-        return tutorialGroupList;
-    }
-
-    public void setTutorialGroupList(ListInterface<TutorialGroup> tutorialGroupList) {
-        this.tutorialGroupList = tutorialGroupList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -134,6 +115,10 @@ public class Course implements Serializable, Comparable<Course> {
         } else {
             return -1;
         }
+    }
+    
+    public String saveToFile() {
+        return courseCode + "|" + courseName + "|" + courseDetail + "|" + courseLevel + "|" + faculty + "|" + duration;
     }
 
     @Override

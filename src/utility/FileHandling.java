@@ -5,13 +5,15 @@
 package utility;
 
 import adt.*;
+import entity.*;
+import utility.ExceptionHandling.FileAction;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import utility.ExceptionHandling.FileAction;
 
 /**
  *
@@ -61,6 +63,24 @@ public class FileHandling {
         } catch (IOException ex) {
             ExceptionHandling.fileException(FileAction.WRITE);
         }
+    }
+    
+    public AssignmentTeam getAssignmentTeam(String primaryKey) {
+        ListInterface<String> dataList = FileHandling.readFile("AssignmentTeam");
+        
+        for(String data : dataList) {
+            String[] attr = data.split("\\|");
+            
+            if (primaryKey.equals(attr[0])) {
+                return ;
+            }
+        }
+        
+        return null;
+    }
+    
+    public Course getCourse(String primaryKey) {
+        
     }
     
     public static void main(String[] args) {

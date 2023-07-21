@@ -82,6 +82,10 @@ public class CourseProgramme implements Serializable, Comparable<CourseProgramme
             return -1;
         }
     }
+    
+    public String saveToFile() {
+        return id + "|" + courseCode.getCourseCode() + "|" + programmeCode.getProgrammeCode();
+    }
 
     @Override
     public String toString() {

@@ -146,6 +146,11 @@ public class Student implements Serializable, Comparable<Student> {
             return -1;
         }
     }
+    
+    public String saveToFile() {
+        return studentId + "|" + studentName + "|" + studentIc + "|" + studentEmail + "|" + phoneNo + "|" + 
+                studyYear + "|" + semester + "|" + assignmentTeamId.getAssignmentTeamId() + "|" + tutorialGroupId.getTutorialGroupId();
+    }
 
     @Override
     public String toString() {
