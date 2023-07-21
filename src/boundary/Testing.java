@@ -6,12 +6,15 @@ package boundary;
 
 import adt.LinkedList;
 import adt.LinkedList.CustomIterator;
+import utility.StartUp;
 /**
  *
  * @author User
  */
 public class Testing {
     public static void main(String[] args) {
+        StartUp.startUp();
+        
         LinkedList<Integer> list = new LinkedList<>();
         list.add(1);
         list.add(-7);
