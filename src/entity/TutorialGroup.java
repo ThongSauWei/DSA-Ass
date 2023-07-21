@@ -6,91 +6,61 @@ package entity;
 
 import java.io.Serializable;
 import adt.ListInterface;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author User
  */
-@Entity
-@Table(name = "TUTORIALGROUP")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TutorialGroup.findAll", query = "SELECT t FROM TutorialGroup t"),
-    @NamedQuery(name = "TutorialGroup.findByTutorialgroupid", query = "SELECT t FROM TutorialGroup t WHERE t.tutorialgroupid = :tutorialgroupid"),
-    @NamedQuery(name = "TutorialGroup.findByGroupno", query = "SELECT t FROM TutorialGroup t WHERE t.groupno = :groupno"),
-    @NamedQuery(name = "TutorialGroup.findByNumofstudent", query = "SELECT t FROM TutorialGroup t WHERE t.numofstudent = :numofstudent")})
 public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "TUTORIALGROUPID")
-    private String tutorialgroupid;
-    @Basic(optional = false)
-    @Column(name = "GROUPNO")
-    private int groupno;
-    @Basic(optional = false)
-    @Column(name = "NUMOFSTUDENT")
-    private int numofstudent;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutorialgroupid")
+    private String tutorialGroupId;
+    private int groupNo;
+    private int numOfStudent;
+    private Course courseCode;
     private ListInterface<Student> studentList;
-    @JoinColumn(name = "COURSECODE", referencedColumnName = "COURSECODE")
-    @ManyToOne(optional = false)
-    private Course coursecode;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tutorialgroupid")
     private ListInterface<AssignmentTeam> assignmentTeamList;
 
     public TutorialGroup() {
     }
 
-    public TutorialGroup(String tutorialgroupid) {
-        this.tutorialgroupid = tutorialgroupid;
+    public TutorialGroup(String tutorialGroupId) {
+        this.tutorialGroupId = tutorialGroupId;
     }
 
-    public TutorialGroup(String tutorialgroupid, int groupno, int numofstudent) {
-        this.tutorialgroupid = tutorialgroupid;
-        this.groupno = groupno;
-        this.numofstudent = numofstudent;
+    public TutorialGroup(String tutorialGroupId, int groupNo, int numOfStudent) {
+        this(tutorialGroupId, groupNo, numOfStudent, null);
+    }
+    
+    public TutorialGroup(String tutorialGroupId, int groupNo, int numOfStudent, Course courseCode) {
+        this.tutorialGroupId = tutorialGroupId;
+        this.groupNo = groupNo;
+        this.numOfStudent = numOfStudent;
+        this.courseCode = courseCode;
     }
 
-    public String getTutorialgroupid() {
-        return tutorialgroupid;
+    public String getTutorialGroupId() {
+        return tutorialGroupId;
     }
 
-    public void setTutorialgroupid(String tutorialgroupid) {
-        this.tutorialgroupid = tutorialgroupid;
+    public void setTutorialGroupId(String tutorialGroupId) {
+        this.tutorialGroupId = tutorialGroupId;
     }
 
-    public int getGroupno() {
-        return groupno;
+    public int getGroupNo() {
+        return groupNo;
     }
 
-    public void setGroupno(int groupno) {
-        this.groupno = groupno;
+    public void setGroupNo(int groupNo) {
+        this.groupNo = groupNo;
     }
 
-    public int getNumofstudent() {
-        return numofstudent;
+    public int getNumOfStudent() {
+        return numOfStudent;
     }
 
-    public void setNumofstudent(int numofstudent) {
-        this.numofstudent = numofstudent;
+    public void setNumOfStudent(int numOfStudent) {
+        this.numOfStudent = numOfStudent;
     }
 
-    @XmlTransient
     public ListInterface<Student> getStudentList() {
         return studentList;
     }
@@ -100,14 +70,13 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
     }
 
     public Course getCoursecode() {
-        return coursecode;
+        return courseCode;
     }
 
-    public void setCoursecode(Course coursecode) {
-        this.coursecode = coursecode;
+    public void setCoursecode(Course courseCode) {
+        this.courseCode = courseCode;
     }
 
-    @XmlTransient
     public ListInterface<AssignmentTeam> getAssignmentTeamList() {
         return assignmentTeamList;
     }
@@ -119,7 +88,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (tutorialgroupid != null ? tutorialgroupid.hashCode() : 0);
+        hash += (tutorialGroupId != null ? tutorialGroupId.hashCode() : 0);
         return hash;
     }
 
@@ -130,7 +99,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
             return false;
         }
         TutorialGroup other = (TutorialGroup) object;
-        if ((this.tutorialgroupid == null && other.tutorialgroupid != null) || (this.tutorialgroupid != null && !this.tutorialgroupid.equals(other.tutorialgroupid))) {
+        if ((this.tutorialGroupId == null && other.tutorialGroupId != null) || (this.tutorialGroupId != null && !this.tutorialGroupId.equals(other.tutorialGroupId))) {
             return false;
         }
         return true;
@@ -138,9 +107,9 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
     
     @Override
     public int compareTo(TutorialGroup tutorialGroup) {
-        if (tutorialgroupid.compareTo(tutorialGroup.getTutorialgroupid()) > 0) {
+        if (tutorialGroupId.compareTo(tutorialGroup.getTutorialGroupId()) > 0) {
             return 1;
-        } else if (tutorialgroupid.compareTo(tutorialGroup.getTutorialgroupid()) == 0) {
+        } else if (tutorialGroupId.compareTo(tutorialGroup.getTutorialGroupId()) == 0) {
             return 0;
         } else {
             return -1;
@@ -149,7 +118,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 
     @Override
     public String toString() {
-        return tutorialgroupid + "\t" + numofstudent + "\n";
+        return tutorialGroupId + "\t" + numOfStudent + "\n";
     }
     
 }

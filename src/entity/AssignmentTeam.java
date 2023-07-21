@@ -6,65 +6,38 @@ package entity;
 
 import java.io.Serializable;
 import adt.ListInterface;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author User
  */
-@Entity
-@Table(name = "ASSIGNMENTTEAM")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "AssignmentTeam.findAll", query = "SELECT a FROM AssignmentTeam a"),
-    @NamedQuery(name = "AssignmentTeam.findByAssignmentteamid", query = "SELECT a FROM AssignmentTeam a WHERE a.assignmentteamid = :assignmentteamid")})
 public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "ASSIGNMENTTEAMID")
-    private String assignmentteamid;
-    @OneToMany(mappedBy = "assignmentteamid")
+    private String assignmentTeamId;
+    private Programme programmeCode;
+    private TutorialGroup tutorialGroupId;
     private ListInterface<Student> studentList;
-    @JoinColumn(name = "PROGRAMMECODE", referencedColumnName = "PROGRAMMECODE")
-    @ManyToOne(optional = false)
-    private Programme programmecode;
-    @JoinColumn(name = "TUTORIALGROUPID", referencedColumnName = "TUTORIALGROUPID")
-    @ManyToOne(optional = false)
-    private TutorialGroup tutorialgroupid;
 
     public AssignmentTeam() {
     }
 
-    public AssignmentTeam(String assignmentteamid) {
-        this.assignmentteamid = assignmentteamid;
+    public AssignmentTeam(String assignmentTeamId) {
+        this(assignmentTeamId, null, null);
+    }
+    
+    public AssignmentTeam(String assignmentTeamId, Programme programmeCode, TutorialGroup tutorialGroupId) {
+        this.assignmentTeamId = assignmentTeamId;
+        this.programmeCode = programmeCode;
+        this.tutorialGroupId = tutorialGroupId;
     }
 
-    public String getAssignmentteamid() {
-        return assignmentteamid;
+    public String getAssignmentTeamId() {
+        return assignmentTeamId;
     }
 
-    public void setAssignmentteamid(String assignmentteamid) {
-        this.assignmentteamid = assignmentteamid;
+    public void setAssignmentTeamId(String assignmentTeamId) {
+        this.assignmentTeamId = assignmentTeamId;
     }
 
-    /**
-     *
-     * @return
-     */
-    @XmlTransient
     public ListInterface<Student> getStudentList() {
         return studentList;
     }
@@ -73,26 +46,26 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
         this.studentList = studentList;
     }
 
-    public Programme getProgrammecode() {
-        return programmecode;
+    public Programme getProgrammeCode() {
+        return programmeCode;
     }
 
-    public void setProgrammecode(Programme programmecode) {
-        this.programmecode = programmecode;
+    public void setProgrammeCode(Programme programmeCode) {
+        this.programmeCode = programmeCode;
     }
 
-    public TutorialGroup getTutorialgroupid() {
-        return tutorialgroupid;
+    public TutorialGroup getTutorialGroupId() {
+        return tutorialGroupId;
     }
 
-    public void setTutorialgroupid(TutorialGroup tutorialgroupid) {
-        this.tutorialgroupid = tutorialgroupid;
+    public void setTutorialGroupId(TutorialGroup tutorialGroupId) {
+        this.tutorialGroupId = tutorialGroupId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (assignmentteamid != null ? assignmentteamid.hashCode() : 0);
+        hash += (assignmentTeamId != null ? assignmentTeamId.hashCode() : 0);
         return hash;
     }
 
@@ -103,7 +76,7 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
             return false;
         }
         AssignmentTeam other = (AssignmentTeam) object;
-        if ((this.assignmentteamid == null && other.assignmentteamid != null) || (this.assignmentteamid != null && !this.assignmentteamid.equals(other.assignmentteamid))) {
+        if ((this.assignmentTeamId == null && other.assignmentTeamId != null) || (this.assignmentTeamId != null && !this.assignmentTeamId.equals(other.assignmentTeamId))) {
             return false;
         }
         return true;
@@ -111,10 +84,10 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
     
     @Override
     public int compareTo(AssignmentTeam assignmentTeam) {
-        if (programmecode.compareTo(assignmentTeam.getProgrammecode()) > 0) {
+        if (programmeCode.compareTo(assignmentTeam.getProgrammeCode()) > 0) {
             return 1;
-        } else if (programmecode.compareTo(assignmentTeam.getProgrammecode()) == 0) {
-            return tutorialgroupid.compareTo(assignmentTeam.getTutorialgroupid());
+        } else if (programmeCode.compareTo(assignmentTeam.getProgrammeCode()) == 0) {
+            return tutorialGroupId.compareTo(assignmentTeam.getTutorialGroupId());
         } else {
             return -1;
         }
@@ -122,7 +95,7 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
 
     @Override
     public String toString() {
-        return programmecode.getProgrammecode() + "\t" + tutorialgroupid.getTutorialgroupid() + "\t" + studentList + "\n";
+        return programmeCode.getProgrammeCode() + "\t" + tutorialGroupId.getTutorialGroupId() + "\t" + studentList + "\n";
     }
     
 }

@@ -5,6 +5,7 @@
 package adt;
 
 import java.io.Serializable;
+import utility.ExceptionHandling;
 /**
  *
  * @author Benjamin
@@ -18,6 +19,55 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
     public ArrayList() {
         arr = (T[]) new Comparable[DEFAULT_SIZE];
         num = 0;
+    }
+    
+    // Custom iterator class implementation
+    public class CustomIterator {
+        private int currentPosition;
+        
+        public CustomIterator() {
+            this(1);
+        }
+        
+        public CustomIterator(int position) {
+            currentPosition = position;
+        }
+        
+        public boolean hasNext() {
+            return currentPosition < getSize();
+        }
+        
+        public boolean hasPrevious() {
+            return currentPosition > 1;
+        }
+        
+        public void next() {
+            if (hasNext()) {
+                currentPosition++;
+            } else {
+                ExceptionHandling.endOfList();
+            }
+        }
+        
+        public void previous() {
+            if (hasPrevious()) {              
+                currentPosition--;
+            } else {
+                ExceptionHandling.endOfList();
+            }
+        }
+        
+        public T getCurrent() {
+            return arr[currentPosition - 1];
+        }
+    }
+    
+    public CustomIterator placeIterator() {
+        return new CustomIterator(1);
+    }
+    
+    public CustomIterator placeIterator(int position) {
+        return new CustomIterator(position);
     }
     
     @Override
@@ -95,6 +145,11 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
         }
         
         num = 0;
+    }
+    
+    @Override
+    public boolean isEmpty() {
+        return num == 0;
     }
     
     @Override

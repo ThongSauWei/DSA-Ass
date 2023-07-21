@@ -6,104 +6,71 @@ package entity;
 
 import java.io.Serializable;
 import adt.ListInterface;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author User
  */
-@Entity
-@Table(name = "COURSE")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c"),
-    @NamedQuery(name = "Course.findByCoursecode", query = "SELECT c FROM Course c WHERE c.coursecode = :coursecode"),
-    @NamedQuery(name = "Course.findByCoursename", query = "SELECT c FROM Course c WHERE c.coursename = :coursename"),
-    @NamedQuery(name = "Course.findByCoursedetail", query = "SELECT c FROM Course c WHERE c.coursedetail = :coursedetail"),
-    @NamedQuery(name = "Course.findByCourselevel", query = "SELECT c FROM Course c WHERE c.courselevel = :courselevel"),
-    @NamedQuery(name = "Course.findByFaculty", query = "SELECT c FROM Course c WHERE c.faculty = :faculty"),
-    @NamedQuery(name = "Course.findByDuration", query = "SELECT c FROM Course c WHERE c.duration = :duration")})
 public class Course implements Serializable, Comparable<Course> {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "COURSECODE")
-    private String coursecode;
-    @Basic(optional = false)
-    @Column(name = "COURSENAME")
-    private String coursename;
-    @Column(name = "COURSEDETAIL")
-    private String coursedetail;
-    @Basic(optional = false)
-    @Column(name = "COURSELEVEL")
-    private Character courselevel;
-    @Basic(optional = false)
-    @Column(name = "FACULTY")
+    private String courseCode;
+    private String courseName;
+    private String courseDetail;
+    private Character courseLevel;
     private String faculty;
-    @Basic(optional = false)
-    @Column(name = "DURATION")
     private int duration;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coursecode")
     private ListInterface<CourseProgramme> courseProgrammeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coursecode")
     private ListInterface<TutorialGroup> tutorialGroupList;
 
     public Course() {
     }
 
-    public Course(String coursecode) {
-        this.coursecode = coursecode;
+    public Course(String courseCode) {
+        this.courseCode = courseCode;
     }
 
-    public Course(String coursecode, String coursename, Character courselevel, String faculty, int duration) {
-        this.coursecode = coursecode;
-        this.coursename = coursename;
-        this.courselevel = courselevel;
+    public Course(String courseCode, String courseName, Character courseLevel, String faculty, int duration) {
+        this(courseCode, courseName, null, courseLevel, faculty, duration);
+    }
+    
+    public Course(String courseCode, String courseName, String courseDetail, Character courseLevel, String faculty, int duration) {
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        this.courseDetail = courseDetail;
+        this.courseLevel = courseLevel;
         this.faculty = faculty;
         this.duration = duration;
     }
 
-    public String getCoursecode() {
-        return coursecode;
+    public String getCourseCode() {
+        return courseCode;
     }
 
-    public void setCoursecode(String coursecode) {
-        this.coursecode = coursecode;
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 
-    public String getCoursename() {
-        return coursename;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCoursename(String coursename) {
-        this.coursename = coursename;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-    public String getCoursedetail() {
-        return coursedetail;
+    public String getCourseDetail() {
+        return courseDetail;
     }
 
-    public void setCoursedetail(String coursedetail) {
-        this.coursedetail = coursedetail;
+    public void setCourseDetail(String courseDetail) {
+        this.courseDetail = courseDetail;
     }
 
-    public Character getCourselevel() {
-        return courselevel;
+    public Character getCourseLevel() {
+        return courseLevel;
     }
 
-    public void setCourselevel(Character courselevel) {
-        this.courselevel = courselevel;
+    public void setCourseLevel(Character courseLevel) {
+        this.courseLevel = courseLevel;
     }
 
     public String getFaculty() {
@@ -122,7 +89,6 @@ public class Course implements Serializable, Comparable<Course> {
         this.duration = duration;
     }
 
-    @XmlTransient
     public ListInterface<CourseProgramme> getCourseProgrammeList() {
         return courseProgrammeList;
     }
@@ -131,7 +97,6 @@ public class Course implements Serializable, Comparable<Course> {
         this.courseProgrammeList = courseProgrammeList;
     }
 
-    @XmlTransient
     public ListInterface<TutorialGroup> getTutorialGroupList() {
         return tutorialGroupList;
     }
@@ -143,7 +108,7 @@ public class Course implements Serializable, Comparable<Course> {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (coursecode != null ? coursecode.hashCode() : 0);
+        hash += (courseCode != null ? courseCode.hashCode() : 0);
         return hash;
     }
 
@@ -154,7 +119,7 @@ public class Course implements Serializable, Comparable<Course> {
             return false;
         }
         Course other = (Course) object;
-        if ((this.coursecode == null && other.coursecode != null) || (this.coursecode != null && !this.coursecode.equals(other.coursecode))) {
+        if ((this.courseCode == null && other.courseCode != null) || (this.courseCode != null && !this.courseCode.equals(other.courseCode))) {
             return false;
         }
         return true;
@@ -162,9 +127,9 @@ public class Course implements Serializable, Comparable<Course> {
     
     @Override
     public int compareTo(Course course) {
-        if (coursename.compareTo(course.getCoursename()) > 0) {
+        if (courseName.compareTo(course.getCourseName()) > 0) {
             return 1;
-        } else if (coursename.compareTo(course.getCoursename()) == 0) {
+        } else if (courseName.compareTo(course.getCourseName()) == 0) {
             return 0;
         } else {
             return -1;
@@ -173,7 +138,7 @@ public class Course implements Serializable, Comparable<Course> {
 
     @Override
     public String toString() {
-        return coursename + "\t" + coursecode + "\t" + faculty + "\n";
+        return courseName + "\t" + courseCode + "\t" + faculty + "\n";
     }
     
 }

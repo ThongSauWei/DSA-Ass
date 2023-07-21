@@ -5,128 +5,91 @@
 package entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author User
  */
-@Entity
-@Table(name = "STUDENT")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
-    @NamedQuery(name = "Student.findByStudentid", query = "SELECT s FROM Student s WHERE s.studentid = :studentid"),
-    @NamedQuery(name = "Student.findByStudentname", query = "SELECT s FROM Student s WHERE s.studentname = :studentname"),
-    @NamedQuery(name = "Student.findByStudentic", query = "SELECT s FROM Student s WHERE s.studentic = :studentic"),
-    @NamedQuery(name = "Student.findByStudentemail", query = "SELECT s FROM Student s WHERE s.studentemail = :studentemail"),
-    @NamedQuery(name = "Student.findByPhoneno", query = "SELECT s FROM Student s WHERE s.phoneno = :phoneno"),
-    @NamedQuery(name = "Student.findByStudyyear", query = "SELECT s FROM Student s WHERE s.studyyear = :studyyear"),
-    @NamedQuery(name = "Student.findBySemester", query = "SELECT s FROM Student s WHERE s.semester = :semester")})
 public class Student implements Serializable, Comparable<Student> {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "STUDENTID")
-    private String studentid;
-    @Basic(optional = false)
-    @Column(name = "STUDENTNAME")
-    private String studentname;
-    @Basic(optional = false)
-    @Column(name = "STUDENTIC")
-    private String studentic;
-    @Basic(optional = false)
-    @Column(name = "STUDENTEMAIL")
-    private String studentemail;
-    @Basic(optional = false)
-    @Column(name = "PHONENO")
-    private String phoneno;
-    @Basic(optional = false)
-    @Column(name = "STUDYYEAR")
-    private int studyyear;
-    @Basic(optional = false)
-    @Column(name = "SEMESTER")
+    private String studentId;
+    private String studentName;
+    private String studentIc;
+    private String studentEmail;
+    private String phoneNo;
+    private int studyYear;
     private int semester;
-    @JoinColumn(name = "ASSIGNMENTTEAMID", referencedColumnName = "ASSIGNMENTTEAMID")
-    @ManyToOne
-    private AssignmentTeam assignmentteamid;
-    @JoinColumn(name = "TUTORIALGROUPID", referencedColumnName = "TUTORIALGROUPID")
-    @ManyToOne(optional = false)
-    private TutorialGroup tutorialgroupid;
+    private AssignmentTeam assignmentTeamId;
+    private TutorialGroup tutorialGroupId;
 
     public Student() {
     }
 
-    public Student(String studentid) {
-        this.studentid = studentid;
+    public Student(String studentId) {
+        this.studentId = studentId;
     }
 
-    public Student(String studentid, String studentname, String studentic, String studentemail, String phoneno, int studyyear, int semester) {
-        this.studentid = studentid;
-        this.studentname = studentname;
-        this.studentic = studentic;
-        this.studentemail = studentemail;
-        this.phoneno = phoneno;
-        this.studyyear = studyyear;
+    public Student(String studentId, String studentName, String studentIc, String studentEmail, String phoneNo, int studyYear, int semester) {
+        this(studentId, studentName, studentIc, studentEmail, phoneNo, studyYear, semester, null, null);
+    }
+    
+    public Student(String studentId, String studentName, String studentIc, String studentEmail, String phoneNo, int studyYear, int semester, AssignmentTeam assignmentTeamId, TutorialGroup tutorialGroupId) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.studentIc = studentIc;
+        this.studentEmail = studentEmail;
+        this.phoneNo = phoneNo;
+        this.studyYear = studyYear;
         this.semester = semester;
+        this.assignmentTeamId = assignmentTeamId;
+        this.tutorialGroupId = tutorialGroupId;
     }
 
-    public String getStudentid() {
-        return studentid;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setStudentid(String studentid) {
-        this.studentid = studentid;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
-    public String getStudentname() {
-        return studentname;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setStudentname(String studentname) {
-        this.studentname = studentname;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public String getStudentic() {
-        return studentic;
+    public String getStudentIc() {
+        return studentIc;
     }
 
-    public void setStudentic(String studentic) {
-        this.studentic = studentic;
+    public void setStudentIc(String studentIc) {
+        this.studentIc = studentIc;
     }
 
-    public String getStudentemail() {
-        return studentemail;
+    public String getStudentEmail() {
+        return studentEmail;
     }
 
-    public void setStudentemail(String studentemail) {
-        this.studentemail = studentemail;
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
     }
 
-    public String getPhoneno() {
-        return phoneno;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
-    public void setPhoneno(String phoneno) {
-        this.phoneno = phoneno;
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
-    public int getStudyyear() {
-        return studyyear;
+    public int getStudyYear() {
+        return studyYear;
     }
 
-    public void setStudyyear(int studyyear) {
-        this.studyyear = studyyear;
+    public void setStudyYear(int studyYear) {
+        this.studyYear = studyYear;
     }
 
     public int getSemester() {
@@ -137,26 +100,26 @@ public class Student implements Serializable, Comparable<Student> {
         this.semester = semester;
     }
 
-    public AssignmentTeam getAssignmentteamid() {
-        return assignmentteamid;
+    public AssignmentTeam getAssignmentTeamId() {
+        return assignmentTeamId;
     }
 
-    public void setAssignmentteamid(AssignmentTeam assignmentteamid) {
-        this.assignmentteamid = assignmentteamid;
+    public void setAssignmentTeamId(AssignmentTeam assignmentTeamId) {
+        this.assignmentTeamId = assignmentTeamId;
     }
 
-    public TutorialGroup getTutorialgroupid() {
-        return tutorialgroupid;
+    public TutorialGroup getTutorialGroupId() {
+        return tutorialGroupId;
     }
 
-    public void setTutorialgroupid(TutorialGroup tutorialgroupid) {
-        this.tutorialgroupid = tutorialgroupid;
+    public void setTutorialGroupId(TutorialGroup tutorialGroupId) {
+        this.tutorialGroupId = tutorialGroupId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (studentid != null ? studentid.hashCode() : 0);
+        hash += (studentId != null ? studentId.hashCode() : 0);
         return hash;
     }
 
@@ -167,7 +130,7 @@ public class Student implements Serializable, Comparable<Student> {
             return false;
         }
         Student other = (Student) object;
-        if ((this.studentid == null && other.studentid != null) || (this.studentid != null && !this.studentid.equals(other.studentid))) {
+        if ((this.studentId == null && other.studentId != null) || (this.studentId != null && !this.studentId.equals(other.studentId))) {
             return false;
         }
         return true;
@@ -175,10 +138,10 @@ public class Student implements Serializable, Comparable<Student> {
     
     @Override
     public int compareTo(Student student) {
-        if (studentname.compareTo(student.getStudentname()) > 0) {
+        if (studentName.compareTo(student.getStudentName()) > 0) {
             return 1;
-        } else if (studentname.compareTo(student.getStudentname()) == 0) {
-            return studentid.compareTo(student.getStudentid());
+        } else if (studentName.compareTo(student.getStudentName()) == 0) {
+            return studentId.compareTo(student.getStudentId());
         } else {
             return -1;
         }
@@ -186,8 +149,8 @@ public class Student implements Serializable, Comparable<Student> {
 
     @Override
     public String toString() {
-        return studentname + "\t" + studentid + "\t" + studentic + "\t" + studentemail + "\t" + phoneno + "\t" + 
-                tutorialgroupid.getCoursecode().getCoursecode() + studyyear + "S" + semester + "G" + tutorialgroupid.getGroupno() + "\n";
+        return studentName + "\t" + studentId + "\t" + studentIc + "\t" + studentEmail + "\t" + phoneNo + "\t" + 
+                tutorialGroupId.getCoursecode().getCourseCode() + studyYear + "S" + semester + "G" + tutorialGroupId.getGroupNo() + "\n";
     }
     
 }

@@ -4,11 +4,15 @@
  */
 package adt;
 
+import java.io.Serializable;
+
+import utility.ExceptionHandling;
+
 /**
  *
  * @author Benjamin
  */
-public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
+public class LinkedList<T extends Comparable<T>> implements Serializable, ListInterface<T> {
     private Node firstNode;
     private Node lastNode;
     private int num; // Number of entries (nodes)
@@ -40,6 +44,55 @@ public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
             this.nextNode = nextNode;
             this.previousNode = previousNode;
         }
+    }
+    
+    // Custom iterator class implementation
+    public class CustomIterator {
+        private Node currentNode;
+        
+        public CustomIterator() {
+            this(1);
+        }
+        
+        public CustomIterator(int position) {
+            currentNode = getNode(position);
+        }
+        
+        public boolean hasNext() {
+            return compareNode(currentNode, lastNode);
+        }
+        
+        public boolean hasPrevious() {
+            return compareNode(firstNode, currentNode);
+        }
+        
+        public void next() {
+            if (hasNext()) {
+                currentNode = currentNode.nextNode;
+            } else {
+                ExceptionHandling.endOfList();
+            }
+        }
+        
+        public void previous() {
+            if (hasPrevious()) {              
+                currentNode = currentNode.previousNode;
+            } else {
+                ExceptionHandling.endOfList();
+            }
+        }
+        
+        public T getCurrent() {
+            return currentNode.entry;
+        }
+    }
+    
+    public CustomIterator placeIterator() {
+        return new CustomIterator(1);
+    }
+    
+    public CustomIterator placeIterator(int position) {
+        return new CustomIterator(position);
     }
     
     @Override
@@ -137,6 +190,11 @@ public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
     }
     
     @Override
+    public boolean isEmpty() {
+        return num == 0;
+    }
+    
+    @Override
     public String toString() {
         Node currentNode = firstNode;
         String str = firstNode.entry + " ";
@@ -172,7 +230,7 @@ public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
     }
     
     private boolean compareNode(Node first, Node second) {
-        if (first == null || second == null) { // if either node is null, means it is the first/last node, does not need to recursive anymore
+        if (first == null || second == null) { // if either node is null, means it is the first/last node, does not need to recursive anymore (for quick sort)
             return false;
         }
         
@@ -219,32 +277,6 @@ public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
         // after swapping we knew that the pivot node is sorted as all the node on its left are "less than" it while all the node on its right are "more than" it
         // return the node that is sorted
         return i;
-    }
-    
-    public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList<>();
-        list.add(1);
-        list.add(-7);
-        list.add(24);
-        list.add(6,1);
-        list.add(9,3);
-        list.add(13,2);
-
-        System.out.println(list);
-        
-        System.out.println(list.getSize());
-        
-        System.out.println(list.remove(3));
-        System.out.println(list.get(3));
-        list.replace(4, 4);
-        
-        System.out.println(list);
-        
-        System.out.println(list.getSize());
-        
-        list.sort();
-        
-        System.out.println(list);
     }
 }
 

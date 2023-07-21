@@ -7,127 +7,89 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 import adt.ListInterface;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author User
  */
-@Entity
-@Table(name = "PROGRAMME")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Programme.findAll", query = "SELECT p FROM Programme p"),
-    @NamedQuery(name = "Programme.findByProgrammecode", query = "SELECT p FROM Programme p WHERE p.programmecode = :programmecode"),
-    @NamedQuery(name = "Programme.findByProgrammename", query = "SELECT p FROM Programme p WHERE p.programmename = :programmename"),
-    @NamedQuery(name = "Programme.findByProgrammedetail", query = "SELECT p FROM Programme p WHERE p.programmedetail = :programmedetail"),
-    @NamedQuery(name = "Programme.findByStartdate", query = "SELECT p FROM Programme p WHERE p.startdate = :startdate"),
-    @NamedQuery(name = "Programme.findByEnddate", query = "SELECT p FROM Programme p WHERE p.enddate = :enddate"),
-    @NamedQuery(name = "Programme.findByAssignmentnum", query = "SELECT p FROM Programme p WHERE p.assignmentnum = :assignmentnum")})
 public class Programme implements Serializable, Comparable<Programme> {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "PROGRAMMECODE")
-    private String programmecode;
-    @Basic(optional = false)
-    @Column(name = "PROGRAMMENAME")
-    private String programmename;
-    @Column(name = "PROGRAMMEDETAIL")
-    private String programmedetail;
-    @Basic(optional = false)
-    @Column(name = "STARTDATE")
-    @Temporal(TemporalType.DATE)
-    private Date startdate;
-    @Basic(optional = false)
-    @Column(name = "ENDDATE")
-    @Temporal(TemporalType.DATE)
-    private Date enddate;
-    @Basic(optional = false)
-    @Column(name = "ASSIGNMENTNUM")
-    private int assignmentnum;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programmecode")
+    private String programmeCode;
+    private String programmeName;
+    private String programmeDetail;
+    private Date startDate;
+    private Date endDate;
+    private int assignmentNum;
     private ListInterface<CourseProgramme> courseProgrammeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programmecode")
     private ListInterface<AssignmentTeam> assignmentTeamList;
 
     public Programme() {
     }
 
-    public Programme(String programmecode) {
-        this.programmecode = programmecode;
+    public Programme(String programmeCode) {
+        this.programmeCode = programmeCode;
+    }
+    
+    public Programme(String programmeCode, String programmeName, Date startDate, Date endDate, int assignmentNum) {
+        this(programmeCode, programmeName, null, startDate, endDate, assignmentNum);
     }
 
-    public Programme(String programmecode, String programmename, Date startdate, Date enddate, int assignmentnum) {
-        this.programmecode = programmecode;
-        this.programmename = programmename;
-        this.startdate = startdate;
-        this.enddate = enddate;
-        this.assignmentnum = assignmentnum;
+    public Programme(String programmeCode, String programmeName, String programmeDetail, Date startDate, Date endDate, int assignmentNum) {
+        this.programmeCode = programmeCode;
+        this.programmeName = programmeName;
+        this.programmeDetail = programmeDetail;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.assignmentNum = assignmentNum;
     }
 
-    public String getProgrammecode() {
-        return programmecode;
+    public String getProgrammeCode() {
+        return programmeCode;
     }
 
-    public void setProgrammecode(String programmecode) {
-        this.programmecode = programmecode;
+    public void setProgrammeCode(String programmeCode) {
+        this.programmeCode = programmeCode;
     }
 
-    public String getProgrammename() {
-        return programmename;
+    public String getProgrammeName() {
+        return programmeName;
     }
 
-    public void setProgrammename(String programmename) {
-        this.programmename = programmename;
+    public void setProgrammeName(String programmeName) {
+        this.programmeName = programmeName;
     }
 
-    public String getProgrammedetail() {
-        return programmedetail;
+    public String getProgrammeDetail() {
+        return programmeDetail;
     }
 
-    public void setProgrammedetail(String programmedetail) {
-        this.programmedetail = programmedetail;
+    public void setProgrammeDetail(String programmeDetail) {
+        this.programmeDetail = programmeDetail;
     }
 
-    public Date getStartdate() {
-        return startdate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEnddate() {
-        return enddate;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnddate(Date enddate) {
-        this.enddate = enddate;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public int getAssignmentnum() {
-        return assignmentnum;
+    public int getAssignmentNum() {
+        return assignmentNum;
     }
 
-    public void setAssignmentnum(int assignmentnum) {
-        this.assignmentnum = assignmentnum;
+    public void setAssignmentNum(int assignmentNum) {
+        this.assignmentNum = assignmentNum;
     }
 
-    @XmlTransient
     public ListInterface<CourseProgramme> getCourseProgrammeList() {
         return courseProgrammeList;
     }
@@ -136,7 +98,6 @@ public class Programme implements Serializable, Comparable<Programme> {
         this.courseProgrammeList = courseProgrammeList;
     }
 
-    @XmlTransient
     public ListInterface<AssignmentTeam> getAssignmentTeamList() {
         return assignmentTeamList;
     }
@@ -148,7 +109,7 @@ public class Programme implements Serializable, Comparable<Programme> {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (programmecode != null ? programmecode.hashCode() : 0);
+        hash += (programmeCode != null ? programmeCode.hashCode() : 0);
         return hash;
     }
 
@@ -159,7 +120,7 @@ public class Programme implements Serializable, Comparable<Programme> {
             return false;
         }
         Programme other = (Programme) object;
-        if ((this.programmecode == null && other.programmecode != null) || (this.programmecode != null && !this.programmecode.equals(other.programmecode))) {
+        if ((this.programmeCode == null && other.programmeCode != null) || (this.programmeCode != null && !this.programmeCode.equals(other.programmeCode))) {
             return false;
         }
         return true;
@@ -167,10 +128,10 @@ public class Programme implements Serializable, Comparable<Programme> {
     
     @Override
     public int compareTo(Programme programme) {
-        if (programmecode.compareTo(programme.getProgrammecode()) > 0) {
+        if (programmeCode.compareTo(programme.getProgrammeCode()) > 0) {
             return 1;
-        } else if (programmecode.compareTo(programme.getProgrammecode()) == 0) {
-            return programmename.compareTo(programme.getProgrammename());
+        } else if (programmeCode.compareTo(programme.getProgrammeCode()) == 0) {
+            return programmeName.compareTo(programme.getProgrammeName());
         } else {
             return -1;
         }
@@ -178,7 +139,7 @@ public class Programme implements Serializable, Comparable<Programme> {
 
     @Override
     public String toString() {
-        return programmecode + "\t" + programmename + "\t" + startdate + "\t" + enddate + "\n";
+        return programmeCode + "\t" + programmeName + "\t" + startDate + "\t" + endDate + "\n";
     }
     
 }

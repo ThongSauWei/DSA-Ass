@@ -32,4 +32,6 @@ public interface ListInterface<T extends Comparable<T>> {
     
     // Clear
     public void clear();
+    
+    public boolean isEmpty();
 }
