@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -65,22 +67,95 @@ public class FileHandling {
         }
     }
     
-    public AssignmentTeam getAssignmentTeam(String primaryKey) {
+    public static AssignmentTeam getAssignmentTeam(String primaryKey) {
         ListInterface<String> dataList = FileHandling.readFile("AssignmentTeam");
         
         for(String data : dataList) {
             String[] attr = data.split("\\|");
             
             if (primaryKey.equals(attr[0])) {
-                return ;
+                return new AssignmentTeam(attr[0], getProgramme(attr[1]), getTutorialGroup(attr[2]));
             }
         }
         
         return null;
     }
     
-    public Course getCourse(String primaryKey) {
+    public static Course getCourse(String primaryKey) {
+        ListInterface<String> dataList = FileHandling.readFile("Course");
         
+        for(String data : dataList) {
+            String[] attr = data.split("\\|");
+            
+            if (primaryKey.equals(attr[0])) {
+                return new Course(attr[0], attr[1], attr[2], attr[3].charAt(0), attr[4], Integer.parseInt(attr[5]));
+            }
+        }
+        
+        return null;
+    }
+    
+    public static CourseProgramme getCourseProgramme(String primaryKey) {
+        ListInterface<String> dataList = FileHandling.readFile("CourseProgramme");
+        
+        for(String data : dataList) {
+            String[] attr = data.split("\\|");
+            
+            if (primaryKey.equals(attr[0])) {
+                return new CourseProgramme(attr[0], getCourse(attr[1]), getProgramme(attr[2]));
+            }
+        }
+        
+        return null;
+    }
+    
+    public static Programme getProgramme(String primaryKey) {
+        ListInterface<String> dataList = FileHandling.readFile("Programme");
+
+        for (String data : dataList) {
+            String[] attr = data.split("\\|");
+
+            if (primaryKey.equals(attr[0])) {
+                try {
+                    return new Programme(attr[0], attr[1], attr[2], new SimpleDateFormat("yyyy-MM-dd").parse(attr[3]),
+                            new SimpleDateFormat("yyyy-MM-dd").parse(attr[4]), Integer.parseInt(attr[5]));
+                } catch (ParseException ex) {
+                    ExceptionHandling.dateParseException();
+                }
+            }
+
+        }
+        
+        return null;
+    }
+    
+    public static Student getStudent(String primaryKey) {
+        ListInterface<String> dataList = FileHandling.readFile("Student");
+        
+        for(String data : dataList) {
+            String[] attr = data.split("\\|");
+            
+            if (primaryKey.equals(attr[0])) {
+                return new Student(attr[0], attr[1], attr[2], attr[3], attr[4], Integer.parseInt(attr[5]),
+                        Integer.parseInt(attr[6]), getAssignmentTeam(attr[7]), getTutorialGroup(attr[8]));
+            }
+        }
+        
+        return null;
+    }
+    
+    public static TutorialGroup getTutorialGroup(String primaryKey) {
+        ListInterface<String> dataList = FileHandling.readFile("TutorialGroup");
+        
+        for(String data : dataList) {
+            String[] attr = data.split("\\|");
+            
+            if (primaryKey.equals(attr[0])) {
+                return new TutorialGroup(attr[0], Integer.parseInt(attr[1]), Integer.parseInt(attr[2]), getCourse(attr[3]));
+            }
+        }
+        
+        return null;
     }
     
     public static void main(String[] args) {
