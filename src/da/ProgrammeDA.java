@@ -4,13 +4,9 @@
  */
 package da;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import adt.LinkedList;
 import adt.ListInterface;
 import entity.Programme;
-import utility.ExceptionHandling;
 import utility.FileHandling;
 
 /**
@@ -22,14 +18,9 @@ public class ProgrammeDA {
         ListInterface<Programme> programmeList = new LinkedList<>();
         ListInterface<String> dataList = FileHandling.readFile("AssignmentTeam");
         for(String data : dataList) {
-            String[] attr = data.split("\\|");
+            String[] attr = data.split("\\|", 1);
 
-            try {
-                programmeList.add(new Programme(attr[0], attr[1], attr[2], new SimpleDateFormat("yyyy-MM-dd").parse(attr[3]),
-                        new SimpleDateFormat("yyyy-MM-dd").parse(attr[4]), Integer.parseInt(attr[5])));
-            } catch (ParseException ex) {
-                ExceptionHandling.dateParseException();
-            }
+            programmeList.add(FileHandling.getProgramme(attr[0]));
         }
         
         return programmeList;

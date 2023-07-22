@@ -18,9 +18,9 @@ public class CourseDA {
         ListInterface<Course> courseList = new LinkedList<>();
         ListInterface<String> dataList = FileHandling.readFile("Course");
         for(String data : dataList) {
-            String[] attr = data.split("\\|");
+            String[] attr = data.split("\\|", 1);
             
-            courseList.add(new Course(attr[0], attr[1], attr[2], attr[3].charAt(0), attr[4], Integer.parseInt(attr[5])));
+            courseList.add(FileHandling.getCourse(attr[0]));
         }
         
         return courseList;

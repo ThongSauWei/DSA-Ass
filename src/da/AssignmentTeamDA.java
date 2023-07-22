@@ -17,9 +17,9 @@ public class AssignmentTeamDA {
         ListInterface<AssignmentTeam> assignmentTeamList = new LinkedList<>();
         ListInterface<String> dataList = FileHandling.readFile("AssignmentTeam");
         for(String data : dataList) {
-            String[] attr = data.split("\\|");
+            String[] attr = data.split("\\|", 1);
             
-            assignmentTeamList.add(new AssignmentTeam(attr[0], attr[1], attr[2]));
+            assignmentTeamList.add(FileHandling.getAssignmentTeam(attr[0]));
         }
         
         return assignmentTeamList;
