@@ -16,7 +16,7 @@ import utility.FileHandling;
 public class TutorialGroupDA {
     public ListInterface<TutorialGroup> readFromFile() {
         ListInterface<TutorialGroup> tutorialGroupList = new LinkedList<>();
-        ListInterface<String> dataList = FileHandling.readFile("AssignmentTeam");
+        ListInterface<String> dataList = FileHandling.readFile("TutorialGroup");
         for(String data : dataList) {
             String[] attr = data.split("\\|", 1);
             

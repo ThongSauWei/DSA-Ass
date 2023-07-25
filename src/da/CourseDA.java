@@ -19,7 +19,7 @@ public class CourseDA {
         ListInterface<String> dataList = FileHandling.readFile("Course");
         for(String data : dataList) {
             String[] attr = data.split("\\|", 1);
-            
+
             courseList.add(FileHandling.getCourse(attr[0]));
         }
         

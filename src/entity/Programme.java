@@ -5,7 +5,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
@@ -15,9 +14,9 @@ public class Programme implements Serializable, Comparable<Programme> {
     private String programmeCode;
     private String programmeName;
     private String programmeDetail;
-    private Date startDate;
-    private Date endDate;
-    private int assignmentNum;
+    private Character programmeLevel;
+    private String faculty;
+    private int duration;
 
     public Programme() {
     }
@@ -25,18 +24,18 @@ public class Programme implements Serializable, Comparable<Programme> {
     public Programme(String programmeCode) {
         this.programmeCode = programmeCode;
     }
-    
-    public Programme(String programmeCode, String programmeName, Date startDate, Date endDate, int assignmentNum) {
-        this(programmeCode, programmeName, null, startDate, endDate, assignmentNum);
-    }
 
-    public Programme(String programmeCode, String programmeName, String programmeDetail, Date startDate, Date endDate, int assignmentNum) {
+    public Programme(String programmeCode, String programmeName, Character programmeLevel, String faculty, int duration) {
+        this(programmeCode, programmeName, null, programmeLevel, faculty, duration);
+    }
+    
+    public Programme(String programmeCode, String programmeName, String programmeDetail, Character programmeLevel, String faculty, int duration) {
         this.programmeCode = programmeCode;
         this.programmeName = programmeName;
         this.programmeDetail = programmeDetail;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.assignmentNum = assignmentNum;
+        this.programmeLevel = programmeLevel;
+        this.faculty = faculty;
+        this.duration = duration;
     }
 
     public String getProgrammeCode() {
@@ -63,28 +62,28 @@ public class Programme implements Serializable, Comparable<Programme> {
         this.programmeDetail = programmeDetail;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Character getProgrammeLevel() {
+        return programmeLevel;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setProgrammeLevel(Character programmeLevel) {
+        this.programmeLevel = programmeLevel;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getFaculty() {
+        return faculty;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
-    public int getAssignmentNum() {
-        return assignmentNum;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setAssignmentNum(int assignmentNum) {
-        this.assignmentNum = assignmentNum;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     @Override
@@ -109,22 +108,22 @@ public class Programme implements Serializable, Comparable<Programme> {
     
     @Override
     public int compareTo(Programme programme) {
-        if (programmeCode.compareTo(programme.getProgrammeCode()) > 0) {
+        if (programmeName.compareTo(programme.getProgrammeName()) > 0) {
             return 1;
-        } else if (programmeCode.compareTo(programme.getProgrammeCode()) == 0) {
-            return programmeName.compareTo(programme.getProgrammeName());
+        } else if (programmeName.compareTo(programme.getProgrammeName()) == 0) {
+            return 0;
         } else {
             return -1;
         }
     }
     
     public String saveToFile() {
-        return programmeCode + "|" + programmeName + "|" + programmeDetail + "|" + startDate + "|" + endDate + "|" + assignmentNum;
+        return programmeCode + "|" + programmeName + "|" + programmeDetail + "|" + programmeLevel + "|" + faculty + "|" + duration;
     }
 
     @Override
     public String toString() {
-        return programmeCode + "\t" + programmeName + "\t" + startDate + "\t" + endDate + "\n";
+        return programmeName + "\t" + programmeCode + "\t" + faculty + "\n";
     }
     
 }

@@ -12,8 +12,8 @@ import java.io.Serializable;
  */
 public class CourseProgramme implements Serializable, Comparable<CourseProgramme> {
     private String id;
-    private Course courseCode;
     private Programme programmeCode;
+    private Course courseCode;
 
     public CourseProgramme() {
     }
@@ -22,10 +22,10 @@ public class CourseProgramme implements Serializable, Comparable<CourseProgramme
         this.id = id;
     }
     
-    public CourseProgramme(String id, Course courseCode, Programme programmeCode) {
+    public CourseProgramme(String id, Programme programmeCode, Course courseCode) {
         this.id = id;
-        this.courseCode = courseCode;
         this.programmeCode = programmeCode;
+        this.courseCode = courseCode;
     }
 
     public String getId() {
@@ -35,6 +35,14 @@ public class CourseProgramme implements Serializable, Comparable<CourseProgramme
     public void setId(String id) {
         this.id = id;
     }
+    
+    public Programme getProgrammeCode() {
+        return programmeCode;
+    }
+
+    public void setProgrammeCode(Programme programmeCode) {
+        this.programmeCode = programmeCode;
+    }
 
     public Course getCourseCode() {
         return courseCode;
@@ -42,14 +50,6 @@ public class CourseProgramme implements Serializable, Comparable<CourseProgramme
 
     public void setCourseCode(Course courseCode) {
         this.courseCode = courseCode;
-    }
-
-    public Programme getProgrammeCode() {
-        return programmeCode;
-    }
-
-    public void setProgrammeCode(Programme programmeCode) {
-        this.programmeCode = programmeCode;
     }
 
     @Override
@@ -74,22 +74,22 @@ public class CourseProgramme implements Serializable, Comparable<CourseProgramme
     
     @Override
     public int compareTo(CourseProgramme courseProgramme) {
-        if (courseCode.compareTo(courseProgramme.getCourseCode()) > 0) {
+        if (programmeCode.compareTo(courseProgramme.getProgrammeCode()) > 0) {
             return 1;
-        } else if (courseCode.compareTo(courseProgramme.getCourseCode()) == 0) {
-            return programmeCode.compareTo(courseProgramme.getProgrammeCode());
+        } else if (programmeCode.compareTo(courseProgramme.getProgrammeCode()) == 0) {
+            return courseCode.compareTo(courseProgramme.getCourseCode());
         } else {
             return -1;
         }
     }
     
     public String saveToFile() {
-        return id + "|" + courseCode.getCourseCode() + "|" + programmeCode.getProgrammeCode();
+        return id + "|" + programmeCode.getProgrammeCode() + "|" + courseCode.getCourseCode();
     }
 
     @Override
     public String toString() {
-        return courseCode.getCourseCode() + "\t" + programmeCode.getProgrammeCode() + "\t" + programmeCode.getProgrammeName() + "\n";
+        return programmeCode.getProgrammeCode() + "\t" + courseCode.getCourseCode() + "\t" + courseCode.getCourseName() + "\n";
     }
     
 }

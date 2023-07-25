@@ -16,7 +16,7 @@ import utility.FileHandling;
 public class CourseProgrammeDA {
     public ListInterface<CourseProgramme> readFromFile() {
         ListInterface<CourseProgramme> courseProgrammeList = new LinkedList<>();
-        ListInterface<String> dataList = FileHandling.readFile("AssignmentTeam");
+        ListInterface<String> dataList = FileHandling.readFile("CourseProgramme");
         for(String data : dataList) {
             String[] attr = data.split("\\|", 1);
             

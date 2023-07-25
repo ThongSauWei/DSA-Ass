@@ -16,10 +16,10 @@ import utility.FileHandling;
 public class ProgrammeDA {
     public ListInterface<Programme> readFromFile() {
         ListInterface<Programme> programmeList = new LinkedList<>();
-        ListInterface<String> dataList = FileHandling.readFile("AssignmentTeam");
+        ListInterface<String> dataList = FileHandling.readFile("Programme");
         for(String data : dataList) {
             String[] attr = data.split("\\|", 1);
-
+            
             programmeList.add(FileHandling.getProgramme(attr[0]));
         }
         

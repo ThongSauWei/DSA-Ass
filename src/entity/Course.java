@@ -5,6 +5,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -14,9 +15,9 @@ public class Course implements Serializable, Comparable<Course> {
     private String courseCode;
     private String courseName;
     private String courseDetail;
-    private Character courseLevel;
-    private String faculty;
-    private int duration;
+    private Date startDate;
+    private Date endDate;
+    private int assignmentNum;
 
     public Course() {
     }
@@ -24,18 +25,18 @@ public class Course implements Serializable, Comparable<Course> {
     public Course(String courseCode) {
         this.courseCode = courseCode;
     }
-
-    public Course(String courseCode, String courseName, Character courseLevel, String faculty, int duration) {
-        this(courseCode, courseName, null, courseLevel, faculty, duration);
-    }
     
-    public Course(String courseCode, String courseName, String courseDetail, Character courseLevel, String faculty, int duration) {
+    public Course(String courseCode, String courseName, Date startDate, Date endDate, int assignmentNum) {
+        this(courseCode, courseName, null, startDate, endDate, assignmentNum);
+    }
+
+    public Course(String courseCode, String courseName, String courseDetail, Date startDate, Date endDate, int assignmentNum) {
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.courseDetail = courseDetail;
-        this.courseLevel = courseLevel;
-        this.faculty = faculty;
-        this.duration = duration;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.assignmentNum = assignmentNum;
     }
 
     public String getCourseCode() {
@@ -62,28 +63,28 @@ public class Course implements Serializable, Comparable<Course> {
         this.courseDetail = courseDetail;
     }
 
-    public Character getCourseLevel() {
-        return courseLevel;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setCourseLevel(Character courseLevel) {
-        this.courseLevel = courseLevel;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public String getFaculty() {
-        return faculty;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getAssignmentNum() {
+        return assignmentNum;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setAssignmentNum(int assignmentNum) {
+        this.assignmentNum = assignmentNum;
     }
 
     @Override
@@ -108,22 +109,22 @@ public class Course implements Serializable, Comparable<Course> {
     
     @Override
     public int compareTo(Course course) {
-        if (courseName.compareTo(course.getCourseName()) > 0) {
+        if (courseCode.compareTo(course.getCourseCode()) > 0) {
             return 1;
-        } else if (courseName.compareTo(course.getCourseName()) == 0) {
-            return 0;
+        } else if (courseCode.compareTo(course.getCourseCode()) == 0) {
+            return courseName.compareTo(course.getCourseName());
         } else {
             return -1;
         }
     }
     
     public String saveToFile() {
-        return courseCode + "|" + courseName + "|" + courseDetail + "|" + courseLevel + "|" + faculty + "|" + duration;
+        return courseCode + "|" + courseName + "|" + courseDetail + "|" + startDate + "|" + endDate + "|" + assignmentNum;
     }
 
     @Override
     public String toString() {
-        return courseName + "\t" + courseCode + "\t" + faculty + "\n";
+        return courseCode + "\t" + courseName + "\t" + startDate + "\t" + endDate + "\n";
     }
     
 }

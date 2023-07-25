@@ -155,7 +155,7 @@ public class Student implements Serializable, Comparable<Student> {
     @Override
     public String toString() {
         return studentName + "\t" + studentId + "\t" + studentIc + "\t" + studentEmail + "\t" + phoneNo + "\t" + 
-                tutorialGroupId.getCoursecode().getCourseCode() + studyYear + "S" + semester + "G" + tutorialGroupId.getGroupNo() + "\n";
+                tutorialGroupId.getProgrammeCode().getProgrammeCode() + studyYear + "S" + semester + "G" + tutorialGroupId.getGroupNo() + "\n";
     }
     
 }

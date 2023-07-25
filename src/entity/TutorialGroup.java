@@ -14,7 +14,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
     private String tutorialGroupId;
     private int groupNo;
     private int numOfStudent;
-    private Course courseCode;
+    private Programme programmeCode;
 
     public TutorialGroup() {
     }
@@ -27,11 +27,11 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
         this(tutorialGroupId, groupNo, numOfStudent, null);
     }
     
-    public TutorialGroup(String tutorialGroupId, int groupNo, int numOfStudent, Course courseCode) {
+    public TutorialGroup(String tutorialGroupId, int groupNo, int numOfStudent, Programme programmeCode) {
         this.tutorialGroupId = tutorialGroupId;
         this.groupNo = groupNo;
         this.numOfStudent = numOfStudent;
-        this.courseCode = courseCode;
+        this.programmeCode = programmeCode;
     }
 
     public String getTutorialGroupId() {
@@ -58,12 +58,12 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
         this.numOfStudent = numOfStudent;
     }
 
-    public Course getCoursecode() {
-        return courseCode;
+    public Programme getProgrammeCode() {
+        return programmeCode;
     }
 
-    public void setCoursecode(Course courseCode) {
-        this.courseCode = courseCode;
+    public void setProgrammeCode(Programme programmeCode) {
+        this.programmeCode = programmeCode;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
     }
     
     public String saveToFile() {
-        return tutorialGroupId + "|" + groupNo + "|" + numOfStudent + "|" + courseCode.getCourseCode();
+        return tutorialGroupId + "|" + groupNo + "|" + numOfStudent + "|" + programmeCode.getProgrammeCode();
     }
 
     @Override
