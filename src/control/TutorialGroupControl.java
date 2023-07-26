@@ -16,4 +16,8 @@ public class TutorialGroupControl {
     public ListInterface<TutorialGroup> readFromFile() {
         return tutorialGroupDA.readFromFile();
     }
+    
+    public void writeToFile(ListInterface<TutorialGroup> tutorialGroupList) {
+        tutorialGroupDA.writeToFile(tutorialGroupList);
+    }
 }

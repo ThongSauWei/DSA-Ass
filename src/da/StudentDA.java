@@ -25,4 +25,13 @@ public class StudentDA {
         
         return studentList;
     }
+    
+    public void writeToFile(ListInterface<Student> studentList) {
+        ListInterface<String> dataList = new LinkedList<>();
+        for (Student student : studentList) {
+            dataList.add(student.saveToFile());
+        }
+        
+        FileHandling.writeFile("Student", dataList);
+    }
 }

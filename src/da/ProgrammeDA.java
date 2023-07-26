@@ -25,4 +25,13 @@ public class ProgrammeDA {
         
         return programmeList;
     }
+    
+    public void writeToFile(ListInterface<Programme> programmeList) {
+        ListInterface<String> dataList = new LinkedList<>();
+        for (Programme programme : programmeList) {
+            dataList.add(programme.saveToFile());
+        }
+        
+        FileHandling.writeFile("Programme", dataList);
+    }
 }

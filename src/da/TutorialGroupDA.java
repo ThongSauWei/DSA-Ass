@@ -25,4 +25,13 @@ public class TutorialGroupDA {
         
         return tutorialGroupList;
     }
+    
+    public void writeToFile(ListInterface<TutorialGroup> tutorialGroupList) {
+        ListInterface<String> dataList = new LinkedList<>();
+        for (TutorialGroup tutorialGroup : tutorialGroupList) {
+            dataList.add(tutorialGroup.saveToFile());
+        }
+        
+        FileHandling.writeFile("TutorialGroup", dataList);
+    }
 }

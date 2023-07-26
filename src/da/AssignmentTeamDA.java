@@ -24,4 +24,13 @@ public class AssignmentTeamDA {
         
         return assignmentTeamList;
     }
+    
+    public void writeToFile(ListInterface<AssignmentTeam> assignmentTeamList) {
+        ListInterface<String> dataList = new LinkedList<>();
+        for (AssignmentTeam assignmentTeam : assignmentTeamList) {
+            dataList.add(assignmentTeam.saveToFile());
+        }
+        
+        FileHandling.writeFile("AssignmentTeam", dataList);
+    }
 }

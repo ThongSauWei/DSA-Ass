@@ -16,4 +16,8 @@ public class ProgrammeControl {
     public ListInterface<Programme> readFromFile() {
         return programmeDA.readFromFile();
     }
+    
+    public void writeToFile(ListInterface<Programme> programmeList) {
+        programmeDA.writeToFile(programmeList);
+    }
 }

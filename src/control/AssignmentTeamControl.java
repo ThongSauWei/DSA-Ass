@@ -16,4 +16,8 @@ public class AssignmentTeamControl {
     public ListInterface<AssignmentTeam> readFromFile() {
         return assignmentTeamDA.readFromFile();
     }
+    
+    public void writeToFile(ListInterface<AssignmentTeam> assignmentTeamList) {
+        assignmentTeamDA.writeToFile(assignmentTeamList);
+    }
 }

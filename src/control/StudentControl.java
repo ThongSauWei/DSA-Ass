@@ -16,4 +16,8 @@ public class StudentControl {
     public ListInterface<Student> readFromFile() {
         return studentDA.readFromFile();
     }
+    
+    public void writeToFile(ListInterface<Student> studentList) {
+        studentDA.writeToFile(studentList);
+    }
 }

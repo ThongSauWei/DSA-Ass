@@ -16,4 +16,8 @@ public class CourseProgrammeControl {
     public ListInterface<CourseProgramme> readFromFile() {
         return courseProgrammeDA.readFromFile();
     }
+    
+    public void writeToFile(ListInterface<CourseProgramme> courseProgrammeList) {
+        courseProgrammeDA.writeToFile(courseProgrammeList);
+    }
 }
