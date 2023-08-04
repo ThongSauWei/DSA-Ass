@@ -1,24 +1,19 @@
-package boundary;
-
-
-import java.awt.Color;
-import javax.swing.JPanel;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+package boundary;
 
 /**
  *
  * @author User
  */
-public class Home extends javax.swing.JFrame {
+public class TutorialGroupManage extends javax.swing.JFrame {
 
     /**
-     * Creates new form Test
+     * Creates new form TutorialGroupManage
      */
-    public Home() {
+    public TutorialGroupManage() {
         initComponents();
     }
 
@@ -53,16 +48,15 @@ public class Home extends javax.swing.JFrame {
         footer = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         titleHome = new javax.swing.JLabel();
-        jbtCourse = new javax.swing.JButton();
-        jbtProgramme = new javax.swing.JButton();
-        jbtTutorialGroup = new javax.swing.JButton();
-        jbtStudent = new javax.swing.JButton();
+        jbtTutorialGroupSearch = new javax.swing.JButton();
+        jbtTutorialGroupAdd = new javax.swing.JButton();
+        jbtTutorialGroupUpdate = new javax.swing.JButton();
+        jbtTutorialGroupDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1263, 788));
-        setMinimumSize(new java.awt.Dimension(1263, 788));
-        setPreferredSize(new java.awt.Dimension(1263, 788));
-        setResizable(false);
+        setMaximumSize(new java.awt.Dimension(1263, 800));
+        setMinimumSize(new java.awt.Dimension(1263, 800));
+        setPreferredSize(new java.awt.Dimension(1263, 800));
 
         bg.setBackground(new java.awt.Color(230, 230, 230));
 
@@ -92,7 +86,7 @@ public class Home extends javax.swing.JFrame {
 
         sidebar.add(jpLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        btnHome.setBackground(new java.awt.Color(163, 167, 172));
+        btnHome.setBackground(new java.awt.Color(172, 178, 187));
         btnHome.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnHomeMouseClicked(evt);
@@ -198,7 +192,7 @@ public class Home extends javax.swing.JFrame {
 
         sidebar.add(btnCourse, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 266, -1));
 
-        btnTutorialGroup.setBackground(new java.awt.Color(172, 178, 187));
+        btnTutorialGroup.setBackground(new java.awt.Color(163, 167, 172));
         btnTutorialGroup.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTutorialGroupMouseClicked(evt);
@@ -277,42 +271,38 @@ public class Home extends javax.swing.JFrame {
         titleHome.setFont(new java.awt.Font("Rockwell", 1, 36)); // NOI18N
         titleHome.setForeground(new java.awt.Color(255, 255, 255));
         titleHome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleHome.setText("Student Management System");
+        titleHome.setText("Tutorial Group Management");
         header.add(titleHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 950, 67));
 
-        jbtCourse.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jbtCourse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/books-stack-of-three.png"))); // NOI18N
-        jbtCourse.setText("Manage Course");
-        jbtCourse.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCourseMouseClicked(evt);
+        jbtTutorialGroupSearch.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
+        jbtTutorialGroupSearch.setText("Search Tutorial Group");
+        jbtTutorialGroupSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtTutorialGroupSearchActionPerformed(evt);
             }
         });
 
-        jbtProgramme.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jbtProgramme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/learning.png"))); // NOI18N
-        jbtProgramme.setText("Manage Programme");
-        jbtProgramme.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnProgrammeMouseClicked(evt);
+        jbtTutorialGroupAdd.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
+        jbtTutorialGroupAdd.setText("Add Tutorial Group");
+        jbtTutorialGroupAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtTutorialGroupAddActionPerformed(evt);
             }
         });
 
-        jbtTutorialGroup.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jbtTutorialGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/multiple-users-silhouette.png"))); // NOI18N
-        jbtTutorialGroup.setText("Manage Tutorial Group");
-        jbtTutorialGroup.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnTutorialGroupMouseClicked(evt);
+        jbtTutorialGroupUpdate.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
+        jbtTutorialGroupUpdate.setText("Update Tutorial Group");
+        jbtTutorialGroupUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtTutorialGroupUpdateActionPerformed(evt);
             }
         });
 
-        jbtStudent.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jbtStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reading-book.png"))); // NOI18N
-        jbtStudent.setText("Manage Student");
-        jbtStudent.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnStudentMouseClicked(evt);
+        jbtTutorialGroupDelete.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
+        jbtTutorialGroupDelete.setText("Delete Tutorial Group");
+        jbtTutorialGroupDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtTutorialGroupDeleteActionPerformed(evt);
             }
         });
 
@@ -331,12 +321,12 @@ public class Home extends javax.swing.JFrame {
                                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 1018, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(bgLayout.createSequentialGroup()
                                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jbtProgramme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jbtTutorialGroup, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE))
+                                    .addComponent(jbtTutorialGroupAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jbtTutorialGroupUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE))
                                 .addGap(0, 0, 0)
                                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jbtCourse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jbtStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(jbtTutorialGroupSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jbtTutorialGroupDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(0, 0, 0))
         );
         bgLayout.setVerticalGroup(
@@ -346,12 +336,12 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(bgLayout.createSequentialGroup()
                         .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtProgramme, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbtTutorialGroupAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtTutorialGroupSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, 0)
                         .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtTutorialGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jbtTutorialGroupUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtTutorialGroupDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -371,7 +361,9 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseClicked
-        // TODO add your handling code here:       
+        // TODO add your handling code here:
+        this.dispose();
+        new Home().setVisible(true);
     }//GEN-LAST:event_btnHomeMouseClicked
 
     private void btnProgrammeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProgrammeMouseClicked
@@ -388,8 +380,6 @@ public class Home extends javax.swing.JFrame {
 
     private void btnTutorialGroupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTutorialGroupMouseClicked
         // TODO add your handling code here:
-        this.dispose();
-        new TutorialGroupManage().setVisible(true);
     }//GEN-LAST:event_btnTutorialGroupMouseClicked
 
     private void btnStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStudentMouseClicked
@@ -397,7 +387,31 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
         new StudentManage().setVisible(true);
     }//GEN-LAST:event_btnStudentMouseClicked
-    
+
+    private void jbtTutorialGroupSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtTutorialGroupSearchActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new TutorialGroupSearch().setVisible(true);
+    }//GEN-LAST:event_jbtTutorialGroupSearchActionPerformed
+
+    private void jbtTutorialGroupAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtTutorialGroupAddActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new TutorialGroupAdd().setVisible(true);
+    }//GEN-LAST:event_jbtTutorialGroupAddActionPerformed
+
+    private void jbtTutorialGroupUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtTutorialGroupUpdateActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new TutorialGroupUpdate().setVisible(true);
+    }//GEN-LAST:event_jbtTutorialGroupUpdateActionPerformed
+
+    private void jbtTutorialGroupDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtTutorialGroupDeleteActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new TutorialGroupDelete().setVisible(true);
+    }//GEN-LAST:event_jbtTutorialGroupDeleteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -415,25 +429,20 @@ public class Home extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TutorialGroupManage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TutorialGroupManage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TutorialGroupManage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TutorialGroupManage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Home test = new Home();
-                test.setVisible(true);
-                test.bg.requestFocusInWindow();
+                new TutorialGroupManage().setVisible(true);
             }
         });
     }
@@ -449,10 +458,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel footer;
     private javax.swing.JPanel header;
     private javax.swing.JLabel homeIcon;
-    private javax.swing.JButton jbtCourse;
-    private javax.swing.JButton jbtProgramme;
-    private javax.swing.JButton jbtStudent;
-    private javax.swing.JButton jbtTutorialGroup;
+    private javax.swing.JButton jbtTutorialGroupAdd;
+    private javax.swing.JButton jbtTutorialGroupDelete;
+    private javax.swing.JButton jbtTutorialGroupSearch;
+    private javax.swing.JButton jbtTutorialGroupUpdate;
     private javax.swing.JLabel jlCourse;
     private javax.swing.JLabel jlHome;
     private javax.swing.JLabel jlProgramme;

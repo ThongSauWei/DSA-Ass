@@ -324,47 +324,32 @@ public class CourseUpdate extends javax.swing.JFrame {
 
     private void btnHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseClicked
         // TODO add your handling code here:
-        setColor(btnHome);
-        resetColor(btnProgramme);
-        resetColor(btnCourse);
-        resetColor(btnTutorialGroup);
-        resetColor(btnStudent);
+        this.dispose();
+        new Home().setVisible(true);
     }//GEN-LAST:event_btnHomeMouseClicked
 
     private void btnProgrammeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProgrammeMouseClicked
         // TODO add your handling code here:
-        resetColor(btnHome);
-        setColor(btnProgramme);
-        resetColor(btnCourse);
-        resetColor(btnTutorialGroup);
-        resetColor(btnStudent);
+        this.dispose();
+        new ProgrammeManage().setVisible(true);
     }//GEN-LAST:event_btnProgrammeMouseClicked
 
     private void btnCourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCourseMouseClicked
         // TODO add your handling code here:
-        resetColor(btnHome);
-        resetColor(btnProgramme);
-        setColor(btnCourse);
-        resetColor(btnTutorialGroup);
-        resetColor(btnStudent);
+        this.dispose();
+        new CourseManage().setVisible(true);
     }//GEN-LAST:event_btnCourseMouseClicked
 
     private void btnTutorialGroupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTutorialGroupMouseClicked
         // TODO add your handling code here:
-        resetColor(btnHome);
-        resetColor(btnProgramme);
-        resetColor(btnCourse);
-        setColor(btnTutorialGroup);
-        resetColor(btnStudent);
+        this.dispose();
+        new TutorialGroupManage().setVisible(true);
     }//GEN-LAST:event_btnTutorialGroupMouseClicked
 
     private void btnStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStudentMouseClicked
         // TODO add your handling code here:
-        resetColor(btnHome);
-        resetColor(btnProgramme);
-        resetColor(btnCourse);
-        resetColor(btnTutorialGroup);
-        setColor(btnStudent);
+        this.dispose();
+        new StudentManage().setVisible(true);
     }//GEN-LAST:event_btnStudentMouseClicked
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
@@ -386,14 +371,6 @@ public class CourseUpdate extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    void setColor(JPanel panel) {
-        panel.setBackground(new Color(163,167,172));
-    }
-    
-    void resetColor(JPanel panel) {
-        panel.setBackground(new Color(172,178,187));
-    }
-    
     /**
      * @param args the command line arguments
      */

@@ -32,7 +32,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="bg" min="-2" max="-2" attributes="0"/>
+          <Component id="bg" alignment="0" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -55,21 +55,21 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <Component id="sidebar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="header" min="-2" pref="1030" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
-              <Component id="footer" max="32767" attributes="0"/>
+              <Component id="footer" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="sidebar" min="-2" pref="717" max="-2" attributes="0"/>
-                      <Component id="header" min="-2" max="-2" attributes="0"/>
+                      <Component id="sidebar" alignment="0" min="-2" pref="717" max="-2" attributes="0"/>
+                      <Component id="header" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="footer" min="-2" pref="37" max="-2" attributes="0"/>
@@ -197,7 +197,7 @@
             <Container class="javax.swing.JPanel" name="btnProgramme">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="bb" green="b2" red="ac" type="rgb"/>
+                  <Color blue="ac" green="a7" red="a3" type="rgb"/>
                 </Property>
               </Properties>
               <Events>
@@ -255,7 +255,7 @@
             <Container class="javax.swing.JPanel" name="btnCourse">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ac" green="a7" red="a3" type="rgb"/>
+                  <Color blue="bb" green="b2" red="ac" type="rgb"/>
                 </Property>
               </Properties>
               <Events>
@@ -447,7 +447,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Search Course"/>
+                <Property name="text" type="java.lang.String" value="Search Programme"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -587,10 +587,10 @@
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
-                    <StringItem index="0" value="Add Course"/>
-                    <StringItem index="1" value="Search Course"/>
-                    <StringItem index="2" value="Update Course"/>
-                    <StringItem index="3" value="Delete Course"/>
+                    <StringItem index="0" value="Add Programme"/>
+                    <StringItem index="1" value="Search Programme"/>
+                    <StringItem index="2" value="Update Programme"/>
+                    <StringItem index="3" value="Delete Programme"/>
                   </StringArray>
                 </Property>
                 <Property name="selectedIndex" type="int" value="1"/>

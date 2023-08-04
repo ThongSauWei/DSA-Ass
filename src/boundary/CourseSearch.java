@@ -48,7 +48,6 @@ public class CourseSearch extends javax.swing.JFrame {
         btnStudent = new javax.swing.JPanel();
         studentIcon = new javax.swing.JLabel();
         jlStudent = new javax.swing.JLabel();
-        footer = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         title = new javax.swing.JLabel();
         searchBar = new javax.swing.JPanel();
@@ -57,6 +56,7 @@ public class CourseSearch extends javax.swing.JFrame {
         searchBtnPanel = new javax.swing.JPanel();
         searchButton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        footer = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1263, 800));
@@ -267,9 +267,6 @@ public class CourseSearch extends javax.swing.JFrame {
 
         sidebar.add(btnStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 266, -1));
 
-        footer.setBackground(new java.awt.Color(163, 167, 172));
-        footer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         header.setBackground(new java.awt.Color(163, 167, 172));
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -366,6 +363,9 @@ public class CourseSearch extends javax.swing.JFrame {
         });
         header.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 192, 30));
 
+        footer.setBackground(new java.awt.Color(163, 167, 172));
+        footer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
@@ -383,6 +383,7 @@ public class CourseSearch extends javax.swing.JFrame {
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
                 .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -390,17 +391,13 @@ public class CourseSearch extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -445,57 +442,34 @@ public class CourseSearch extends javax.swing.JFrame {
 
     private void btnHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseClicked
         // TODO add your handling code here:
-        setColor(btnHome);
-        resetColor(btnProgramme);
-        resetColor(btnCourse);
-        resetColor(btnTutorialGroup);
-        resetColor(btnStudent);
+        this.dispose();
+        new Home().setVisible(true);
     }//GEN-LAST:event_btnHomeMouseClicked
 
     private void btnProgrammeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProgrammeMouseClicked
         // TODO add your handling code here:
-        resetColor(btnHome);
-        setColor(btnProgramme);
-        resetColor(btnCourse);
-        resetColor(btnTutorialGroup);
-        resetColor(btnStudent);
+        this.dispose();
+        new ProgrammeManage().setVisible(true);
     }//GEN-LAST:event_btnProgrammeMouseClicked
 
     private void btnCourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCourseMouseClicked
         // TODO add your handling code here:
-        resetColor(btnHome);
-        resetColor(btnProgramme);
-        setColor(btnCourse);
-        resetColor(btnTutorialGroup);
-        resetColor(btnStudent);
+        this.dispose();
+        new CourseManage().setVisible(true);
     }//GEN-LAST:event_btnCourseMouseClicked
 
     private void btnTutorialGroupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTutorialGroupMouseClicked
         // TODO add your handling code here:
-        resetColor(btnHome);
-        resetColor(btnProgramme);
-        resetColor(btnCourse);
-        setColor(btnTutorialGroup);
-        resetColor(btnStudent);
+        this.dispose();
+        new TutorialGroupManage().setVisible(true);
     }//GEN-LAST:event_btnTutorialGroupMouseClicked
 
     private void btnStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStudentMouseClicked
         // TODO add your handling code here:
-        resetColor(btnHome);
-        resetColor(btnProgramme);
-        resetColor(btnCourse);
-        resetColor(btnTutorialGroup);
-        setColor(btnStudent);
+        this.dispose();
+        new StudentManage().setVisible(true);
     }//GEN-LAST:event_btnStudentMouseClicked
 
-    void setColor(JPanel panel) {
-        panel.setBackground(new Color(163,167,172));
-    }
-    
-    void resetColor(JPanel panel) {
-        panel.setBackground(new Color(172,178,187));
-    }
-    
     /**
      * @param args the command line arguments
      */

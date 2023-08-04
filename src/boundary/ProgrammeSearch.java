@@ -1,24 +1,22 @@
-package boundary;
-
-
-import java.awt.Color;
-import javax.swing.JPanel;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+package boundary;
+
+import java.awt.Color;
+import javax.swing.JPanel;
 
 /**
  *
  * @author User
  */
-public class Home extends javax.swing.JFrame {
+public class ProgrammeSearch extends javax.swing.JFrame {
 
     /**
-     * Creates new form Test
+     * Creates new form ProgrammeSearch
      */
-    public Home() {
+    public ProgrammeSearch() {
         initComponents();
     }
 
@@ -50,19 +48,20 @@ public class Home extends javax.swing.JFrame {
         btnStudent = new javax.swing.JPanel();
         studentIcon = new javax.swing.JLabel();
         jlStudent = new javax.swing.JLabel();
-        footer = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
-        titleHome = new javax.swing.JLabel();
-        jbtCourse = new javax.swing.JButton();
-        jbtProgramme = new javax.swing.JButton();
-        jbtTutorialGroup = new javax.swing.JButton();
-        jbtStudent = new javax.swing.JButton();
+        title = new javax.swing.JLabel();
+        searchBar = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        searchText = new javax.swing.JTextField();
+        searchBtnPanel = new javax.swing.JPanel();
+        searchButton = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        footer = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1263, 788));
-        setMinimumSize(new java.awt.Dimension(1263, 788));
-        setPreferredSize(new java.awt.Dimension(1263, 788));
-        setResizable(false);
+        setMaximumSize(new java.awt.Dimension(1263, 800));
+        setMinimumSize(new java.awt.Dimension(1263, 800));
+        setPreferredSize(new java.awt.Dimension(1263, 800));
 
         bg.setBackground(new java.awt.Color(230, 230, 230));
 
@@ -92,7 +91,7 @@ public class Home extends javax.swing.JFrame {
 
         sidebar.add(jpLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        btnHome.setBackground(new java.awt.Color(163, 167, 172));
+        btnHome.setBackground(new java.awt.Color(172, 178, 187));
         btnHome.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnHomeMouseClicked(evt);
@@ -128,7 +127,7 @@ public class Home extends javax.swing.JFrame {
 
         sidebar.add(btnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 266, -1));
 
-        btnProgramme.setBackground(new java.awt.Color(172, 178, 187));
+        btnProgramme.setBackground(new java.awt.Color(163, 167, 172));
         btnProgramme.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnProgrammeMouseClicked(evt);
@@ -268,91 +267,123 @@ public class Home extends javax.swing.JFrame {
 
         sidebar.add(btnStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 266, -1));
 
-        footer.setBackground(new java.awt.Color(163, 167, 172));
-        footer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         header.setBackground(new java.awt.Color(163, 167, 172));
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        titleHome.setFont(new java.awt.Font("Rockwell", 1, 36)); // NOI18N
-        titleHome.setForeground(new java.awt.Color(255, 255, 255));
-        titleHome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleHome.setText("Student Management System");
-        header.add(titleHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 950, 67));
+        title.setFont(new java.awt.Font("Rockwell", 1, 36)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setText("Search Programme");
+        header.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 67));
 
-        jbtCourse.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jbtCourse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/books-stack-of-three.png"))); // NOI18N
-        jbtCourse.setText("Manage Course");
-        jbtCourse.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCourseMouseClicked(evt);
+        searchBar.setBackground(new Color(242,242,242));
+        searchBar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
+
+        searchText.setBackground(new java.awt.Color(242, 242, 242));
+        searchText.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        searchText.setForeground(new java.awt.Color(204, 204, 204));
+        searchText.setText("Search");
+        searchText.setBorder(null);
+        searchText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchTextFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchTextFocusLost(evt);
+            }
+        });
+        searchText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTextActionPerformed(evt);
             }
         });
 
-        jbtProgramme.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jbtProgramme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/learning.png"))); // NOI18N
-        jbtProgramme.setText("Manage Programme");
-        jbtProgramme.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnProgrammeMouseClicked(evt);
-            }
-        });
+        javax.swing.GroupLayout searchBarLayout = new javax.swing.GroupLayout(searchBar);
+        searchBar.setLayout(searchBarLayout);
+        searchBarLayout.setHorizontalGroup(
+            searchBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchBarLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(searchText, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(16, 16, 16))
+        );
+        searchBarLayout.setVerticalGroup(
+            searchBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchBarLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(searchBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(searchText)))
+        );
 
-        jbtTutorialGroup.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jbtTutorialGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/multiple-users-silhouette.png"))); // NOI18N
-        jbtTutorialGroup.setText("Manage Tutorial Group");
-        jbtTutorialGroup.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnTutorialGroupMouseClicked(evt);
-            }
-        });
+        header.add(searchBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
 
-        jbtStudent.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
-        jbtStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reading-book.png"))); // NOI18N
-        jbtStudent.setText("Manage Student");
-        jbtStudent.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnStudentMouseClicked(evt);
+        searchBtnPanel.setBackground(new java.awt.Color(163, 167, 172));
+
+        searchButton.setBackground(new java.awt.Color(153, 153, 153));
+        searchButton.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
+        searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setText("Search");
+        searchButton.setBorderPainted(false);
+
+        javax.swing.GroupLayout searchBtnPanelLayout = new javax.swing.GroupLayout(searchBtnPanel);
+        searchBtnPanel.setLayout(searchBtnPanelLayout);
+        searchBtnPanelLayout.setHorizontalGroup(
+            searchBtnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchBtnPanelLayout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addComponent(searchButton))
+        );
+        searchBtnPanelLayout.setVerticalGroup(
+            searchBtnPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchBtnPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(searchButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        header.add(searchBtnPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, -1));
+
+        jComboBox1.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Add Programme", "Search Programme", "Update Programme", "Delete Programme" }));
+        jComboBox1.setSelectedIndex(1);
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
             }
         });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        header.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 192, 30));
+
+        footer.setBackground(new java.awt.Color(163, 167, 172));
+        footer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 1018, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jbtProgramme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jbtTutorialGroup, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE))
-                                .addGap(0, 0, 0)
-                                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jbtCourse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jbtStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addGap(0, 0, 0))
+                .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 1030, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtProgramme, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtTutorialGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sidebar, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
                 .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -364,14 +395,18 @@ public class Home extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseClicked
-        // TODO add your handling code here:       
+        // TODO add your handling code here:
+        this.dispose();
+        new Home().setVisible(true);
     }//GEN-LAST:event_btnHomeMouseClicked
 
     private void btnProgrammeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProgrammeMouseClicked
@@ -397,7 +432,44 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
         new StudentManage().setVisible(true);
     }//GEN-LAST:event_btnStudentMouseClicked
-    
+
+    private void searchTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTextFocusGained
+        if (searchText.getForeground().equals(new Color(204,204,204))) {
+            searchText.setText("");
+        }
+        searchText.setForeground(Color.BLACK);
+    }//GEN-LAST:event_searchTextFocusGained
+
+    private void searchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchTextFocusLost
+        if (searchText.getText().equals("")) {
+            searchText.setText("Search");
+            searchText.setForeground(new Color(204,204,204));
+        }
+    }//GEN-LAST:event_searchTextFocusLost
+
+    private void searchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTextActionPerformed
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        if (evt.getItem().equals("Add Programme")) {
+            this.dispose();
+            new ProgrammeAdd().setVisible(true);
+        } else if (evt.getItem().equals("Search Programme")) {
+
+        } else if (evt.getItem().equals("Update Programme")) {
+            this.dispose();
+            new ProgrammeUpdate().setVisible(true);
+        } else if (evt.getItem().equals("Delete Programme")) {
+            this.dispose();
+            new ProgrammeDelete().setVisible(true);
+        }
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -415,25 +487,20 @@ public class Home extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProgrammeSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProgrammeSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProgrammeSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProgrammeSearch.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Home test = new Home();
-                test.setVisible(true);
-                test.bg.requestFocusInWindow();
+                new ProgrammeSearch().setVisible(true);
             }
         });
     }
@@ -449,10 +516,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel footer;
     private javax.swing.JPanel header;
     private javax.swing.JLabel homeIcon;
-    private javax.swing.JButton jbtCourse;
-    private javax.swing.JButton jbtProgramme;
-    private javax.swing.JButton jbtStudent;
-    private javax.swing.JButton jbtTutorialGroup;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jlCourse;
     private javax.swing.JLabel jlHome;
     private javax.swing.JLabel jlProgramme;
@@ -461,9 +526,13 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jpLogo;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel programmeIcon;
+    private javax.swing.JPanel searchBar;
+    private javax.swing.JPanel searchBtnPanel;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTextField searchText;
     private javax.swing.JPanel sidebar;
     private javax.swing.JLabel studentIcon;
-    private javax.swing.JLabel titleHome;
+    private javax.swing.JLabel title;
     private javax.swing.JLabel tutorialGroupIcon;
     // End of variables declaration//GEN-END:variables
 }

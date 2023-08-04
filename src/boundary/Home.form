@@ -520,6 +520,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Manage Programme"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnProgrammeMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbtTutorialGroup">
           <Properties>
@@ -531,6 +534,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Manage Tutorial Group"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnTutorialGroupMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbtStudent">
           <Properties>
@@ -542,6 +548,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Manage Student"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnStudentMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
