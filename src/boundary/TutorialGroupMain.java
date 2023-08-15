@@ -25,8 +25,10 @@ public class TutorialGroupMain {
     private ProgrammeControl programmeControl = new ProgrammeControl();
     private TutorialGroupControl tutorialGroupControl = new TutorialGroupControl();
     private StudentControl studentControl = new StudentControl();
-    private ListInterface<TutorialGroup> tutorialGroupList = tutorialGroupControl.readFromFile();
+    
     private ListInterface<Programme> programmeList = programmeControl.readFromFile();
+    private ListInterface<TutorialGroup> tutorialGroupList = tutorialGroupControl.readFromFile();
+    private ListInterface<Student> studentList = studentControl.readFromFile();
     
     public TutorialGroupMain() {
         
