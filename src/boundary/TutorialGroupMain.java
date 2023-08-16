@@ -43,21 +43,31 @@ public class TutorialGroupMain {
                     addStudent();
                     break;
                 case 2:
-                    searchStudent();
-                    break;
-                case 3:
-                    updateStudent();
-                    break;
-                case 4:
                     removeStudent();
                     break;
+                case 3:
+                    changeTutorialGroup();
+                    break;
+                case 4:
+                    findStudent();
+                    break;
+                case 5:
+                    listStudents();
+                    break;
+                case 6:
+                    filterTutorialGroups();
+                    break;
+                case 7:
+                    generateReports();
                 case 0:
                     break;
+                default:
+                    System.out.println("Invalid Option! Please Enter Again.");
             }
         } while (choice != 0);
     }
     
-    private TutorialGroup chooseTutorialGroup() {
+    private Programme chooseProgramme() {
         int count = 1;
         System.out.println("Choose the Programme");
         Helper.printLine('=', 20);
@@ -74,7 +84,11 @@ public class TutorialGroupMain {
             choice = InputHandling.getInt("Please Choose Your Option : ");
         }
         
-        Programme programme = programmeList.get(choice);
+        return programmeList.get(choice);
+    }
+    
+    private TutorialGroup chooseTutorialGroup() {       
+        Programme programme = chooseProgramme();
         ListInterface<TutorialGroup> programmeTtlGroups = new LinkedList<>();
         
         for (TutorialGroup ttlGroup : tutorialGroupList) {
@@ -83,11 +97,11 @@ public class TutorialGroupMain {
             }
         }
         
-        int groupNo = InputHandling.getInt("Please Enter the Tutorial Group (max = " + programmeTtlGroups.getSize() + " ) : ");
+        int groupNo = InputHandling.getInt("Please Enter the Tutorial Group Number (max = " + programmeTtlGroups.getSize() + " ) : ");
         
         while (groupNo < 1 || groupNo > programmeTtlGroups.getSize()) {
             System.out.println("Invalid Option! Please Enter Again.");
-            groupNo = InputHandling.getInt("Please Enter the Tutorial Group (max = " + programmeTtlGroups.getSize() + " ) : ");
+            groupNo = InputHandling.getInt("Please Enter the Tutorial Group Number (max = " + programmeTtlGroups.getSize() + " ) : ");
         }
         
         return programmeTtlGroups.get(groupNo);
@@ -95,17 +109,20 @@ public class TutorialGroupMain {
     
     private int displayMenu() {
         System.out.println("Welcome to Tutorial Group Management");
-        Helper.printLine('=', 36);
-        System.out.println("1. Add New Student");
-        System.out.println("2. Search Student");
-        System.out.println("3. Update Student Information");
-        System.out.println("4. Remove Student");
+        Helper.printLine('=', 50);
+        System.out.println("1. Add A Student To A Tutorial Group");
+        System.out.println("2. Remove A Student From A Tutorial Group");
+        System.out.println("3. Change The Tutorial Group For A Student");
+        System.out.println("4. Find A Student In A Tutorial Group");
+        System.out.println("5. List All Students In A Tutorial Group");
+        System.out.println("6. Filter Tutorial Groups Based On Criteria");
+        System.out.println("7. Generate Reports");
         System.out.println("0. Go Back to Home Page");
-        Helper.printLine('=', 36);
+        Helper.printLine('=', 50);
         
         int choice = InputHandling.getInt("Please Choose Your Option : ");
         
-        while (choice < 0 || choice > 4) {
+        while (choice < 0 || choice > 7) {
             System.out.println("Invalid Option! Please Enter Again.");
             choice = InputHandling.getInt("Please Choose Your Option : ");
         }
@@ -114,7 +131,7 @@ public class TutorialGroupMain {
     }
     
     private void addStudent() {
-        System.out.println("You have selected to add new student...");
+        System.out.println("You have selected to add a student to a tutorial group...");
         System.out.println();
         System.out.println("Enter the Detail of the new student : ");
         String id = InputHandling.getString("ID : ");
@@ -128,8 +145,8 @@ public class TutorialGroupMain {
         
     }
     
-    private void searchStudent() {
-        System.out.println("You have selected to search for student...");
+    private void removeStudent() {
+        System.out.println("You have selected to remove a student from a tutorial group...");
         System.out.println();
         System.out.println("1. ID");
         System.out.println("2. Name");
@@ -140,11 +157,23 @@ public class TutorialGroupMain {
         }
     }
     
-    private void updateStudent() {
+    private void changeTutorialGroup() {
         
     }
     
-    private void removeStudent() {
+    private void findStudent() {
+        
+    }
+    
+    private void listStudents() {
+        
+    }
+    
+    private void filterTutorialGroups() {
+        
+    }
+    
+    private void generateReports() {
         
     }
 }
