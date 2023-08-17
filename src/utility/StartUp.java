@@ -16,5 +16,6 @@ public class StartUp {
         FileHandling.createOrOpenFile("Programme.txt");
         FileHandling.createOrOpenFile("Student.txt");
         FileHandling.createOrOpenFile("TutorialGroup.txt");
+        FileHandling.createOrOpenFile("AssignmentStudent.txt");
     }
 }

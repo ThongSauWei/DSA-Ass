@@ -18,7 +18,6 @@ public class Student implements Serializable, Comparable<Student> {
     private String phoneNo;
     private int studyYear;
     private int semester;
-    private AssignmentTeam assignmentTeamId;
     private TutorialGroup tutorialGroupId;
 
     public Student() {
@@ -29,10 +28,10 @@ public class Student implements Serializable, Comparable<Student> {
     }
 
     public Student(String studentId, String studentName, String studentIc, String studentEmail, String phoneNo, int studyYear, int semester) {
-        this(studentId, studentName, studentIc, studentEmail, phoneNo, studyYear, semester, null, null);
+        this(studentId, studentName, studentIc, studentEmail, phoneNo, studyYear, semester, null);
     }
     
-    public Student(String studentId, String studentName, String studentIc, String studentEmail, String phoneNo, int studyYear, int semester, AssignmentTeam assignmentTeamId, TutorialGroup tutorialGroupId) {
+    public Student(String studentId, String studentName, String studentIc, String studentEmail, String phoneNo, int studyYear, int semester, TutorialGroup tutorialGroupId) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentIc = studentIc;
@@ -40,7 +39,6 @@ public class Student implements Serializable, Comparable<Student> {
         this.phoneNo = phoneNo;
         this.studyYear = studyYear;
         this.semester = semester;
-        this.assignmentTeamId = assignmentTeamId;
         this.tutorialGroupId = tutorialGroupId;
     }
 
@@ -100,14 +98,6 @@ public class Student implements Serializable, Comparable<Student> {
         this.semester = semester;
     }
 
-    public AssignmentTeam getAssignmentTeamId() {
-        return assignmentTeamId;
-    }
-
-    public void setAssignmentTeamId(AssignmentTeam assignmentTeamId) {
-        this.assignmentTeamId = assignmentTeamId;
-    }
-
     public TutorialGroup getTutorialGroupId() {
         return tutorialGroupId;
     }
@@ -149,7 +139,7 @@ public class Student implements Serializable, Comparable<Student> {
     
     public String saveToFile() {
         return studentId + "|" + studentName + "|" + studentIc + "|" + studentEmail + "|" + phoneNo + "|" + 
-                studyYear + "|" + semester + "|" + assignmentTeamId.getAssignmentTeamId() + "|" + tutorialGroupId.getTutorialGroupId();
+                studyYear + "|" + semester + "|" + tutorialGroupId.getTutorialGroupId();
     }
 
     @Override

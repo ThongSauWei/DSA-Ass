@@ -137,7 +137,7 @@ public class FileHandling {
             
             if (primaryKey.equals(attr[0])) {
                 return new Student(attr[0], attr[1], attr[2], attr[3], attr[4], Integer.parseInt(attr[5]),
-                        Integer.parseInt(attr[6]), getAssignmentTeam(attr[7]), getTutorialGroup(attr[8]));
+                        Integer.parseInt(attr[6]), getTutorialGroup(attr[7]));
             }
         }
         
@@ -158,19 +158,17 @@ public class FileHandling {
         return null;
     }
     
-    public static void main(String[] args) {
-        ListInterface<String> dataList = readFile("Course");
-        if (dataList.isEmpty()) {
-            ListInterface<String> writeFile = new LinkedList<>();
-            writeFile.add("1 ........");
-            writeFile.add("2 ........");
-            writeFile.add("3 ........");
-            writeFile.add("4 ........");
-            writeFile("Course", writeFile);
-        } else {
-            for (String data : dataList) {
-                System.out.println(data);
+    public static AssignmentStudent getAssignmentStudent(String primaryKey) {
+        ListInterface<String> dataList = readFile("AssignmentStudent");
+        
+        for(String data : dataList) {
+            String[] attr = data.split("\\|");
+            
+            if (primaryKey.equals(attr[0])) {
+                return new AssignmentStudent(attr[0], getAssignmentTeam(attr[1]), getStudent(attr[2]));
             }
         }
+        
+        return null;
     }
 }

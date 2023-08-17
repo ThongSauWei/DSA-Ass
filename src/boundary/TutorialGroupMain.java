@@ -142,6 +142,8 @@ public class TutorialGroupMain {
         int year = InputHandling.getInt("Year of Study : ");
         int sem = InputHandling.getInt("Semester : ");
         System.out.println();
+        TutorialGroup ttlGroup = chooseTutorialGroup();
+        
         
     }
     
