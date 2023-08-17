@@ -65,6 +65,8 @@ public class TutorialGroupMain {
                     System.out.println("Invalid Option! Please Enter Again.");
             }
         } while (choice != 0);
+        
+        closeMain();
     }
     
     private Programme chooseProgramme() {
@@ -83,6 +85,8 @@ public class TutorialGroupMain {
             System.out.println("Invalid Option! Please Enter Again.");
             choice = InputHandling.getInt("Please Choose Your Option : ");
         }
+        
+        System.out.println();
         
         return programmeList.get(choice);
     }
@@ -103,6 +107,8 @@ public class TutorialGroupMain {
             System.out.println("Invalid Option! Please Enter Again.");
             groupNo = InputHandling.getInt("Please Enter the Tutorial Group Number (max = " + programmeTtlGroups.getSize() + " ) : ");
         }
+        
+        System.out.println();
         
         return programmeTtlGroups.get(groupNo);
     }
@@ -144,7 +150,9 @@ public class TutorialGroupMain {
         System.out.println();
         TutorialGroup ttlGroup = chooseTutorialGroup();
         
+        Student newStudent = new Student(id, name, ic, email, phoneNo, year, sem, ttlGroup);
         
+        studentList.add(newStudent);    
     }
     
     private void removeStudent() {
@@ -177,5 +185,11 @@ public class TutorialGroupMain {
     
     private void generateReports() {
         
+    }
+    
+    private void closeMain() {
+        programmeControl.writeToFile(programmeList);
+        studentControl.writeToFile(studentList);
+        tutorialGroupControl.writeToFile(tutorialGroupList);
     }
 }
