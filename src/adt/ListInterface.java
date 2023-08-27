@@ -4,6 +4,8 @@
  */
 package adt;
 
+import java.util.function.Predicate;
+
 /**
  *
  * @author Benjamin
@@ -34,4 +36,11 @@ public interface ListInterface<T extends Comparable<T>> extends Iterable<T> {
     public void clear();
     
     public boolean isEmpty();
+    
+    // filter the list based on the criteria given
+    public ListInterface<T> filter(Predicate<T> criteria);
+    
+    public IteratorInterface<T> getIterator();
+    
+    public IteratorInterface<T> getIterator(int position);
 }

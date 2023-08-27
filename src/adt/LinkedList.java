@@ -6,7 +6,7 @@ package adt;
 
 import java.io.Serializable;
 import java.util.Iterator;
-
+import java.util.function.Predicate;
 import utility.ExceptionHandling;
 
 /**
@@ -48,7 +48,7 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     }
     
     // Custom iterator class implementation
-    public class CustomIterator implements Iterator<T>{
+    public class CustomIterator implements IteratorInterface<T>, Iterator<T> {
         private Node currentNode;
         
         public CustomIterator() {
@@ -61,16 +61,17 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
         
         @Override
         public boolean hasNext() {
-            return compareNode(currentNode, lastNode);
-        }
-        
-        public boolean hasPrevious() {
-            return compareNode(firstNode, currentNode);
+            return !currentNode.equals(lastNode);
         }
         
         @Override
-        public T next() {
-            if (hasNext()) {
+        public boolean hasPrevious() {
+            return !currentNode.equals(firstNode);
+        }
+        
+        @Override
+        public T next() {           
+            if (hasNext()) { 
                 T data = currentNode.entry;
                 currentNode = currentNode.nextNode;
                 return data;
@@ -80,6 +81,7 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
             }
         }
         
+        @Override
         public T previous() {
             if (hasPrevious()) {    
                 T data = currentNode.entry;
@@ -91,25 +93,32 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
             }
         }
         
+        @Override
         public T getCurrent() {
             return currentNode.entry;
         }
     }
     
     @Override
-    public Iterator<T> iterator() {
-        return new CustomIterator(1);
+    public IteratorInterface<T> getIterator() {
+        return new CustomIterator();
     }
     
-    public Iterator<T> iterator(int position) {
+    @Override
+    public IteratorInterface<T> getIterator(int position) {
         return new CustomIterator(position);
+    }
+    
+    @Override
+    public Iterator<T> iterator() { // iterator for the iterable
+        return new CustomIterator();
     }
     
     @Override
     public boolean add(T newEntry) {
         Node newNode = new Node(newEntry);
         
-        if (getSize() == 0) { // If it is an empty list, the first and last node will be the new entry
+        if (isEmpty()) { // If it is an empty list, the first and last node will be the new entry
             firstNode = newNode;
             lastNode = newNode;
         } else { // else the entry is added to tail of the list
@@ -205,6 +214,21 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     }
     
     @Override
+    public ListInterface<T> filter(Predicate<T> criteria) {
+        ListInterface<T> filteredList = new LinkedList<>();
+        Node currentNode = firstNode;
+        while (currentNode.nextNode != null) {
+            if (criteria.test(currentNode.entry)) {
+                filteredList.add(currentNode.entry);
+            }
+            
+            currentNode = currentNode.nextNode;
+        }
+        
+        return filteredList;
+    }
+    
+    @Override
     public String toString() {
         Node currentNode = firstNode;
         String str = firstNode.entry + " ";
@@ -287,6 +311,21 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
         // after swapping we knew that the pivot node is sorted as all the node on its left are "less than" it while all the node on its right are "more than" it
         // return the node that is sorted
         return i;
+    }
+    
+    public static void main(String[] args) {
+        ListInterface<String> fruits = new LinkedList<>(); // Custom linked list
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Orange");
+
+        // Creating a custom iterator
+        IteratorInterface<String> iterator = fruits.getIterator(fruits.getSize());
+
+        // Using the iterator to traverse and process elements
+        while (iterator.hasNext()) {
+            
+        }
     }
 }
 

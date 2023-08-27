@@ -6,6 +6,7 @@ package adt;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import utility.ExceptionHandling;
 /**
@@ -24,7 +25,7 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
     }
     
     // Custom iterator class implementation
-    public class CustomIterator implements Iterator<T> {
+    public class CustomIterator implements IteratorInterface<T>, Iterator<T> {
         private int currentPosition;
         
         public CustomIterator() {
@@ -40,6 +41,7 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
             return currentPosition < getSize();
         }
         
+        @Override
         public boolean hasPrevious() {
             return currentPosition > 1;
         }
@@ -56,6 +58,7 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
             }
         }
         
+        @Override
         public T previous() {
             if (hasPrevious()) {   
                 T data = get(currentPosition);
@@ -67,18 +70,25 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
             }
         }
         
+        @Override
         public T getCurrent() {
             return get(currentPosition);
         }
     }
     
     @Override
-    public Iterator<T> iterator() {
+    public IteratorInterface<T> getIterator() {
         return new CustomIterator(1);
     }
     
-    public Iterator<T> iterator(int position) {
+    @Override
+    public IteratorInterface<T> getIterator(int position) {
         return new CustomIterator(position);
+    }
+    
+    @Override
+    public Iterator<T> iterator() {
+        return new CustomIterator();
     }
     
     @Override
@@ -161,6 +171,19 @@ public class ArrayList<T extends Comparable<T>> implements Serializable, ListInt
     @Override
     public boolean isEmpty() {
         return num == 0;
+    }
+    
+    @Override
+    public ListInterface<T> filter(Predicate<T> criteria) {
+        ListInterface<T> filteredList = new ArrayList<>();
+        
+        for (T element : arr) {
+            if (criteria.test(element)) {
+                filteredList.add(element);
+            }
+        }
+        
+        return filteredList;
     }
     
     @Override
