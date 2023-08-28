@@ -117,6 +117,8 @@ public class ProgrammeControl {
                 comparison = programme.getFaculty().compareTo(current.getFaculty());
             }else if(option == 3){
                 comparison = programme.getProgrammeName().compareTo(current.getProgrammeName());
+            }else if(option == 4){
+                comparison = programme.getProgrammeLevel().compareTo(current.getProgrammeLevel());
             }
             
 

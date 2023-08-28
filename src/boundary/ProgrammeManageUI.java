@@ -87,9 +87,10 @@ public class ProgrammeManageUI {
         System.out.println("1. By Programme Code");
         System.out.println("2. By Faculty");
         System.out.println("3. By Name");
+        System.out.println("4. By Programme Level");
         System.out.println("0. EXIT");
         Helper.printLine('-', 20);
-        return InputHandling.choiceValidation("Please Choose Option: ", 0, 3);
+        return InputHandling.choiceValidation("Please Choose Option: ", 0, 4);
     }
 
 }
