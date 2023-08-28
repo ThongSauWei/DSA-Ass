@@ -71,7 +71,7 @@ public class ProgrammeManageUI {
     }
 
     public int sortMenu() {
-        System.out.println("\n~SORT MENU~");
+        System.out.println("\n~SORT MENU ~");
         Helper.printLine('-', 20);
         System.out.println("1. Ascending Order");
         System.out.println("2. Descending Order");
@@ -79,6 +79,17 @@ public class ProgrammeManageUI {
         Helper.printLine('-', 20);
 
         return InputHandling.choiceValidation("Please Choose Sorting Option: ", 0, 2);
+    }
+    
+    public int sortOptions() {
+        System.out.println("\nChoose how to sort the programme list:");
+        Helper.printLine('-', 20);
+        System.out.println("1. By Programme Code");
+        System.out.println("2. By Faculty");
+        System.out.println("3. By Name");
+        System.out.println("0. EXIT");
+        Helper.printLine('-', 20);
+        return InputHandling.choiceValidation("Please Choose Option: ", 0, 3);
     }
 
 }
