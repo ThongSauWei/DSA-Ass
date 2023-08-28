@@ -30,7 +30,7 @@ public class TutorialGroupUI {
         System.out.println("0. Go Back to Home Page");
         Helper.printLine('=', 50);
         
-        return Helper.choiceValidation("Please Choose Your Option : ", 0, 7);
+        return InputHandling.choiceValidation("Please Choose Your Option : ", 0, 7);
     }
     
     public Student addStudentDetail(TutorialGroup ttlGroup) {
@@ -59,7 +59,7 @@ public class TutorialGroupUI {
         System.out.println("3. Browsing (One)");
         Helper.printLine('=', 36);
         
-        return Helper.choiceValidation("Please Choose Your Option : ", 1, 3);
+        return InputHandling.choiceValidation("Please Choose Your Option : ", 1, 3);
     }
     
     public int browseStudentMenu(Student student) {
@@ -71,7 +71,7 @@ public class TutorialGroupUI {
         System.out.println("0. Exit");
         Helper.printLine('=', 30);
         
-        return Helper.choiceValidation("Option : ", 0, 3);
+        return InputHandling.choiceValidation("Option : ", 0, 3);
     }
     
     public void changeTutorialGroup() {
@@ -126,10 +126,10 @@ public class TutorialGroupUI {
     }
     
     public int getProgrammeChoice(int size) {
-        return Helper.choiceValidation("Please Choose Your Option : ", 1, size);
+        return InputHandling.choiceValidation("Please Choose Your Option : ", 1, size);
     }
     
     public int getTutorialGroupChoice(int size) {       
-        return Helper.choiceValidation("Please Enter the Tutorial Group Number (max = " + size + " ) : ", 1, size);
+        return InputHandling.choiceValidation("Please Enter the Tutorial Group Number (max = " + size + " ) : ", 1, size);
     }
 }

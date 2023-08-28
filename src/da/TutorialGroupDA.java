@@ -18,7 +18,7 @@ public class TutorialGroupDA {
         ListInterface<TutorialGroup> tutorialGroupList = new LinkedList<>();
         ListInterface<String> dataList = FileHandling.readFile("TutorialGroup");
         for(String data : dataList) {
-            String[] attr = data.split("\\|", 1);
+            String[] attr = data.split("\\|");
             
             tutorialGroupList.add(FileHandling.getTutorialGroup(attr[0]));
         }

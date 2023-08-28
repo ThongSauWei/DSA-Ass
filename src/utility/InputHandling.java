@@ -10,19 +10,25 @@ import java.util.Scanner;
  * @author User
  */
 public class InputHandling {
+    private static final Scanner scanner = new Scanner(System.in);
+    
     public static int getInt() {
         return getInt("Please Enter A Digit : ");
     }
     
-    public static int getInt(String promptMsg) {
+    public static int getInt(String promptMsg) {       
         System.out.print(promptMsg);
         
         do {
-            try (Scanner scanner = new Scanner(System.in)) {
-                int input = scanner.nextInt();
-                return input;
+            try {
+                if (scanner.hasNextInt()) {
+                    int input = scanner.nextInt();
+                    scanner.nextLine();
+                    return input;
+                }
             } catch (IllegalStateException ex) {
                 System.out.print("Invalid Input! " + promptMsg);
+                scanner.nextLine();
             }                   
         } while (true);
     }
@@ -31,15 +37,17 @@ public class InputHandling {
         return getDouble("Please Enter A Value : ");
     }
     
-    public static double getDouble(String promptMsg) {
+    public static double getDouble(String promptMsg) {       
         System.out.print(promptMsg);
         
         do {
-            try (Scanner scanner = new Scanner(System.in)) {
+            try {
                 double input = scanner.nextDouble();
+                scanner.nextLine();
                 return input;
             } catch (IllegalStateException ex) {
                 System.out.print("Invalid Input!" + promptMsg);
+                scanner.nextLine();
             }                   
         } while (true);
     }
@@ -50,7 +58,7 @@ public class InputHandling {
     
     public static char getChar(String promptMsg) {
         System.out.print(promptMsg);
-        return new Scanner(System.in).nextLine().charAt(0);
+        return scanner.nextLine().charAt(0);
     }
     
     public static String getString() {
@@ -59,7 +67,7 @@ public class InputHandling {
     
     public static String getString(String promptMsg) {
         System.out.print(promptMsg);
-        return new Scanner(System.in).nextLine();
+        return scanner.nextLine();
     }
     
     public static boolean getConfirmation() {
@@ -68,8 +76,7 @@ public class InputHandling {
     
     public static boolean getConfirmation(String promptMsg) {
         System.out.print(promptMsg);
-        
-        Scanner scanner = new Scanner(System.in);
+
         char ch = Character.toUpperCase(scanner.next().charAt(0));
         
         while (ch != 'Y' && ch != 'N') {
@@ -80,8 +87,19 @@ public class InputHandling {
         return ch == 'Y';
     }
     
+    public static int choiceValidation(String promptMsg, int min, int max) {
+        int choice = getInt(promptMsg);
+        
+        while (choice < min || choice > max) {
+            System.out.println("Invalid Option! Please Enter Again.");
+            choice = getInt(promptMsg);
+        }
+        
+        return choice;
+    }
+    
     public static void systemPause() {
         System.out.println("Press Enter To Proceed...");
-        new Scanner(System.in).nextLine();
+        scanner.nextLine();
     }
 }

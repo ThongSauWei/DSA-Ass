@@ -22,15 +22,4 @@ public class Helper {
         
         System.out.println();
     }
-    
-    public static int choiceValidation(String promptMsg, int min, int max) {
-        int choice = InputHandling.getInt(promptMsg);
-        
-        while (choice < min || choice > max) {
-            System.out.println("Invalid Option! Please Enter Again.");
-            choice = InputHandling.getInt(promptMsg);
-        }
-        
-        return choice;
-    }
 }

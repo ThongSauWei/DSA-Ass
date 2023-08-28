@@ -17,7 +17,7 @@ public class AssignmentStudentDA {
         ListInterface<AssignmentStudent> assignmentStudentList = new LinkedList<>();
         ListInterface<String> dataList = FileHandling.readFile("AssignmentStudent");
         for(String data : dataList) {
-            String[] attr = data.split("\\|", 1);
+            String[] attr = data.split("\\|");
             
             assignmentStudentList.add(FileHandling.getAssignmentStudent(attr[0]));
         }
