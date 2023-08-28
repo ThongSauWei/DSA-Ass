@@ -5,6 +5,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -119,7 +120,8 @@ public class Course implements Serializable, Comparable<Course> {
     }
     
     public String saveToFile() {
-        return courseCode + "|" + courseName + "|" + courseDetail + "|" + startDate + "|" + endDate + "|" + assignmentNum;
+        return courseCode + "|" + courseName + "|" + courseDetail + "|" + new SimpleDateFormat("yyyy-MM-dd").format(startDate) + "|" + 
+                new SimpleDateFormat("yyyy-MM-dd").format(endDate) + "|" + assignmentNum;
     }
 
     @Override

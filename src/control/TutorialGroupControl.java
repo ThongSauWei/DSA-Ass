@@ -78,7 +78,7 @@ public class TutorialGroupControl {
         closeMain();
     }
     
-    public void addStudent() {
+    public void addStudent() { // completed
         TutorialGroup ttlGroup = chooseTutorialGroup();
         Student newStudent = tutorialGroupUI.addStudentDetail(ttlGroup);
         boolean idRepeated = false;
@@ -130,7 +130,7 @@ public class TutorialGroupControl {
         
     }
     
-    public void findStudent() {
+    public void findStudent() { // completed
         TutorialGroup ttlGroup = chooseTutorialGroup();
         
         String id = tutorialGroupUI.getIdInput();
@@ -149,7 +149,7 @@ public class TutorialGroupControl {
         }
     }
     
-    public void listStudents() {
+    public void listStudents() { // completed
         TutorialGroup ttlGroup = chooseTutorialGroup();
         ListInterface<Student> ttlGroupStudents = studentList.filter(student -> student.getTutorialGroupId().equals(ttlGroup));
         
@@ -208,9 +208,9 @@ public class TutorialGroupControl {
                 do {                    
                     option = tutorialGroupUI.browseStudentMenu(iterator.getCurrent());
                     
-                    if (option == 1 && iterator.hasPrevious()) {
+                    if (option == 1 && !iterator.isFirst()) {
                         iterator.previous();
-                    } else if (option == 2 && iterator.hasNext()) {
+                    } else if (option == 2 && !iterator.isLast()) {
                         iterator.next();
                     } else if (option == 3) {
                         student = iterator.getCurrent();
@@ -231,5 +231,10 @@ public class TutorialGroupControl {
         tutorialGroupDA.writeToFile(tutorialGroupList);
         studentDA.writeToFile(studentList);
         programmeDA.writeToFile(programmeList);
+    }
+    
+    public static void main(String[] args) {
+        TutorialGroupControl tutorialGroupControl = new TutorialGroupControl();
+        tutorialGroupControl.runMain();
     }
 }

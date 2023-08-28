@@ -19,4 +19,8 @@ public interface IteratorInterface<T> {
     public T previous();
     
     public T getCurrent();
+    
+    public boolean isFirst();
+    
+    public boolean isLast();
 }
