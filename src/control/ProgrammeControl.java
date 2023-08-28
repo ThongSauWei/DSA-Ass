@@ -4,14 +4,11 @@
  */
 package control;
 
-import adt.*;
 import boundary.ProgrammeManageUI;
 
 import entity.Programme;
 import adt.ListInterface;
 import da.ProgrammeDA;
-import java.util.Comparator;
-import java.util.Iterator;
 import utility.*;
 
 /**
@@ -29,6 +26,11 @@ public class ProgrammeControl {
     //boundary
     private ProgrammeManageUI programmeUI = new ProgrammeManageUI();
 
+//    private StartUp startUp;
+//    public ProgrammeControl(){
+//        programmeList = programmeDA.readFromFile();
+//    }
+//    
     public void runProgramme() {
         int choice;
 //        startUp.startUp();
@@ -51,74 +53,20 @@ public class ProgrammeControl {
         } while (choice != 0);
     }
 
+    
+
     public void listProgramme() {
         programmeList = programmeDA.readFromFile();
 
         if (programmeList.isEmpty()) {
             programmeUI.displayMessage("No programmes found.");
         } else {
-            String formattedOutput = programmeUI.formatProgrammeList(programmeList);
-            programmeUI.listAllProgrammes(formattedOutput);
-
-            // Ask user if they want to sort the output
-            if (InputHandling.getConfirmation("Do you want to sort the programme list? (Y or N): ")) {
-                int sortChoice = programmeUI.sortMenu(); 
-
-                if (sortChoice == 1) {
-                    sortProgrammeListAscending();
-                } else if (sortChoice == 2) {
-                    sortProgrammeListDescending();
-                } else if (sortChoice != 3) {
-                    System.out.println("Invalid choice.");
-                }
-
-                formattedOutput = programmeUI.formatProgrammeList(programmeList);
-                programmeUI.listAllProgrammes(formattedOutput);
+            String outputProg = "";
+            for (Programme programme : programmeList) {
+                outputProg += programme.toString() + "\n";
             }
-
+            programmeUI.listAllProgrammes(outputProg);
         }
-    }
-
-    private void sortProgrammeListAscending() {
-        LinkedList<Programme> sortedList = new LinkedList<>();
-
-        for (int i = 1; i <= programmeList.getSize(); i++) {
-            Programme currentProgramme = programmeList.get(i);
-            insertSorted(sortedList, currentProgramme, true);
-        }
-
-        programmeList = sortedList;
-    }
-
-    private void sortProgrammeListDescending() {
-        LinkedList<Programme> sortedList = new LinkedList<>();
-
-        for (int i = 1; i <= programmeList.getSize(); i++) {
-            Programme currentProgramme = programmeList.get(i);
-            insertSorted(sortedList, currentProgramme, false);
-        }
-
-        programmeList = sortedList;
-    }
-
-    private void insertSorted(LinkedList<Programme> list, Programme programme, boolean ascending) {
-        int position = 1;
-
-        // Find the position to insert the current programme
-        while (position <= list.getSize()) {
-            Programme current = list.get(position);
-            int comparison = programme.getProgrammeCode().compareTo(current.getProgrammeCode());
-
-            if ((ascending && comparison < 0) || (!ascending && comparison > 0)) {
-                list.add(programme, position);
-                return;
-            }
-
-            position++;
-        }
-
-        // If not inserted yet, add it to the end
-        list.add(programme);
     }
 
     public void addProgramme() {
@@ -127,7 +75,7 @@ public class ProgrammeControl {
         programmeDA.writeToFile(programmeList); // Update the file after adding
         System.out.println("Programme added successfully!");
     }
-
+    
     public static void main(String[] args) {
         ProgrammeControl progControl = new ProgrammeControl();
         progControl.runProgramme();
@@ -136,6 +84,9 @@ public class ProgrammeControl {
 //    public void displayProgramme() {
 //        listProgramme();
 //    }
+    
+    
+    
 //    public ListInterface<Programme> readFromFile() {
 //        return programmeDA.readFromFile();
 //    }
