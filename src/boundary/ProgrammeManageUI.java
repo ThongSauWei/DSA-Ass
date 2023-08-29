@@ -38,6 +38,10 @@ public class ProgrammeManageUI {
 
     //formatDisplay - any format also can der
     public String formatProgrammeList(ListInterface<Programme> programmeList) {
+        if (programmeList == null) {
+            return "No programmes found.";
+        }
+
         StringBuilder formattedOutput = new StringBuilder();
 
         formattedOutput.append("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -63,6 +67,7 @@ public class ProgrammeManageUI {
     public Programme checkProgrammeCode() {
         String programmeCode;
         do {
+            
             programmeCode = InputHandling.getString("Programme Code (exp. RSD): ");
             if (!programmeCode.matches("[A-Za-z]{3}")) {
                 invalidInput();
@@ -81,7 +86,6 @@ public class ProgrammeManageUI {
 
         programmeName = InputHandling.getString("Programme Name: ");
 
-        // Collect programmeDetail input with validation
         do {
             programmeDetail = InputHandling.getString("Programme Detail: ");
             if (programmeDetail.trim().isEmpty()) {
@@ -105,12 +109,70 @@ public class ProgrammeManageUI {
 
         duration = InputHandling.getInt("Duration (in months): ");
 
-        return new Programme(programmeCode.getProgrammeCode(), programmeName, programmeDetail, programmeLevel, faculty, duration);
+        return new Programme(programmeCode.getProgrammeCode().toUpperCase(), programmeName, programmeDetail, Character.toUpperCase(programmeLevel), faculty.toUpperCase(), duration);
     }
 
     //invalid message
     private void invalidInput() {
         System.out.println("Invalid input, please enter again...");
+    }
+
+    //update
+    public Programme updateProgrammeInput(Programme existingProgramme, int updateOption) {
+        Programme updatedProgramme = new Programme(); // Create a new instance for updating
+
+        // Copy existing data to the new instance
+        updatedProgramme.setProgrammeCode(existingProgramme.getProgrammeCode());
+        updatedProgramme.setProgrammeName(existingProgramme.getProgrammeName());
+        updatedProgramme.setProgrammeDetail(existingProgramme.getProgrammeDetail());
+        updatedProgramme.setProgrammeLevel(existingProgramme.getProgrammeLevel());
+        updatedProgramme.setFaculty(existingProgramme.getFaculty());
+        updatedProgramme.setDuration(existingProgramme.getDuration());
+
+        switch (updateOption) {
+            case 1:
+                String newName = InputHandling.getString("Enter new Programme Name: ");
+                updatedProgramme.setProgrammeName(newName);
+                break;
+            case 2:
+                String newDetail = InputHandling.getString("Enter new Programme Detail: ");
+                updatedProgramme.setProgrammeDetail(newDetail);
+                break;
+            case 3:
+                char newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
+                updatedProgramme.setProgrammeLevel(newLevel);
+                break;
+            case 4:
+                String newFaculty = InputHandling.getString("Enter new Faculty: ");
+                updatedProgramme.setFaculty(newFaculty);
+                break;
+            case 5:
+                int newDuration = InputHandling.getInt("Enter new Duration (in months): ");
+                updatedProgramme.setDuration(newDuration);
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                return null;
+        }
+
+//        System.out.println("\nUpdated Programme Details:");
+//        System.out.println(updatedProgramme);
+        return updatedProgramme;
+    }
+
+    public int updateProgrammeMenu() {
+        System.out.println("\nUpdate Programme Menu:");
+        Helper.printLine('-', 30);
+        System.out.println("1. Update Programme Name");
+        System.out.println("2. Update Programme Detail");
+        System.out.println("3. Update Programme Level");
+        System.out.println("4. Update Faculty");
+        System.out.println("5. Update Duration");
+        System.out.println("6. Update All Details");
+        System.out.println("0. Cancel Update");
+        Helper.printLine('-', 30);
+
+        return InputHandling.choiceValidation("Please choose an option: ", 0, 6);
     }
 
     //sort
