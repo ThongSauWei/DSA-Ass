@@ -48,12 +48,16 @@ public class ProgrammeControl {
                 case 3:
                     updateProgramme();
                     break;
+                case 4:
+                    deleteProgramme();
+                    break;
                 default:
                 // ...
             }
         } while (choice != 0);
     }
 
+    //display programme
     public void listProgramme() {
         programmeList = programmeDA.readFromFile();
 
@@ -178,10 +182,9 @@ public class ProgrammeControl {
             System.out.println("Error: Programme with the given code does not exist.");
             return; // Exit the function if programme doesn't exist
         }
-        
+
 //        ListInterface<Programme> programme1 = programmeList.filter(programme -> programme.getProgrammeCode().equals(programmeCode.getProgrammeCode().toUpperCase()));
 //        Programme prog1 = FileHandling.getProgramme(primaryKey);
-        
         existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
 
         // list selected program for formatting
@@ -252,6 +255,45 @@ public class ProgrammeControl {
         return -1; // not found
     }
 
+    //delete
+    public void deleteProgramme() {
+        System.out.println("\nEnter Programme Code to Delete:");
+
+        Programme existingProgramme;
+
+        Programme programmeCode = programmeUI.checkProgrammeCode();
+
+        if (!programmeExists(programmeCode.getProgrammeCode())) {
+            System.out.println("Error: Programme with the given code does not exist.");
+            return; // Exit the function if programme doesn't exist
+        }
+
+        existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
+
+        // list selected program for formatting
+        LinkedList<Programme> selectedProgramList = new LinkedList<>();
+        selectedProgramList.add(existingProgramme);
+
+        String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
+        programmeUI.listAllProgrammes(formattedOutput); //display current - code
+
+        if (InputHandling.getConfirmation("Confirm to delete this programme? (Y or N): ")) {
+            int index = getIndexByProgrammeCode(existingProgramme.getProgrammeCode());
+            if (index != -1) {
+                programmeList.remove(index);
+                programmeDA.writeToFile(programmeList);
+                System.out.println("\nProgramme deleted successfully!");
+            } else {
+                System.out.println("\nError: Programme not found in the list.");
+            }
+        } else {
+            System.out.println("\nProgramme deleted unsuccessfully.");
+        }
+
+        formattedOutput = programmeUI.formatProgrammeList(programmeList);
+        programmeUI.listAllProgrammes(formattedOutput);
+    }
+
     //check code exists
     private boolean programmeExists(String programmeCode) {
         String upCode = programmeCode.toUpperCase();
@@ -263,8 +305,7 @@ public class ProgrammeControl {
         }
         return false;
     }
-    
-    
+
     public static void main(String[] args) {
         ProgrammeControl progControl = new ProgrammeControl();
         progControl.runProgramme();

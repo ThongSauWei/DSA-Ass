@@ -37,22 +37,6 @@ public class ProgrammeManageUI {
     }
 
     //formatDisplay - any format also can der
-//    public String formatProgrammeList(ListInterface<Programme> programmeList) {
-//        StringBuilder formattedOutput = new StringBuilder();
-//
-//        formattedOutput.append("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-//        formattedOutput.append(String.format("%-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n", "Programme Code", "Programme Name", "Programme Details",
-//                "Level", "Faculty", "Duration(Months)"));
-//        formattedOutput.append("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-//
-//        for (Programme programme : programmeList) {
-//            formattedOutput.append(String.format("%-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n",
-//                    programme.getProgrammeCode(), programme.getProgrammeName(), programme.getProgrammeDetail(),
-//                    programme.getProgrammeLevel(), programme.getFaculty(), programme.getDuration()));
-//        }
-//
-//        return formattedOutput.toString();
-//    }
     public String formatProgrammeList(ListInterface<Programme> programmeList) {
         if (programmeList == null) {
             return "No programmes found.";
