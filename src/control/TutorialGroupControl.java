@@ -21,7 +21,7 @@ import utility.*;
 
 /**
  *
- * @author User
+ * @author Benjamin
  */
 public class TutorialGroupControl {  
     private TutorialGroupDA tutorialGroupDA = new TutorialGroupDA();
@@ -99,7 +99,7 @@ public class TutorialGroupControl {
         }
     }
     
-    public void removeStudent() {
+    public void removeStudent() { // completed
         TutorialGroup ttlGroup = chooseTutorialGroup();
         ListInterface<Student> ttlGroupStudents = studentList.filter(student -> student.getTutorialGroupId().equals(ttlGroup));
         
@@ -121,32 +121,37 @@ public class TutorialGroupControl {
         tutorialGroupDA.writeToFile(tutorialGroupList);
     }
     
-    public void changeTutorialGroup() {
-        TutorialGroup ttlGroup = chooseTutorialGroup();
-        ListInterface<Student> ttlGroupStudents = studentList.filter(student -> student.getTutorialGroupId().equals(ttlGroup));
+    public void changeTutorialGroup() { // completed
+        TutorialGroup oldTtlGroup = chooseTutorialGroup();
+        ListInterface<Student> oldTtlGroupStudents = studentList.filter(student -> student.getTutorialGroupId().equals(oldTtlGroup));
         
-        Student studentChange = getStudent(ttlGroupStudents);
+        Student studentChange = getStudent(oldTtlGroupStudents);
         
+        TutorialGroup newTtlGroup = chooseTutorialGroup(oldTtlGroup);
         
+        if (tutorialGroupUI.confirmForGroupChanging(oldTtlGroup, newTtlGroup)) {
+            studentChange.setTutorialGroupId(newTtlGroup);
+            newTtlGroup.setNumOfStudent(newTtlGroup.getNumOfStudent() + 1);
+            oldTtlGroup.setNumOfStudent(oldTtlGroup.getNumOfStudent() - 1);
+            tutorialGroupDA.writeToFile(tutorialGroupList);
+        }
     }
     
-    public void findStudent() { // completed
+    public Student findStudent() { // completed
         TutorialGroup ttlGroup = chooseTutorialGroup();
         
         String id = tutorialGroupUI.getIdInput();
-        boolean found = false;
         
         for(Student student : studentList) {
             if (student.getStudentId().equals(id)) {
                 tutorialGroupUI.displayStudent(student);
-                found = true;
-                break;
+                return student;
             }
         }
         
-        if (!found) {
-            tutorialGroupUI.displayStudentNotFoundMessage();
-        }
+        tutorialGroupUI.displayStudentNotFoundMessage();
+        
+        return null;
     }
     
     public void listStudents() { // completed
@@ -157,33 +162,47 @@ public class TutorialGroupControl {
     }
     
     public void filterTutorialGroups() {
-        TutorialGroup ttlGroup = chooseTutorialGroup();
+        
     }
     
     public void generateReports() {
-        TutorialGroup ttlGroup = chooseTutorialGroup();
+        
     }
     
     public Programme chooseProgramme() {
         tutorialGroupUI.listProgrammes(programmeList);
         
         int choice = tutorialGroupUI.getProgrammeChoice(programmeList.getSize());
-
-        System.out.println();
         
         return programmeList.get(choice);
     }
     
     public TutorialGroup chooseTutorialGroup() {
+        return chooseTutorialGroup(null);
+    }
+    
+    public TutorialGroup chooseTutorialGroup(TutorialGroup oldTtlGroup) {       
         Programme programme = chooseProgramme();
-        
         ListInterface<TutorialGroup> programmeTtlGroups = tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(programme));
+        TutorialGroup ttlGroupChosen = null;
+
+        do {
+            int choice = tutorialGroupUI.getTutorialGroupChoice(programmeTtlGroups.getSize());
+
+            ttlGroupChosen = programmeTtlGroups.get(choice);
+
+        } while (compareTtlGroup(oldTtlGroup, ttlGroupChosen));
         
-        int choice = tutorialGroupUI.getTutorialGroupChoice(programmeTtlGroups.getSize());
+        return ttlGroupChosen;
+    }
+    
+    public boolean compareTtlGroup(TutorialGroup oldTtlGroup, TutorialGroup newTtlGroup) {
+        if (oldTtlGroup.equals(newTtlGroup)) {
+            tutorialGroupUI.displaySameTtlGroupMessage();
+            return false;
+        }
         
-        System.out.println();
-        
-        return programmeTtlGroups.get(choice);
+        return true;
     }
     
     public Student getStudent(ListInterface<Student> ttlGroupStudents) {
@@ -194,11 +213,12 @@ public class TutorialGroupControl {
         
         switch (choice) {
             case 1:
-                findStudent();
+                student = findStudent();
                 break;
             case 2:
                 listStudents();
-                int studentNo;
+                int studentNo = tutorialGroupUI.getStudentChoice(ttlGroupStudents.getSize());
+                student = ttlGroupStudents.get(studentNo);
                 break;
             case 3: // maybe will be remove
                 IteratorInterface<Student> iterator = ttlGroupStudents.getIterator();

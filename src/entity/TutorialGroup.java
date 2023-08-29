@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author User
+ * @author Benjamin
  */
 public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
     private String tutorialGroupId;

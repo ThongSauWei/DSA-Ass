@@ -14,7 +14,7 @@ import entity.TutorialGroup;
 import adt.ListInterface;
 /**
  *
- * @author User
+ * @author Benjamin
  */
 public class TutorialGroupUI {
     public int displayMenu() {
@@ -50,9 +50,9 @@ public class TutorialGroupUI {
     }
     
     public int getStudentMenu() {
-        System.out.println("You have selected to remove a student from a tutorial group...");
+        System.out.println("You have to select a student from the tutorial group...");
         System.out.println();
-        System.out.println("Choose the method for removing");
+        System.out.println("Choose the method for selecting");
         Helper.printLine('=', 36);
         System.out.println("1. Searching");
         System.out.println("2. Browsing (List)");
@@ -74,8 +74,17 @@ public class TutorialGroupUI {
         return InputHandling.choiceValidation("Option : ", 0, 3);
     }
     
-    public void changeTutorialGroup() {
+    public int displayCriteriaMenu() {
+        System.out.println("You have selected to filter the tutorial groups...");
+        System.out.println();
+        System.out.println("Choose The Criteria");
+        Helper.printLine('=', 19);
+        System.out.println("1. Programme");
+        System.out.println("2. Course Taken");
+        System.out.println("3. Number Of Students");
+        Helper.printLine('=', 19);
         
+        return InputHandling.choiceValidation("Option : ", 1, 3);
     }
     
     public void displayStudent(Student student) {
@@ -123,6 +132,16 @@ public class TutorialGroupUI {
     
     public void displayInvalidChoiceMessage() {
         System.out.println("Invalid Option! Please Enter Again.");
+        InputHandling.systemPause();
+    }
+    
+    public void displaySameTtlGroupMessage() {
+        System.out.println("You Cannot Choose The Same Tutorial Group! Please Choose Again.");
+        InputHandling.systemPause();
+    }
+    
+    public int getStudentChoice(int size) {
+        return InputHandling.choiceValidation("Please Choose The Student", 1, size);
     }
     
     public int getProgrammeChoice(int size) {
@@ -131,5 +150,10 @@ public class TutorialGroupUI {
     
     public int getTutorialGroupChoice(int size) {       
         return InputHandling.choiceValidation("Please Enter the Tutorial Group Number (max = " + size + " ) : ", 1, size);
+    }
+    
+    public boolean confirmForGroupChanging(TutorialGroup oldTtlGroup, TutorialGroup newTtlGroup) {
+        return InputHandling.getConfirmation("Are You Sure You Want To Change The Tutorial Group Of The Student From " + oldTtlGroup.getTutorialGroupId()
+                + " To " + newTtlGroup.getTutorialGroupId() + "? (Y or N) : ");
     }
 }
