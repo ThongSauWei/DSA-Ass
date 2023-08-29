@@ -10,6 +10,7 @@ import utility.Helper;
 import entity.Programme;
 import entity.Student;
 import entity.TutorialGroup;
+import entity.Course;
 
 import adt.ListInterface;
 /**
@@ -17,6 +18,7 @@ import adt.ListInterface;
  * @author Benjamin
  */
 public class TutorialGroupUI {
+    // Display Menu
     public int displayMenu() {
         System.out.println("Welcome to Tutorial Group Management");
         Helper.printLine('=', 50);
@@ -33,23 +35,7 @@ public class TutorialGroupUI {
         return InputHandling.choiceValidation("Please Choose Your Option : ", 0, 7);
     }
     
-    public Student addStudentDetail(TutorialGroup ttlGroup) {
-        System.out.println("You have selected to add a student to a tutorial group...");
-        System.out.println();
-        System.out.println("Enter the Detail of the new student : ");
-        String id = InputHandling.getString("ID : ");
-        String name = InputHandling.getString("Name : ");
-        String ic = InputHandling.getString("IC : ");
-        String email = InputHandling.getString("Email : ");
-        String phoneNo = InputHandling.getString("Phone Number : ");
-        int year = InputHandling.getInt("Year of Study : ");
-        int sem = InputHandling.getInt("Semester : ");
-        System.out.println();
-        
-        return new Student(id, name, ic, email, phoneNo, year, sem, ttlGroup);  
-    }
-    
-    public int getStudentMenu() {
+    public int displayGetStudentMenu() {
         System.out.println("You have to select a student from the tutorial group...");
         System.out.println();
         System.out.println("Choose the method for selecting");
@@ -59,10 +45,10 @@ public class TutorialGroupUI {
         System.out.println("3. Browsing (One)");
         Helper.printLine('=', 36);
         
-        return InputHandling.choiceValidation("Please Choose Your Option : ", 1, 3);
+        return InputHandling.choiceValidation("Option : ", 1, 3);
     }
     
-    public int browseStudentMenu(Student student) {
+    public int displayBrowseStudentMenu(Student student) {
         System.out.println(student);
         Helper.printLine('=', 30);
         System.out.println("1. Previous Student");
@@ -87,47 +73,36 @@ public class TutorialGroupUI {
         return InputHandling.choiceValidation("Option : ", 1, 3);
     }
     
+    public int displayReportMenu() {
+        System.out.println("You have selected to generate report");
+        System.out.println();
+        System.out.println("Generate Report For...");
+        Helper.printLine('=', 22);
+        System.out.println("1. One Tutorial Group");
+        System.out.println("2. All Tutorial Groups In A Programme");
+        System.out.println("3. All Tutorial Groups");
+        Helper.printLine('=', 22);
+        
+        return InputHandling.choiceValidation("Option : ", 1, 3);
+    }
+    
+    // Display Message/Entity
+    public void displayTutorialGroup(TutorialGroup tutorialGroup) {
+        System.out.println(tutorialGroup);
+    }
+    
     public void displayStudent(Student student) {
         System.out.println(student);
     }
     
+    public void displayProgramme(Programme programme) {
+        System.out.println("Programme Code : " + programme.getProgrammeCode());
+        System.out.println("Programme Name : " + programme.getProgrammeName());
+        System.out.println("Faculty : " + programme.getFaculty());
+    }
+    
     public void displayStudentNotFoundMessage() {
         System.out.println("Student Not Found!");
-    }
-    
-    public void filterTutorialGroups() {
-        
-    }
-    
-    public void generateReports() {
-        
-    }
-    
-    // others
-    public void listProgrammes(ListInterface<Programme> programmeList) {
-        int count = 1;
-        System.out.println("Choose the Programme");
-        Helper.printLine('=', 20);
-        for (Programme programme : programmeList) {
-            System.out.print(count + ". " + programme);
-            count++;
-        }
-        Helper.printLine('=', 20);
-    }
-    
-    public String getIdInput() {
-        return InputHandling.getString("ID : ");
-    }
-    
-    public void listStudents(ListInterface<Student> studentList) {
-        int count = 1;
-        System.out.println("Choose the Student");
-        Helper.printLine('=', 18);
-        for (Student student : studentList) {
-            System.out.print(count + ". " + student);
-            count++;
-        }
-        Helper.printLine('=', 18);
     }
     
     public void displayInvalidChoiceMessage() {
@@ -140,6 +115,67 @@ public class TutorialGroupUI {
         InputHandling.systemPause();
     }
     
+    // Display List
+    public void listTutorialGroups(ListInterface<TutorialGroup> tutorialGroupList) {
+        listTutorialGroups(tutorialGroupList, 1);
+    }
+    
+    public void listTutorialGroups(ListInterface<TutorialGroup> tutorialGroupList, int count) {
+        System.out.println("The Tutorial Groups In The Programme");
+        Helper.printLine('=', 36);
+        for (TutorialGroup ttlGroup : tutorialGroupList) {
+            System.out.print(count + ". " + ttlGroup);
+            count++;
+        }
+        Helper.printLine('=', 36);
+    }
+    
+    public void listProgrammes(ListInterface<Programme> programmeList) {
+        int count = 1;
+        System.out.println("The Programmes Available");
+        Helper.printLine('=', 24);
+        for (Programme programme : programmeList) {
+            System.out.print(count + ". " + programme);
+            count++;
+        }
+        Helper.printLine('=', 24);
+    }
+    
+    public void listStudents(ListInterface<Student> studentList) {
+        int count = 1;
+        System.out.println("The Students In The Tutorial Group");
+        Helper.printLine('=', 34);
+        for (Student student : studentList) {
+            System.out.print(count + ". " + student);
+            count++;
+        }
+        Helper.printLine('=', 34);
+    }
+    
+    public void listCourses(ListInterface<Course> courseList) {
+        int count = 1;
+        System.out.println("The Courses Available");
+        Helper.printLine('=', 21);
+        for (Course course : courseList) {
+            System.out.print(count + ". " + course);
+            count++;
+        }
+        Helper.printLine('=', 21);
+    }
+    
+    public void generateReports() {
+        
+    }
+    
+    // Get Input
+    public String getIdInput() {
+        return InputHandling.getString("ID : ");
+    }
+    
+    public int getNumOfStudents() {
+        return InputHandling.getInt("Only Shows Tutorial Groups With Number Of Students More Than Or Equals To : ");
+    }
+    
     public int getStudentChoice(int size) {
         return InputHandling.choiceValidation("Please Choose The Student", 1, size);
     }
@@ -149,10 +185,30 @@ public class TutorialGroupUI {
     }
     
     public int getTutorialGroupChoice(int size) {       
-        return InputHandling.choiceValidation("Please Enter the Tutorial Group Number (max = " + size + " ) : ", 1, size);
+        return InputHandling.choiceValidation("Please Enter The Tutorial Group Number (max = " + size + " ) : ", 1, size);
     }
     
-    public boolean confirmForGroupChanging(TutorialGroup oldTtlGroup, TutorialGroup newTtlGroup) {
+    public int getCourseChoice(int size) {
+        return InputHandling.choiceValidation("Please Choose Your Option : ", 1, size);
+    }
+    
+    public Student getStudentDetail(TutorialGroup ttlGroup) {
+        System.out.println("You have selected to add a student to a tutorial group...");
+        System.out.println();
+        System.out.println("Enter the Detail of the new student : ");
+        String id = InputHandling.getString("ID : ");
+        String name = InputHandling.getString("Name : ");
+        String ic = InputHandling.getString("IC : ");
+        String email = InputHandling.getString("Email : ");
+        String phoneNo = InputHandling.getString("Phone Number : ");
+        int year = InputHandling.getInt("Year of Study : ");
+        int sem = InputHandling.getInt("Semester : ");
+        System.out.println();
+        
+        return new Student(id, name, ic, email, phoneNo, year, sem, ttlGroup);  
+    }
+    
+    public boolean getConfirmationForGroupChanging(TutorialGroup oldTtlGroup, TutorialGroup newTtlGroup) {
         return InputHandling.getConfirmation("Are You Sure You Want To Change The Tutorial Group Of The Student From " + oldTtlGroup.getTutorialGroupId()
                 + " To " + newTtlGroup.getTutorialGroupId() + "? (Y or N) : ");
     }
