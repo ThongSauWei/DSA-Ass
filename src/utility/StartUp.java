@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
  * @author User
  */
 public class StartUp {
-    public static void startUp() {
+    public static void startUp() { // In case the related file is not open yet
         FileHandling.createOrOpenFile("AssignmentTeam.txt");
         FileHandling.createOrOpenFile("Course.txt");
         FileHandling.createOrOpenFile("CourseProgramme.txt");
@@ -22,11 +22,9 @@ public class StartUp {
         FileHandling.createOrOpenFile("Student.txt");
         FileHandling.createOrOpenFile("TutorialGroup.txt");
         FileHandling.createOrOpenFile("AssignmentStudent.txt");
-        
-        init();
     }
     
-    public static void init() {
+    public static void init() { // Used to create data if the file does not have data
         // initialise programme file
         ListInterface<Programme> programmeList = new LinkedList<>();
         Programme programme1 = new Programme("RSD", "Bachelor in Software System Development", "Year Two Sem One Sibeehhhh Busy.", 'R', "FOCS", 3);
