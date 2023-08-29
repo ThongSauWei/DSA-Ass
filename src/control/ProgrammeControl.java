@@ -258,12 +258,11 @@ public class ProgrammeControl {
     //delete
     public void deleteProgramme() {
         System.out.println("\nEnter Programme Code to Delete:");
-
         Programme existingProgramme;
 
         Programme programmeCode = programmeUI.checkProgrammeCode();
 
-        if (!programmeExists(programmeCode.getProgrammeCode())) {
+        if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
             System.out.println("Error: Programme with the given code does not exist.");
             return; // Exit the function if programme doesn't exist
         }
@@ -272,6 +271,7 @@ public class ProgrammeControl {
 
         // list selected program for formatting
         LinkedList<Programme> selectedProgramList = new LinkedList<>();
+//        ListInterface<Programme> programme1 = programmeList.filter(programme -> programme.getProgrammeCode().equals(programmeCode.getProgrammeCode().toUpperCase()));
         selectedProgramList.add(existingProgramme);
 
         String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
