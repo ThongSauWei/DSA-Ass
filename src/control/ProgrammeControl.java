@@ -30,23 +30,24 @@ public class ProgrammeControl {
     private ProgrammeManageUI programmeUI = new ProgrammeManageUI();
 
     public void runProgramme() {
+        // Initialize the programmeList here before displaying the menu
+        programmeList = programmeDA.readFromFile();
+
         int choice;
-//        startUp.startUp();
         do {
             choice = programmeUI.programmeMenu();
             switch (choice) {
                 case 0:
-//                    listProgramme();
+                    // ...
                     break;
                 case 1:
                     listProgramme();
                     break;
                 case 2:
                     addProgramme();
-//                    productUI.listAllProducts(getAllProducts());
                     break;
                 default:
-//                    MessageUI.displayInvalidChoiceMessage();
+                // ...
             }
         } while (choice != 0);
     }
@@ -62,8 +63,8 @@ public class ProgrammeControl {
 
             // Ask user if they want to sort the output
             if (InputHandling.getConfirmation("Do you want to sort the programme list? (Y or N): ")) {
-                int sortOption = programmeUI.sortOptions(); 
-                int sortChoice = programmeUI.sortMenu(); 
+                int sortOption = programmeUI.sortOptions();
+                int sortChoice = programmeUI.sortMenu();
 
                 if (sortChoice == 1) {
                     sortProgrammeListAscending(sortOption);
@@ -111,19 +112,17 @@ public class ProgrammeControl {
             Programme current = list.get(position);
 //            int option = 1;
             int comparison = 0;
-            if(option == 1){
+            if (option == 1) {
                 comparison = programme.getProgrammeCode().compareTo(current.getProgrammeCode());
-            }else if(option == 2){
+            } else if (option == 2) {
                 comparison = programme.getFaculty().compareTo(current.getFaculty());
-            }else if(option == 3){
+            } else if (option == 3) {
                 comparison = programme.getProgrammeName().compareTo(current.getProgrammeName());
-            }else if(option == 4){
+            } else if (option == 4) {
                 comparison = programme.getProgrammeLevel().compareTo(current.getProgrammeLevel());
             }
-            
 
 //            int comparison = programme.getProgrammeCode().compareTo(current.getProgrammeCode());
-
             if ((ascending && comparison < 0) || (!ascending && comparison > 0)) {
                 list.add(programme, position);
                 return;
@@ -138,10 +137,41 @@ public class ProgrammeControl {
 
     //add
     public void addProgramme() {
-        Programme newProgramme = programmeUI.getProgrammeInput();
-        programmeList.add(newProgramme);
-        programmeDA.writeToFile(programmeList); // Update the file after adding
-        System.out.println("Programme added successfully!");
+        System.out.println("\nEnter Programme Details:");
+
+        Programme newProgrammeCode;
+        do {
+            newProgrammeCode = programmeUI.checkProgrammeCode();
+
+            if (programmeExists(newProgrammeCode.getProgrammeCode())) {
+                System.out.println("Error: the Programme Code - " + newProgrammeCode.getProgrammeCode() + " already exists.");
+            }
+        } while (programmeExists(newProgrammeCode.getProgrammeCode()));
+
+        Programme newProgramme = programmeUI.addProgrammeInput(newProgrammeCode);
+
+        if (newProgramme != null) {
+            if (InputHandling.getConfirmation("Confirm to add this programme? (Y or N): ")) {
+                programmeList.add(newProgramme);
+                programmeDA.writeToFile(programmeList);
+                System.out.println("Programme added successfully!");
+            } else {
+                System.out.println("Programme added unsuccessfully.");
+            }
+            // Display 
+            String formattedOutput = programmeUI.formatProgrammeList(programmeList);
+            programmeUI.listAllProgrammes(formattedOutput);
+        }
+    }
+
+    //check code exists
+    private boolean programmeExists(String programmeCode) {
+        for (Programme existingProgramme : programmeList) {
+            if (existingProgramme.getProgrammeCode().equals(programmeCode)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
@@ -149,9 +179,6 @@ public class ProgrammeControl {
         progControl.runProgramme();
     }
 
-//    public void displayProgramme() {
-//        listProgramme();
-//    }
 //    public ListInterface<Programme> readFromFile() {
 //        return programmeDA.readFromFile();
 //    }

@@ -2,3 +2,8 @@ RSD|Bachelor in Software System Development|Year Two Sem One Sibeehhhh Busy.|R|F
 DFT|Diploma in Information Technology|Diploma Is Used For Playing!!!|D|FOCS|2
 FCP|Foundation in Computing Track A|Foundation Not To Say One. No Experience.|F|FOCS|1
 RRR|testing testing|testing detail testing|D|FOCS|12
+QQQ|testing|testing123|D|FAFB|2
+X|X|null|X|FOXX|1
+A|hccccbcbsdhcbdshc|null|A|AAAA|1
+ZZ|ZZ|null|Z|ZZZZ|1
+CCC|C|CCC|C|CCCC|1

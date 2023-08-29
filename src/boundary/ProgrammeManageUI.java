@@ -15,6 +15,7 @@ import utility.*;
  */
 public class ProgrammeManageUI {
 
+    //programme menu
     public int programmeMenu() {
         System.out.println("\n~PROGRAMME MENU~");
         Helper.printLine('-', 30);
@@ -30,6 +31,7 @@ public class ProgrammeManageUI {
         return InputHandling.choiceValidation("Please Choose Your Option : ", 0, 6);
     }
 
+    //list all programme
     public void listAllProgrammes(String formattedOutput) {
         displayMessage("\nProgramme List:\n" + formattedOutput);
     }
@@ -57,21 +59,63 @@ public class ProgrammeManageUI {
         System.out.println(message);
     }
 
-    //add
-    public Programme getProgrammeInput() {
-        System.out.println("\nEnter Programme Details:");
-        String programmeCode = InputHandling.getString("Programme Code: ");
-        String programmeName = InputHandling.getString("Programme Name: ");
-        String programmeDetail = InputHandling.getString("Programme Detail: ");
-        char programmeLevel = InputHandling.getChar("Programme Level: ");
-        String faculty = InputHandling.getString("Faculty: ");
-        int duration = InputHandling.getInt("Duration (in months): ");
-
-        return new Programme(programmeCode, programmeName, programmeDetail, programmeLevel, faculty, duration);
+    //check programme code
+    public Programme checkProgrammeCode() {
+        String programmeCode;
+        do {
+            programmeCode = InputHandling.getString("Programme Code (exp. RSD): ");
+            if (!programmeCode.matches("[A-Za-z]{3}")) {
+                invalidInput();
+            }
+        } while (!programmeCode.matches("[A-Za-z]{3}"));
+        return new Programme(programmeCode);
     }
 
+    //add
+    public Programme addProgrammeInput(Programme programmeCode) {
+        String programmeName;
+        String programmeDetail;
+        char programmeLevel;
+        String faculty;
+        int duration;
+
+        programmeName = InputHandling.getString("Programme Name: ");
+
+        // Collect programmeDetail input with validation
+        do {
+            programmeDetail = InputHandling.getString("Programme Detail: ");
+            if (programmeDetail.trim().isEmpty()) {
+                invalidInput();
+            }
+        } while (programmeDetail.trim().isEmpty());
+
+        do {
+            programmeLevel = InputHandling.getChar("Programme Level (exp. D - Diploma, R - Bachelor Degree): ");
+            if (!Character.isLetter(programmeLevel) || Character.isWhitespace(programmeLevel)) {
+                invalidInput();
+            }
+        } while (!Character.isLetter(programmeLevel) || Character.isWhitespace(programmeLevel));
+
+        do {
+            faculty = InputHandling.getString("Faculty (exp.FOCS): ");
+            if (!faculty.matches("[A-Za-z]{4}")) {
+                invalidInput();
+            }
+        } while (!faculty.matches("[A-Za-z]{4}"));
+
+        duration = InputHandling.getInt("Duration (in months): ");
+
+        return new Programme(programmeCode.getProgrammeCode(), programmeName, programmeDetail, programmeLevel, faculty, duration);
+    }
+
+    //invalid message
+    private void invalidInput() {
+        System.out.println("Invalid input, please enter again...");
+    }
+
+    //sort
     public int sortMenu() {
-        System.out.println("\n~SORT MENU ~");
+        System.out.println("\n~ SORT MENU ~");
         Helper.printLine('-', 20);
         System.out.println("1. Ascending Order");
         System.out.println("2. Descending Order");
@@ -80,7 +124,7 @@ public class ProgrammeManageUI {
 
         return InputHandling.choiceValidation("Please Choose Sorting Option: ", 0, 2);
     }
-    
+
     public int sortOptions() {
         System.out.println("\nChoose how to sort the programme list:");
         Helper.printLine('-', 20);
