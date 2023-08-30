@@ -125,8 +125,7 @@ public class TutorialGroupUI {
 
     public void displayStudent(Student student) {
         System.out.println(student);
-        InputHandling.systemPause();
-        Helper.clearScreen();
+        displaySystemPauseMessage();
     }
 
     public void displayProgramme(Programme programme) {
@@ -147,6 +146,20 @@ public class TutorialGroupUI {
 
     public void displaySameTtlGroupMessage() {
         System.out.println("You Cannot Choose The Same Tutorial Group! Please Choose Again.");
+    }
+    
+    public void displayNoTtlGroupMessage() {
+        System.out.println("There Is No Tutorial Group In This Programme. Please Choose Again...");
+        System.out.println();
+        InputHandling.systemPause();
+        System.out.println();
+        System.out.println();
+    }
+    
+    public void displayNoStudentMessage() {
+        System.out.println("There is No Student In This Tutorial Group...");
+        System.out.println();
+        displaySystemPauseMessage();
     }
 
     public void displaySystemPauseMessage() {
@@ -172,7 +185,7 @@ public class TutorialGroupUI {
         System.out.println("The Programmes Available");
         Helper.printLine('=', 24);
         for (Programme programme : programmeList) {
-            System.out.print(count + ". " + programme);
+            System.out.println(count + ". " + programme.getProgrammeName() + "\t" + programme.getProgrammeCode() + "\t" + programme.getFaculty());
             count++;
         }
         Helper.printLine('=', 24);
@@ -238,10 +251,10 @@ public class TutorialGroupUI {
     }
 
     public int getTutorialGroupChoice(int size) {
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("Please Enter The Tutorial Group Number (max = " + size + ") : ");
 
         while (!Helper.choiceValidation(choice, 1, size)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("Please Enter The Tutorial Group Number (max = " + size + ") : ");
         }
 
         return choice;

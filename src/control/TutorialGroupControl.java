@@ -68,6 +68,7 @@ public class TutorialGroupControl {
                     break;
                 case 7:
                     generateReports();
+                    break;
                 case 0:
                     break;
                 default:
@@ -80,6 +81,7 @@ public class TutorialGroupControl {
     
     public void addStudent() { // completed
         TutorialGroup ttlGroup = chooseTutorialGroup();
+        
         Student newStudent = tutorialGroupUI.getStudentDetail(ttlGroup);
         boolean idRepeated = false;
         
@@ -165,7 +167,7 @@ public class TutorialGroupControl {
         return null;
     }
     
-    public void listStudents() { // completed
+    public void listStudents() { // completed & tested
         listStudents(true);
     }
     
@@ -181,7 +183,11 @@ public class TutorialGroupControl {
     }
     
     public void listStudents(TutorialGroup tutorialGroup, boolean sysPause) {
-        tutorialGroupUI.listStudents(studentList.filter(student -> student.getTutorialGroupId().equals(tutorialGroup)), sysPause);
+        try {
+            tutorialGroupUI.listStudents(studentList.filter(student -> student.getTutorialGroupId().equals(tutorialGroup)), sysPause);
+        } catch (IndexOutOfBoundsException ex) {
+            tutorialGroupUI.displayNoStudentMessage();
+        }
     }
     
     public void filterTutorialGroups() { // completed
@@ -277,11 +283,21 @@ public class TutorialGroupControl {
         return chooseTutorialGroup(null); // no old tutorial group except for the case of changing tutorial group for a student
     }
     
-    public TutorialGroup chooseTutorialGroup(TutorialGroup oldTtlGroup) {       
-        Programme programme = chooseProgramme();
+    public TutorialGroup chooseTutorialGroup(TutorialGroup oldTtlGroup) {
+        ListInterface<TutorialGroup> programmeTtlGroups = new LinkedList<>();
         
-        // filter the list so that the tutorial group in the programme only will be listed
-        ListInterface<TutorialGroup> programmeTtlGroups = tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(programme));
+        do {
+            Programme programme = chooseProgramme();
+
+            // filter the list so that the tutorial group in the programme only will be listed
+            programmeTtlGroups = tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(programme));
+
+            if (programmeTtlGroups.isEmpty()) {
+                tutorialGroupUI.displayNoTtlGroupMessage();
+            }
+
+        } while (programmeTtlGroups.isEmpty());
+
         TutorialGroup ttlGroupChosen = null;
 
         do {
@@ -290,7 +306,7 @@ public class TutorialGroupControl {
             ttlGroupChosen = programmeTtlGroups.get(choice);
 
         } while (oldTtlGroup != null && compareTtlGroup(oldTtlGroup, ttlGroupChosen)); // if there is old tutorial group, the selected tutorial group cannot be same with the old tutorial group
-        
+
         return ttlGroupChosen;
     }
     
