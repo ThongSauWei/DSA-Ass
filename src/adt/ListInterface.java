@@ -4,6 +4,7 @@
  */
 package adt;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 /**
@@ -26,8 +27,12 @@ public interface ListInterface<T extends Comparable<T>> extends Iterable<T> {
     // Update
     public boolean replace(T entry, int position);
     
-    // Sort
     public void sort();
+    // Sort
+    public void sort(Comparator<T> attribute);
+    
+    // Reverse
+    public void reverse();
     
     // Count
     public int getSize();

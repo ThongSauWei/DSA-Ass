@@ -5,13 +5,14 @@
 package adt;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 import utility.ExceptionHandling;
 
 /**
  *
- * @author Benjamin
+ * @author User
  */
 public class LinkedList<T extends Comparable<T>> implements Serializable, ListInterface<T> {
     private Node firstNode;
@@ -203,7 +204,19 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     
     @Override
     public void sort() {
-        quickSort(firstNode, lastNode); // use quick sort for sorting
+        sort(Comparator.naturalOrder());
+    }
+    
+    @Override
+    public void sort(Comparator<T> attribute) {
+        quickSort(firstNode, lastNode, attribute); // use quick sort for sorting
+    }
+    
+    @Override
+    public void reverse() {
+        for (Node i = firstNode, j = lastNode; compareNode(i,j); i = i.nextNode, j = j.previousNode) {
+            swap(i,j);
+        }
     }
     
     @Override
@@ -294,24 +307,24 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
         return false;
     }
     
-    private void quickSort(Node first, Node last) {
+    private void quickSort(Node first, Node last, Comparator<T> attribute) {
         if (compareNode(first, last)) { // first and last != null and first must be in front of last in the list (first < second in the list)
             // get the node that is sorted
-            Node sorted = partition(first, last);
+            Node sorted = partition(first, last, attribute);
             
             // sort both side from the sorted node
-            quickSort(first, sorted.previousNode);
-            quickSort(sorted.nextNode, last);           
+            quickSort(first, sorted.previousNode, attribute);
+            quickSort(sorted.nextNode, last, attribute);           
         }
     }
     
-    private Node partition(Node first, Node last) {
+    private Node partition(Node first, Node last, Comparator<T> attribute) {
         T pivot = last.entry; // select the last entry as the pivot
         
         Node i = first; // node that will be swapped
         
         for (Node j = first; j != last; j = j.nextNode) { // traverse through the sub-list to determine whether to swap or not
-            if (j.entry.compareTo(pivot) < 0) { // compare both pivot and the node traversing, if the node traversing is "less than" pivot, swap it with the node "i"
+            if (attribute.compare(j.entry, pivot) < 0) { // compare both pivot and the node traversing, if the node traversing is "less than" pivot, swap it with the node "i"
                 swap(i, j);
                 i = i.nextNode; // go to the next node (the node will then be swapped)
             }
