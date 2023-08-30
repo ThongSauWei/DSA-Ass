@@ -169,7 +169,7 @@ public class ProgrammeManageUI {
         System.out.println("4. Update Faculty");
         System.out.println("5. Update Duration");
         System.out.println("6. Update All Details");
-        System.out.println("0. Cancel Update");
+        System.out.println("0. EXIT");
         Helper.printLine('-', 30);
 
         return InputHandling.choiceValidation("Please choose an option: ", 0, 6);
@@ -181,10 +181,9 @@ public class ProgrammeManageUI {
         Helper.printLine('-', 20);
         System.out.println("1. Ascending Order");
         System.out.println("2. Descending Order");
-        System.out.println("0. EXIT");
         Helper.printLine('-', 20);
 
-        return InputHandling.choiceValidation("Please Choose Sorting Option: ", 0, 2);
+        return InputHandling.choiceValidation("Please Choose Sorting Option: ", 1, 2);
     }
 
     public int sortOptions() {
@@ -198,5 +197,7 @@ public class ProgrammeManageUI {
         Helper.printLine('-', 20);
         return InputHandling.choiceValidation("Please Choose Option: ", 0, 4);
     }
+  
+
 
 }

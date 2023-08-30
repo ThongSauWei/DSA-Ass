@@ -51,6 +51,9 @@ public class ProgrammeControl {
                 case 4:
                     deleteProgramme();
                     break;
+                case 5:
+                    searchProgramme();
+                    break;
                 default:
                 // ...
             }
@@ -70,6 +73,9 @@ public class ProgrammeControl {
             // Ask user if they want to sort the output
             if (InputHandling.getConfirmation("Do you want to sort the programme list? (Y or N): ")) {
                 int sortOption = programmeUI.sortOptions();
+                if (sortOption == 0) {
+                    return;
+                }
                 int sortChoice = programmeUI.sortMenu();
 
                 if (sortChoice == 1) {
@@ -195,16 +201,12 @@ public class ProgrammeControl {
         programmeUI.listAllProgrammes(formattedOutput); //display current - code
 
         int updateOption = programmeUI.updateProgrammeMenu();
-        updateProgrammeData(existingProgramme, updateOption);
-    }
-
-    private Programme getProgrammeByCode(String programmeCode) {
-        for (Programme programme : programmeList) {
-            if (programme.getProgrammeCode().equals(programmeCode)) {
-                return programme;
-            }
+        if (updateOption == 0) {
+            return;
+        } else {
+            updateProgrammeData(existingProgramme, updateOption);
         }
-        return null;
+
     }
 
     private void updateProgrammeData(Programme programme, int updateOption) {
@@ -292,6 +294,74 @@ public class ProgrammeControl {
 
         formattedOutput = programmeUI.formatProgrammeList(programmeList);
         programmeUI.listAllProgrammes(formattedOutput);
+    }
+
+    //find
+    public void searchProgramme() {
+        ListInterface<Programme> programmeList = programmeDA.readFromFile();
+        int searchOption = programmeUI.sortOptions();
+
+        switch (searchOption) {
+            case 1:
+                searchByCriteria(programmeList, "Programme Code");
+                break;
+            case 2:
+                searchByCriteria(programmeList, "Faculty");
+                break;
+            case 3:
+                searchByCriteria(programmeList, "Programme Name");
+                break;
+            case 4:
+                searchByCriteria(programmeList, "Programme Level");
+                break;
+            case 0:
+                System.out.println("Returning to the main menu.");
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+
+    private void searchByCriteria(ListInterface<Programme> programmeList, String fieldLabel) {
+        String targetValue = InputHandling.getString("Enter " + fieldLabel + " to search: ");
+        LinkedList<Programme> results = new LinkedList<>();
+
+        for (Programme programme : programmeList) {
+            String fieldValue = "";
+            boolean matches = false;
+
+            switch (fieldLabel) {
+                case "Programme Code":
+                    fieldValue = programme.getProgrammeCode();
+                    break;
+                case "Faculty":
+                    fieldValue = programme.getFaculty();
+                    break;
+                case "Programme Name":
+                    fieldValue = programme.getProgrammeName();
+                    break;
+                case "Programme Level":
+                    fieldValue = programme.getProgrammeLevel() + "";
+                    break;
+            }
+
+            if (fieldValue.equalsIgnoreCase(targetValue)) {
+                results.add(programme);
+            }
+        }
+
+        String formattedOutput = programmeUI.formatProgrammeList(results);
+        programmeUI.listAllProgrammes(formattedOutput);
+    }
+
+    //get the specific programme
+    private Programme getProgrammeByCode(String programmeCode) {
+        for (Programme programme : programmeList) {
+            if (programme.getProgrammeCode().equals(programmeCode)) {
+                return programme;
+            }
+        }
+        return null;
     }
 
     //check code exists
