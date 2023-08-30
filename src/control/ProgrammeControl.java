@@ -60,6 +60,12 @@ public class ProgrammeControl {
                 case 6:
                     addTutorialGroup();
                     break;
+                case 7:
+                    removeTutorialGroup();
+                    break;
+                case 8:
+                    listTtl();
+                    break;
                 default:
                     programmeUI.invalidInput();
                     break;
@@ -306,7 +312,6 @@ public class ProgrammeControl {
                     programmeDA.writeToFile(programmeList);
                     System.out.println("\nProgramme deleted successfully!");
                 } else {
-//                System.out.println("\nError: Programme not found in the list.");
                     programmeUI.notFound();
                 }
             } else {
@@ -379,11 +384,11 @@ public class ProgrammeControl {
             String formattedOutput = programmeUI.formatProgrammeList(results);
             programmeUI.listAllProgrammes(formattedOutput);
         } else if (!matches) {
-//            System.out.println("No programme found!");
             programmeUI.notFound();
         }
     }
 
+    //tutorial group
     //add tutorial group to programme
     public void addTutorialGroup() {
         boolean yesNo;
@@ -403,19 +408,113 @@ public class ProgrammeControl {
             TutorialGroup newTutorial = programmeUI.addTutorialInput(newProgrammeCode);
 
             if (newTutorial != null) {
-                    if (InputHandling.getConfirmation("Confirm to add this tutorial to " + newProgrammeCode.getProgrammeCode().toUpperCase() + " ? (Y or N): ")) {
-                        ttlList.add(newTutorial);
-                        ttlDA.writeToFile(ttlList);
-                        System.out.println("\nTutorial Group added successfully!");
-                    } else {
-                        System.out.println("\nTutorial Group addition cancelled. The Tutorial Group List remains the same.");
-                    }
+                if (InputHandling.getConfirmation("Confirm to add this tutorial to " + newProgrammeCode.getProgrammeCode().toUpperCase() + " ? (Y or N): ")) {
+                    ttlList.add(newTutorial);
+                    ttlDA.writeToFile(ttlList);
+                    System.out.println("\nTutorial Group added successfully!");
+                } else {
+                    System.out.println("\nTutorial Group addition cancelled. The Tutorial Group List remains the same.");
+                }
 
-                    programmeUI.displayTtl(ttlList);
+                programmeUI.displayTtl(ttlList);
             }
 
             yesNo = programmeUI.continueInput();
         } while (yesNo);
+    }
+
+    //delete
+    public void removeTutorialGroup() {
+        boolean continueRemoval;
+        do {
+            System.out.println("\nRemove Tutorial Group from Programme:");
+
+            Programme programmeCode = programmeUI.checkProgrammeCode();
+
+            if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
+                programmeUI.notExists();
+            } else {
+                Programme existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
+                displayTutorialGroups(existingProgramme);
+
+                String tutorialGroupId = programmeUI.getTutorialGroupIdToDelete();
+
+                TutorialGroup tutorialGroupToRemove = getTutorialGroupById(tutorialGroupId, existingProgramme);
+
+                if (tutorialGroupToRemove != null) {
+                    if (InputHandling.getConfirmation("Confirm to remove this tutorial group? (Y or N): ")) {
+                        int indexToRemove = getIndexByTutorialGroup(tutorialGroupToRemove);
+                        if (indexToRemove != -1) {
+                            ttlList.remove(indexToRemove);
+                            ttlDA.writeToFile(ttlList);
+                            System.out.println("\nTutorial Group removed successfully!");
+                        } else {
+                            System.out.println("\nError: Tutorial Group not found in the list.");
+                        }
+                    } else {
+                        System.out.println("\nTutorial Group removal cancelled.");
+                    }
+                    programmeUI.displayTtl(ttlList);
+                } else {
+                    System.out.println("\nTutorial Group not found in the selected programme.");
+                }
+            }
+
+            continueRemoval = programmeUI.continueInput();
+        } while (continueRemoval);
+    }
+
+    //display ttl
+    public void listTtl() {
+        if (ttlList.isEmpty()) {
+            programmeUI.displayMessage("No Tutorial Group found.");
+        } else {
+            System.out.println("\nRemove Tutorial Group from Programme:");
+
+            Programme programmeCode = programmeUI.checkProgrammeCode();
+
+            if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
+                programmeUI.notExists();
+            } else {
+                Programme existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
+                displayTutorialGroups(existingProgramme);
+            }
+
+        }
+    }
+
+    private void displayTutorialGroups(Programme programme) {
+        LinkedList<TutorialGroup> tutorialGroupsInProgramme = new LinkedList<>();
+        for (TutorialGroup tutorialGroup : ttlList) {
+            if (tutorialGroup.getProgrammeCode().equals(programme)) {
+                tutorialGroupsInProgramme.add(tutorialGroup);
+            }
+        }
+
+        if (tutorialGroupsInProgramme.isEmpty()) {
+            System.out.println("No tutorial groups found in the selected programme.");
+        } else {
+            programmeUI.displayTtl(tutorialGroupsInProgramme);
+        }
+    }
+
+    private int getIndexByTutorialGroup(TutorialGroup tutorialGroup) {
+        for (int i = 1; i <= ttlList.getSize(); i++) {
+            TutorialGroup existingTutorialGroup = ttlList.get(i);
+            if (existingTutorialGroup.equals(tutorialGroup)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private TutorialGroup getTutorialGroupById(String tutorialGroupId, Programme programme) {
+        for (TutorialGroup tutorialGroup : ttlList) {
+            if (tutorialGroup.getTutorialGroupId().equals(tutorialGroupId) && tutorialGroup.getProgrammeCode().equals(programme)) {
+                return tutorialGroup;
+            }
+        }
+        return null;
     }
 
     //get the specific programme
