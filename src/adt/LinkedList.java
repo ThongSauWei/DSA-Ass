@@ -240,7 +240,8 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     public ListInterface<T> filter(Predicate<T> criteria) {
         ListInterface<T> filteredList = new LinkedList<>();
         Node currentNode = firstNode;
-        while (currentNode.nextNode != null) {
+        
+        for (int i = 1; i <= getSize(); i++) {
             if (criteria.test(currentNode.entry)) {
                 filteredList.add(currentNode.entry);
             }
@@ -254,10 +255,12 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     @Override
     public String toString() {
         Node currentNode = firstNode;
-        String str = firstNode.entry + " ";
-        while (currentNode.nextNode != null) {
-            currentNode = currentNode.nextNode;
+        String str = "";
+        
+        for (int i = 1; i <= getSize(); i++) {
             str += currentNode.entry + " ";
+            
+            currentNode = currentNode.nextNode;
         }
         
         return str;
