@@ -22,4 +22,14 @@ public class Helper {
         
         System.out.println();
     }
+    
+    public static boolean choiceValidation(int choice, int min, int max) {
+        
+        if (choice < min || choice > max) {
+            System.out.println("Invalid Option! Please Enter Again.");
+            return false;
+        }
+        
+        return true;
+    }
 }

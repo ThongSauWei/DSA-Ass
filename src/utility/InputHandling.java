@@ -4,6 +4,7 @@
  */
 package utility;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
  *
@@ -18,18 +19,17 @@ public class InputHandling {
     
     public static int getInt(String promptMsg) {       
         System.out.print(promptMsg);
-        
+                  
         do {
             try {
-                if (scanner.hasNextInt()) {
-                    int input = scanner.nextInt();
-                    scanner.nextLine();
-                    return input;
-                }
-            } catch (IllegalStateException ex) {
+                int input = scanner.nextInt();
+                scanner.nextLine();
+                System.out.println();
+                return input;
+            } catch (InputMismatchException ex) {
                 System.out.print("Invalid Input! " + promptMsg);
                 scanner.nextLine();
-            }                   
+            }
         } while (true);
     }
     
@@ -44,9 +44,10 @@ public class InputHandling {
             try {
                 double input = scanner.nextDouble();
                 scanner.nextLine();
+                System.out.println();
                 return input;
-            } catch (IllegalStateException ex) {
-                System.out.print("Invalid Input!" + promptMsg);
+            } catch (InputMismatchException ex) {
+                System.out.print("Invalid Input! " + promptMsg);
                 scanner.nextLine();
             }                   
         } while (true);
@@ -58,7 +59,10 @@ public class InputHandling {
     
     public static char getChar(String promptMsg) {
         System.out.print(promptMsg);
-        return scanner.nextLine().charAt(0);
+        
+        char ch = scanner.nextLine().charAt(0);
+        System.out.println();
+        return ch;
     }
     
     public static String getString() {
@@ -67,7 +71,10 @@ public class InputHandling {
     
     public static String getString(String promptMsg) {
         System.out.print(promptMsg);
-        return scanner.nextLine();
+        
+        String str = scanner.nextLine();
+        System.out.println();
+        return str;
     }
     
     public static boolean getConfirmation() {
@@ -84,22 +91,13 @@ public class InputHandling {
             ch = Character.toUpperCase(scanner.next().charAt(0));
         }
         
+        System.out.println();
+        
         return ch == 'Y';
     }
     
-    public static int choiceValidation(String promptMsg, int min, int max) {
-        int choice = getInt(promptMsg);
-        
-        while (choice < min || choice > max) {
-            System.out.println("Invalid Option! Please Enter Again.");
-            choice = getInt(promptMsg);
-        }
-        
-        return choice;
-    }
-    
     public static void systemPause() {
-        System.out.println("Press Enter To Proceed...");
+        System.out.print("Press Enter To Proceed...");
         scanner.nextLine();
     }
 }

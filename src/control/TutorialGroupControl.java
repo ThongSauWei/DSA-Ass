@@ -146,7 +146,7 @@ public class TutorialGroupControl {
         }
     }
     
-    public Student findStudent() { // completed
+    public Student findStudent() { // completed & tested
         String id = tutorialGroupUI.getIdInput();
         
         return findStudent(id);
@@ -166,14 +166,22 @@ public class TutorialGroupControl {
     }
     
     public void listStudents() { // completed
-        TutorialGroup ttlGroup = chooseTutorialGroup();
+        listStudents(true);
+    }
+    
+    public void listStudents(boolean sysPause) {
+        TutorialGroup tutorialGroup = chooseTutorialGroup();
         
-        listStudents(ttlGroup);
+        listStudents(tutorialGroup, sysPause);
     }
     
     public void listStudents(TutorialGroup tutorialGroup) {
         // filter the list so that the students in the tutorial group only will be listed
-        tutorialGroupUI.listStudents(studentList.filter(student -> student.getTutorialGroupId().equals(tutorialGroup)));
+        listStudents(tutorialGroup, true);
+    }
+    
+    public void listStudents(TutorialGroup tutorialGroup, boolean sysPause) {
+        tutorialGroupUI.listStudents(studentList.filter(student -> student.getTutorialGroupId().equals(tutorialGroup)), sysPause);
     }
     
     public void filterTutorialGroups() { // completed
@@ -195,12 +203,10 @@ public class TutorialGroupControl {
                 
                 // filter the course programme list so that only programmes which has the course is listed
                 ListInterface<CourseProgramme> programmes = new da.CourseProgrammeDA().readFromFile().filter(courseProgramme -> courseProgramme.getCourseCode().equals(course));
-                
-                int count = 1;
-                
+
                 for (CourseProgramme courseProgramme : programmes) { // for each programme, list out all the tutorial groups
-                    tutorialGroupUI.listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(courseProgramme.getProgrammeCode())), count);
-                    count++;
+                    tutorialGroupUI.displayProgramme(courseProgramme.getProgrammeCode());
+                    tutorialGroupUI.listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(courseProgramme.getProgrammeCode())));
                 }
                 break;
             case 3: // filter based on the number of students
@@ -283,7 +289,7 @@ public class TutorialGroupControl {
 
             ttlGroupChosen = programmeTtlGroups.get(choice);
 
-        } while (compareTtlGroup(oldTtlGroup, ttlGroupChosen)); // if there is old tutorial group, the selected tutorial group cannot be same with the old tutorial group
+        } while (oldTtlGroup != null && compareTtlGroup(oldTtlGroup, ttlGroupChosen)); // if there is old tutorial group, the selected tutorial group cannot be same with the old tutorial group
         
         return ttlGroupChosen;
     }
@@ -308,7 +314,7 @@ public class TutorialGroupControl {
                 student = findStudent();
                 break;
             case 2:
-                listStudents();
+                listStudents(false);
                 int studentNo = tutorialGroupUI.getStudentChoice(ttlGroupStudents.getSize());
                 student = ttlGroupStudents.get(studentNo);
                 break;
