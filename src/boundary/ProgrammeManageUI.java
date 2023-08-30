@@ -24,11 +24,12 @@ public class ProgrammeManageUI {
         System.out.println("3. Update Programme");
         System.out.println("4. Delete Programme");
         System.out.println("5. Search Programme");  //filter
-        System.out.println("6. Report");
+        System.out.println("6. Add Tutorial Group to Programme");
+        System.out.println("7. Report");
         System.out.println("0. Exit");
         Helper.printLine('-', 30);
 
-        return InputHandling.choiceValidation("Please Choose Your Option : ", 0, 6);
+        return InputHandling.choiceValidation("Please Choose Your Option : ", 0, 7);
     }
 
     //list all programme
@@ -36,7 +37,7 @@ public class ProgrammeManageUI {
         displayMessage("\nProgramme List:\n" + formattedOutput);
     }
 
-    //formatDisplay - any format also can der
+    //formatDisplay
     public String formatProgrammeList(ListInterface<Programme> programmeList) {
         if (programmeList == null) {
             return "No programmes found.";
@@ -60,6 +61,19 @@ public class ProgrammeManageUI {
         formattedOutput.append("\nTotal Programmes -> ").append(totalProgrammes);
 
         return formattedOutput.toString();
+    }
+
+    public void displayTtl(ListInterface<TutorialGroup> ttlList) {
+        System.out.println("Tutorial Group List :");
+        Helper.printLine('-', 60);
+        System.out.printf("%-12s | %-8s | %-15s | %-15s\n", "Tutorial ID", "Group No", "Number of Student", "Programme Code");
+        Helper.printLine('-', 60);
+
+        for (TutorialGroup ttlgroup : ttlList) {
+            System.out.printf("%-12s | %-8s | %-17s | %-15s\n", ttlgroup.getTutorialGroupId(), ttlgroup.getGroupNo(), ttlgroup.getNumOfStudent(), ttlgroup.getProgrammeCode());
+        }
+
+        System.out.println("\nTotal Tutorial Group -> " + ttlList.getSize());
     }
 
     //for display the message out
@@ -116,9 +130,17 @@ public class ProgrammeManageUI {
         return new Programme(programmeCode.getProgrammeCode().toUpperCase(), programmeName, programmeDetail, Character.toUpperCase(programmeLevel), faculty.toUpperCase(), duration);
     }
 
-    //invalid message
-    private void invalidInput() {
-        System.out.println("Invalid input, please enter again...");
+    //add tutorial group
+    public TutorialGroup addTutorialInput(Programme programmeCode) {
+        String tutorialGroupId;
+        int groupNo;
+        int numOfStudent;
+
+        tutorialGroupId = InputHandling.getString("Tutorial ID: ");
+        groupNo = InputHandling.getInt("Group No : ");
+        numOfStudent = InputHandling.getInt("Number of Student : ");
+
+        return new TutorialGroup(tutorialGroupId, groupNo, numOfStudent, programmeCode);
     }
 
     //update
@@ -200,6 +222,28 @@ public class ProgrammeManageUI {
         System.out.println("0. EXIT");
         Helper.printLine('-', 20);
         return InputHandling.choiceValidation("Please Choose Option: ", 0, 4);
+    }
+
+    //code does not exists
+    public void notExists() {
+        System.out.println("Error: Programme with the given code does not exist.");
+    }
+
+    //not found
+    public void notFound() {
+        System.out.println("Error: Programme not found!");
+    }
+
+    //continue
+    public boolean continueInput() {
+        boolean yesNo = InputHandling.getConfirmation("\nDo you want to continue ? (Y or N): ");
+        InputHandling.systemPause();
+        return yesNo;
+    }
+
+    //invalid message
+    public void invalidInput() {
+        System.out.println("Invalid input, please enter again...");
     }
 
 }

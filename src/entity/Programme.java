@@ -123,7 +123,7 @@ public class Programme implements Serializable, Comparable<Programme> {
 
     @Override
     public String toString() {
-        return programmeName + "\t" + programmeCode + "\n";
+        return programmeCode;
     }
     
 }

@@ -1,4 +1,4 @@
-RSD|hhhh|heyheyhey|L|FFFF|3
+RSD|updated|heyheyhey|L|FFFF|3
 DFT|Diploma in Information Technology|Diploma Is Used For Playing!!!|D|FOCS|2
 FCP|Foundation in Computing Track A|Foundation Not To Say One. No Experience.|F|FOCS|1
 RRR|testing testing|testing detail testing|D|FOCS|12
@@ -15,3 +15,4 @@ aaa|aaa|aaa|A|AAAA|1
 fff|fff|fff|F|FFFF|2
 ttt|ttt|ttt|T|TTTT|4
 ggg|ggg|gggggggggggggggggggggg|G|GGGG|3
+NNN|nnn|nnnnnnnnnnnnnn|N|NNNN|2
