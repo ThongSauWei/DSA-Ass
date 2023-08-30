@@ -63,17 +63,17 @@ public class ProgrammeManageUI {
         return formattedOutput.toString();
     }
 
-    public void displayTtl(ListInterface<TutorialGroup> ttlList, String programmeCode) {
+    public void displayTtl(ListInterface<TutorialGroup> ttlList) {
         System.out.println("Tutorial Group List :");
         Helper.printLine('-', 60);
-        System.out.printf("%-12s | %-10s | %-10s | %-15s\n", "Tutorial ID", "Group No", "Number of Student", "Programme Code");
+        System.out.printf("%-12s | %-8s | %-15s | %-15s\n", "Tutorial ID", "Group No", "Number of Student", "Programme Code");
         Helper.printLine('-', 60);
 
         for (TutorialGroup ttlgroup : ttlList) {
-            System.out.printf("%-12s | %-10s | %-10s | %-15s\n", ttlgroup.getTutorialGroupId(), ttlgroup.getGroupNo(), ttlgroup.getNumOfStudent(), programmeCode);
+            System.out.printf("%-12s | %-8s | %-17s | %-15s\n", ttlgroup.getTutorialGroupId(), ttlgroup.getGroupNo(), ttlgroup.getNumOfStudent(), ttlgroup.getProgrammeCode());
         }
 
-        System.out.println("Total Tutorial Group -> " + ttlList.getSize());
+        System.out.println("\nTotal Tutorial Group -> " + ttlList.getSize());
     }
 
     //for display the message out

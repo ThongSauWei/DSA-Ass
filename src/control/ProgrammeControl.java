@@ -40,7 +40,7 @@ public class ProgrammeControl {
             choice = programmeUI.programmeMenu();
             switch (choice) {
                 case 0:
-                    System.out.println("\n Thank You ~ Have a nice day ^_^");
+                    System.out.println("\nThank You ~ Have a nice day ^_^");
                     break;
                 case 1:
                     listProgramme();
@@ -399,7 +399,7 @@ public class ProgrammeControl {
                 }
             } while (!programmeExists(newProgrammeCode.getProgrammeCode()));
 
-            Programme existingProgramme = getProgrammeByCode(newProgrammeCode.getProgrammeCode());
+            Programme existingProgramme = getProgrammeByCode(newProgrammeCode.getProgrammeCode().toUpperCase());
             TutorialGroup newTutorial = programmeUI.addTutorialInput(newProgrammeCode);
 
             if (newTutorial != null) {
@@ -411,7 +411,7 @@ public class ProgrammeControl {
                         System.out.println("\nTutorial Group addition cancelled. The Tutorial Group List remains the same.");
                     }
 
-                    programmeUI.displayTtl(ttlList, newProgrammeCode.getProgrammeCode());
+                    programmeUI.displayTtl(ttlList);
             }
 
             yesNo = programmeUI.continueInput();
