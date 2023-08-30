@@ -208,7 +208,7 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     }
     
     @Override
-    public void sort(Comparator<T> attribute) {
+    public void sort(Comparator<T> attribute) { // when using this method, e.g. programmeList.sort(Comparator.comparing(Programme::getName));
         quickSort(firstNode, lastNode, attribute); // use quick sort for sorting
     }
     
