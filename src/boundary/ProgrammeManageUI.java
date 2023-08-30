@@ -25,11 +25,19 @@ public class ProgrammeManageUI {
         System.out.println("4. Delete Programme");
         System.out.println("5. Search Programme");  //filter
         System.out.println("6. Add Tutorial Group to Programme");
-        System.out.println("7. Report");
+        System.out.println("7. Remove Tutorial Group from a Programme");
+        System.out.println("8. List All Tutorial Group from a Programme");
+        System.out.println("9. Report");
         System.out.println("0. Exit");
         Helper.printLine('-', 30);
 
-        return InputHandling.choiceValidation("Please Choose Your Option : ", 0, 7);
+        int choice = InputHandling.getInt("Please Choose Your Option : ");
+
+        while (!Helper.choiceValidation(choice, 0, 8)) {
+            choice = InputHandling.getInt("Please Choose Your Option : ");
+        }
+
+        return choice;
     }
 
     //list all programme
@@ -58,7 +66,7 @@ public class ProgrammeManageUI {
 
         // Calculate total and add it to the message
         int totalProgrammes = programmeList.getSize();
-        formattedOutput.append("\nTotal Programmes -> ").append(totalProgrammes);
+        formattedOutput.append("\nTotal Programmes -> ").append(totalProgrammes).append("\n");
 
         return formattedOutput.toString();
     }
@@ -73,7 +81,7 @@ public class ProgrammeManageUI {
             System.out.printf("%-12s | %-8s | %-17s | %-15s\n", ttlgroup.getTutorialGroupId(), ttlgroup.getGroupNo(), ttlgroup.getNumOfStudent(), ttlgroup.getProgrammeCode());
         }
 
-        System.out.println("\nTotal Tutorial Group -> " + ttlList.getSize());
+        System.out.println("\nTotal Tutorial Group -> " + ttlList.getSize() + "\n");
     }
 
     //for display the message out
@@ -198,7 +206,13 @@ public class ProgrammeManageUI {
         System.out.println("0. EXIT");
         Helper.printLine('-', 30);
 
-        return InputHandling.choiceValidation("Please choose an option: ", 0, 6);
+        int choice = InputHandling.getInt("Please Choose Your Option : ");
+
+        while (!Helper.choiceValidation(choice, 0, 6)) {
+            choice = InputHandling.getInt("Please Choose Your Option : ");
+        }
+
+        return choice;
     }
 
     //sort
@@ -209,7 +223,13 @@ public class ProgrammeManageUI {
         System.out.println("2. Descending Order");
         Helper.printLine('-', 20);
 
-        return InputHandling.choiceValidation("Please Choose Sorting Option: ", 1, 2);
+        int choice = InputHandling.getInt("Please Choose Sorting Option: ");
+
+        while (!Helper.choiceValidation(choice, 1, 2)) {
+            choice = InputHandling.getInt("Please Choose Your Option : ");
+        }
+
+        return choice;
     }
 
     public int sortOptions() {
@@ -221,7 +241,19 @@ public class ProgrammeManageUI {
         System.out.println("4. By Programme Level");
         System.out.println("0. EXIT");
         Helper.printLine('-', 20);
-        return InputHandling.choiceValidation("Please Choose Option: ", 0, 4);
+
+        int choice = InputHandling.getInt("Please Choose Your Option : ");
+
+        while (!Helper.choiceValidation(choice, 0, 4)) {
+            choice = InputHandling.getInt("Please Choose Your Option : ");
+        }
+
+        return choice;
+    }
+
+    //delete ttl
+    public String getTutorialGroupIdToDelete() {
+        return InputHandling.getString("Enter Tutorial Group ID to delete: ");
     }
 
     //code does not exists
