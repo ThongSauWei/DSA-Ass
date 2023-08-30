@@ -55,6 +55,10 @@ public class ProgrammeManageUI {
                     programme.getProgrammeLevel(), programme.getFaculty(), programme.getDuration()));
         }
 
+        // Calculate total and add it to the message
+        int totalProgrammes = programmeList.getSize();
+        formattedOutput.append("\nTotal Programmes -> ").append(totalProgrammes);
+
         return formattedOutput.toString();
     }
 
@@ -67,7 +71,7 @@ public class ProgrammeManageUI {
     public Programme checkProgrammeCode() {
         String programmeCode;
         do {
-            
+
             programmeCode = InputHandling.getString("Programme Code (exp. RSD): ");
             if (!programmeCode.matches("[A-Za-z]{3}")) {
                 invalidInput();
@@ -197,7 +201,5 @@ public class ProgrammeManageUI {
         Helper.printLine('-', 20);
         return InputHandling.choiceValidation("Please Choose Option: ", 0, 4);
     }
-  
-
 
 }

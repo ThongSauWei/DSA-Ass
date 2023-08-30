@@ -71,7 +71,7 @@ public class ProgrammeControl {
             programmeUI.listAllProgrammes(formattedOutput);
 
             // Ask user if they want to sort the output
-            if (InputHandling.getConfirmation("Do you want to sort the programme list? (Y or N): ")) {
+            if (InputHandling.getConfirmation("\nDo you want to sort the programme list? (Y or N): ")) {
                 int sortOption = programmeUI.sortOptions();
                 if (sortOption == 0) {
                     return;
@@ -325,10 +325,10 @@ public class ProgrammeControl {
     private void searchByCriteria(ListInterface<Programme> programmeList, String fieldLabel) {
         String targetValue = InputHandling.getString("Enter " + fieldLabel + " to search: ");
         LinkedList<Programme> results = new LinkedList<>();
+        boolean matches = false;
 
         for (Programme programme : programmeList) {
             String fieldValue = "";
-            boolean matches = false;
 
             switch (fieldLabel) {
                 case "Programme Code":
@@ -347,11 +347,16 @@ public class ProgrammeControl {
 
             if (fieldValue.equalsIgnoreCase(targetValue)) {
                 results.add(programme);
+                matches = true; // At least one match found
             }
         }
 
-        String formattedOutput = programmeUI.formatProgrammeList(results);
-        programmeUI.listAllProgrammes(formattedOutput);
+        if (!results.isEmpty()) {
+            String formattedOutput = programmeUI.formatProgrammeList(results);
+            programmeUI.listAllProgrammes(formattedOutput);
+        } else if (!matches) {
+            System.out.println("No programme found!");
+        }
     }
 
     //get the specific programme
