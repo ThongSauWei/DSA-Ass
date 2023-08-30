@@ -7,9 +7,9 @@ package control;
 import adt.*;
 import boundary.ProgrammeManageUI;
 
-import entity.Programme;
+import entity.*;
 import adt.ListInterface;
-import da.ProgrammeDA;
+import da.*;
 import java.util.Comparator;
 import java.util.Iterator;
 import utility.*;
@@ -22,22 +22,25 @@ public class ProgrammeControl {
 
     //da
     private ProgrammeDA programmeDA = new ProgrammeDA();
+    private TutorialGroupDA ttlDA = new TutorialGroupDA();
 
-    //programme list
+    //list
     private ListInterface<Programme> programmeList;
+    private ListInterface<TutorialGroup> ttlList = new LinkedList<>();
 
     //boundary
     private ProgrammeManageUI programmeUI = new ProgrammeManageUI();
 
     public void runProgramme() {
         programmeList = programmeDA.readFromFile();
+        ttlList = ttlDA.readFromFile();
 
         int choice;
         do {
             choice = programmeUI.programmeMenu();
             switch (choice) {
                 case 0:
-                    // ...
+                    System.out.println("\n Thank You ~ Have a nice day ^_^");
                     break;
                 case 1:
                     listProgramme();
@@ -54,8 +57,12 @@ public class ProgrammeControl {
                 case 5:
                     searchProgramme();
                     break;
+                case 6:
+                    addTutorialGroup();
+                    break;
                 default:
-                // ...
+                    programmeUI.invalidInput();
+                    break;
             }
         } while (choice != 0);
     }
@@ -148,64 +155,74 @@ public class ProgrammeControl {
 
     //add
     public void addProgramme() {
-        System.out.println("\nEnter Programme Details:");
-
-        Programme newProgrammeCode;
+        boolean yesNo;
         do {
-            newProgrammeCode = programmeUI.checkProgrammeCode();
-            String programmeCode = InputHandling.getString("Programme Code (exp. RSD): ");
+            System.out.println("\nEnter Programme Details to Add :");
 
-            if (programmeExists(newProgrammeCode.getProgrammeCode())) {
-                System.out.println("Error: the Programme Code - " + newProgrammeCode.getProgrammeCode().toUpperCase() + " already exists.");
+            Programme newProgrammeCode;
+            do {
+                newProgrammeCode = programmeUI.checkProgrammeCode();
+//                String programmeCode = InputHandling.getString("Programme Code (exp. RSD): ");
+
+                if (programmeExists(newProgrammeCode.getProgrammeCode())) {
+                    System.out.println("Error: the Programme Code - " + newProgrammeCode.getProgrammeCode().toUpperCase() + " already exists.");
+                }
+            } while (programmeExists(newProgrammeCode.getProgrammeCode()));
+
+            Programme newProgramme = programmeUI.addProgrammeInput(newProgrammeCode);
+
+            if (newProgramme != null) {
+                if (InputHandling.getConfirmation("Confirm to add this programme? (Y or N): ")) {
+                    programmeList.add(newProgramme);
+                    programmeDA.writeToFile(programmeList);
+                    System.out.println("\nProgramme added successfully!");
+                } else {
+                    System.out.println("\nProgramme added unsuccessfully. The Programme List remain same !");
+                }
+                // Display 
+                String formattedOutput = programmeUI.formatProgrammeList(programmeList);
+                programmeUI.listAllProgrammes(formattedOutput);
             }
-        } while (programmeExists(newProgrammeCode.getProgrammeCode()));
-
-        Programme newProgramme = programmeUI.addProgrammeInput(newProgrammeCode);
-
-        if (newProgramme != null) {
-            if (InputHandling.getConfirmation("Confirm to add this programme? (Y or N): ")) {
-                programmeList.add(newProgramme);
-                programmeDA.writeToFile(programmeList);
-                System.out.println("\nProgramme added successfully!");
-            } else {
-                System.out.println("\nProgramme added unsuccessfully. The Programme List remain same !");
-            }
-            // Display 
-            String formattedOutput = programmeUI.formatProgrammeList(programmeList);
-            programmeUI.listAllProgrammes(formattedOutput);
-        }
+            yesNo = programmeUI.continueInput();
+        } while (yesNo == true);
     }
 
     //update
     public void updateProgramme() {
-        System.out.println("\nEnter Programme Code to Update:");
+        boolean yesNo;
+        do {
+            System.out.println("\nEnter Programme Code to Update:");
 
-        Programme existingProgramme;
+            Programme existingProgramme;
 
-        Programme programmeCode = programmeUI.checkProgrammeCode();
+            Programme programmeCode = programmeUI.checkProgrammeCode();
 
-        if (!programmeExists(programmeCode.getProgrammeCode())) {
-            System.out.println("Error: Programme with the given code does not exist.");
-            return; // Exit the function if programme doesn't exist
-        }
+            if (!programmeExists(programmeCode.getProgrammeCode())) {
+//            System.out.println("Error: Programme with the given code does not exist.");
+                programmeUI.notExists();
+                return; // Exit the function if programme doesn't exist
+            }
 
 //        ListInterface<Programme> programme1 = programmeList.filter(programme -> programme.getProgrammeCode().equals(programmeCode.getProgrammeCode().toUpperCase()));
 //        Programme prog1 = FileHandling.getProgramme(primaryKey);
-        existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
+            existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
 
-        // list selected program for formatting
-        LinkedList<Programme> selectedProgramList = new LinkedList<>();
-        selectedProgramList.add(existingProgramme);
+            // list selected program for formatting
+            LinkedList<Programme> selectedProgramList = new LinkedList<>();
+            selectedProgramList.add(existingProgramme);
 
-        String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
-        programmeUI.listAllProgrammes(formattedOutput); //display current - code
+            String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
+            programmeUI.listAllProgrammes(formattedOutput); //display current - code
 
-        int updateOption = programmeUI.updateProgrammeMenu();
-        if (updateOption == 0) {
-            return;
-        } else {
-            updateProgrammeData(existingProgramme, updateOption);
-        }
+            int updateOption = programmeUI.updateProgrammeMenu();
+            if (updateOption == 0) {
+                return;
+            } else {
+                updateProgrammeData(existingProgramme, updateOption);
+            }
+
+            yesNo = programmeUI.continueInput();
+        } while (yesNo == true);
 
     }
 
@@ -259,41 +276,48 @@ public class ProgrammeControl {
 
     //delete
     public void deleteProgramme() {
-        System.out.println("\nEnter Programme Code to Delete:");
-        Programme existingProgramme;
+        boolean yesNo;
+        do {
+            System.out.println("\nEnter Programme Code to Delete:");
+            Programme existingProgramme;
 
-        Programme programmeCode = programmeUI.checkProgrammeCode();
+            Programme programmeCode = programmeUI.checkProgrammeCode();
 
-        if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
-            System.out.println("Error: Programme with the given code does not exist.");
-            return; // Exit the function if programme doesn't exist
-        }
-
-        existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
-
-        // list selected program for formatting
-        LinkedList<Programme> selectedProgramList = new LinkedList<>();
-//        ListInterface<Programme> programme1 = programmeList.filter(programme -> programme.getProgrammeCode().equals(programmeCode.getProgrammeCode().toUpperCase()));
-        selectedProgramList.add(existingProgramme);
-
-        String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
-        programmeUI.listAllProgrammes(formattedOutput); //display current - code
-
-        if (InputHandling.getConfirmation("Confirm to delete this programme? (Y or N): ")) {
-            int index = getIndexByProgrammeCode(existingProgramme.getProgrammeCode());
-            if (index != -1) {
-                programmeList.remove(index);
-                programmeDA.writeToFile(programmeList);
-                System.out.println("\nProgramme deleted successfully!");
-            } else {
-                System.out.println("\nError: Programme not found in the list.");
+            if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
+//            System.out.println("Error: Programme with the given code does not exist.");
+                programmeUI.notExists();
+                return; // Exit the function if programme doesn't exist
             }
-        } else {
-            System.out.println("\nProgramme deleted unsuccessfully.");
-        }
 
-        formattedOutput = programmeUI.formatProgrammeList(programmeList);
-        programmeUI.listAllProgrammes(formattedOutput);
+            existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
+
+            // list selected program for formatting
+            LinkedList<Programme> selectedProgramList = new LinkedList<>();
+//        ListInterface<Programme> programme1 = programmeList.filter(programme -> programme.getProgrammeCode().equals(programmeCode.getProgrammeCode().toUpperCase()));
+            selectedProgramList.add(existingProgramme);
+
+            String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
+            programmeUI.listAllProgrammes(formattedOutput); //display current - code
+
+            if (InputHandling.getConfirmation("Confirm to delete this programme? (Y or N): ")) {
+                int index = getIndexByProgrammeCode(existingProgramme.getProgrammeCode());
+                if (index != -1) {
+                    programmeList.remove(index);
+                    programmeDA.writeToFile(programmeList);
+                    System.out.println("\nProgramme deleted successfully!");
+                } else {
+//                System.out.println("\nError: Programme not found in the list.");
+                    programmeUI.notFound();
+                }
+            } else {
+                System.out.println("\nProgramme deleted unsuccessfully.");
+            }
+
+            formattedOutput = programmeUI.formatProgrammeList(programmeList);
+            programmeUI.listAllProgrammes(formattedOutput);
+
+            yesNo = programmeUI.continueInput();
+        } while (yesNo == true);
     }
 
     //find
@@ -355,8 +379,43 @@ public class ProgrammeControl {
             String formattedOutput = programmeUI.formatProgrammeList(results);
             programmeUI.listAllProgrammes(formattedOutput);
         } else if (!matches) {
-            System.out.println("No programme found!");
+//            System.out.println("No programme found!");
+            programmeUI.notFound();
         }
+    }
+
+    //add tutorial group to programme
+    public void addTutorialGroup() {
+        boolean yesNo;
+        do {
+            System.out.println("\nAdd Tutorial Group to Programme :");
+
+            Programme newProgrammeCode;
+            do {
+                newProgrammeCode = programmeUI.checkProgrammeCode(); // Get programme code
+
+                if (!programmeExists(newProgrammeCode.getProgrammeCode())) {
+                    programmeUI.notExists();
+                }
+            } while (!programmeExists(newProgrammeCode.getProgrammeCode()));
+
+            Programme existingProgramme = getProgrammeByCode(newProgrammeCode.getProgrammeCode());
+            TutorialGroup newTutorial = programmeUI.addTutorialInput(newProgrammeCode);
+
+            if (newTutorial != null) {
+                    if (InputHandling.getConfirmation("Confirm to add this tutorial to " + newProgrammeCode.getProgrammeCode().toUpperCase() + " ? (Y or N): ")) {
+                        ttlList.add(newTutorial);
+                        ttlDA.writeToFile(ttlList);
+                        System.out.println("\nTutorial Group added successfully!");
+                    } else {
+                        System.out.println("\nTutorial Group addition cancelled. The Tutorial Group List remains the same.");
+                    }
+
+                    programmeUI.displayTtl(ttlList, newProgrammeCode.getProgrammeCode());
+            }
+
+            yesNo = programmeUI.continueInput();
+        } while (yesNo);
     }
 
     //get the specific programme
