@@ -84,11 +84,13 @@ public class InputHandling {
     public static boolean getConfirmation(String promptMsg) {
         System.out.print(promptMsg);
 
-        char ch = Character.toUpperCase(scanner.next().charAt(0));
+        char ch = Character.toUpperCase(scanner.next().charAt(0)); 
+        scanner.nextLine();
         
         while (ch != 'Y' && ch != 'N') {
             System.out.print("Invalid Input! Please Enter Only Y or N : ");
             ch = Character.toUpperCase(scanner.next().charAt(0));
+            scanner.nextLine();
         }
         
         System.out.println();

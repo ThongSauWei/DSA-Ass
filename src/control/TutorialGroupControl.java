@@ -93,6 +93,9 @@ public class TutorialGroupControl {
         }
         
         if (!idRepeated) {
+            tutorialGroupUI.displayAddSuccessMessage();
+            tutorialGroupUI.displayStudent(newStudent);
+            
             // add new student and save to student file
             studentList.add(newStudent);
             studentDA.writeToFile(studentList);
@@ -100,35 +103,44 @@ public class TutorialGroupControl {
             // update the tutorial group data and save to tutorial group file
             ttlGroup.setNumOfStudent(ttlGroup.getNumOfStudent() + 1);
             tutorialGroupDA.writeToFile(tutorialGroupList);
+        } else {
+            tutorialGroupUI.displayAddFailedMessage();
         }
     }
     
     public void removeStudent() { // completed
-        TutorialGroup ttlGroup = chooseTutorialGroup();
-        
         // filter the list so that the students in the tutorial group only will be listed
-        Student studentRemove = getStudent(studentList.filter(student -> student.getTutorialGroupId().equals(ttlGroup)));
+        Student studentRemove = getStudent();
+        TutorialGroup ttlGroup = studentRemove.getTutorialGroupId();
         
-        // remove the student and save to student file
-        studentList.remove(studentRemove);        
-        studentDA.writeToFile(studentList);
+        if (tutorialGroupUI.getConfirmationForRemoving(studentRemove)) { // ask for confirmation of removing
+            tutorialGroupUI.displayRemoveSuccessMessage();
+            
+            // remove the student and save to student file
+            studentList.remove(studentRemove);
+            studentDA.writeToFile(studentList);
+
+            // update the tutorial group data and save to tutorial group file
+            ttlGroup.setNumOfStudent(ttlGroup.getNumOfStudent() - 1);
+            tutorialGroupDA.writeToFile(tutorialGroupList);
+        } else {
+            tutorialGroupUI.displayRemoveCancelMessage();
+        }
         
-        // update the tutorial group data and save to tutorial group file
-        ttlGroup.setNumOfStudent(ttlGroup.getNumOfStudent() - 1);
-        tutorialGroupDA.writeToFile(tutorialGroupList);
     }
     
-    public void changeTutorialGroup() { // completed
-        
-        TutorialGroup oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
-        
+    public void changeTutorialGroup() { // completed        
         // filter the list so that the students in the tutorial group only will be listed
-        Student studentChange = getStudent(studentList.filter(student -> student.getTutorialGroupId().equals(oldTtlGroup)));
+        Student studentChange = getStudent();
+        TutorialGroup oldTtlGroup = studentChange.getTutorialGroupId();
         
         // choose the new tutorial group (cannot same with the old tutorial group)
+        tutorialGroupUI.displayChooseNewTtlGroup();
         TutorialGroup newTtlGroup = chooseTutorialGroup(oldTtlGroup);
         
         if (tutorialGroupUI.getConfirmationForGroupChanging(oldTtlGroup, newTtlGroup)) { // ask for confirmation of changing group
+            tutorialGroupUI.displayChangeSuccessMessage();
+            
             // update student data and save to student file
             studentChange.setTutorialGroupId(newTtlGroup);
             studentDA.writeToFile(studentList);
@@ -137,6 +149,8 @@ public class TutorialGroupControl {
             newTtlGroup.setNumOfStudent(newTtlGroup.getNumOfStudent() + 1);
             oldTtlGroup.setNumOfStudent(oldTtlGroup.getNumOfStudent() - 1);
             tutorialGroupDA.writeToFile(tutorialGroupList);
+        } else {
+            tutorialGroupUI.displayChangeCancelMessage();
         }
     }
     
@@ -322,7 +336,7 @@ public class TutorialGroupControl {
 
             ttlGroupChosen = programmeTtlGroups.get(choice);
 
-        } while (oldTtlGroup != null && compareTtlGroup(oldTtlGroup, ttlGroupChosen)); // if there is old tutorial group, the selected tutorial group cannot be same with the old tutorial group
+        } while (oldTtlGroup != null && !compareTtlGroup(oldTtlGroup, ttlGroupChosen)); // if there is old tutorial group, the selected tutorial group cannot be same with the old tutorial group
 
         return ttlGroupChosen;
     }
@@ -336,22 +350,30 @@ public class TutorialGroupControl {
         return true;
     }
     
-    public Student getStudent(ListInterface<Student> ttlGroupStudents) {
+    public Student getStudent() {       
+        int choice = tutorialGroupUI.displayGetStudentMenu(); 
         
         Student student = null;
-        
-        int choice = tutorialGroupUI.displayGetStudentMenu(); 
+        TutorialGroup oldTtlGroup;
+        ListInterface<Student> ttlGroupStudents;
         
         switch (choice) {
             case 1:
                 student = findStudent();
                 break;
             case 2:
-                listStudents(false);
+                tutorialGroupUI.displayChooseOldTtlGroup();
+                oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
+                ttlGroupStudents = studentList.filter(stud -> stud.getTutorialGroupId().equals(oldTtlGroup));
+                listStudents(oldTtlGroup, false);
                 int studentNo = tutorialGroupUI.getStudentChoice(ttlGroupStudents.getSize());
                 student = ttlGroupStudents.get(studentNo);
                 break;
             case 3: // maybe will be remove
+                tutorialGroupUI.displayChooseOldTtlGroup();
+                oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
+                ttlGroupStudents = studentList.filter(stud -> stud.getTutorialGroupId().equals(oldTtlGroup));
+                
                 IteratorInterface<Student> iterator = ttlGroupStudents.getIterator(); // place iterator
                 
                 int option;

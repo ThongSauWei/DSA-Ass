@@ -67,7 +67,7 @@ public class TutorialGroupUI {
         Helper.printLine('=', 30);
         System.out.println("1. Previous Student");
         System.out.println("2. Next Student");
-        System.out.println("3. Remove Student");
+        System.out.println("3. Select Student");
         System.out.println("0. Exit");
         Helper.printLine('=', 30);
 
@@ -133,6 +133,48 @@ public class TutorialGroupUI {
         System.out.println("Programme Code : " + programme.getProgrammeCode());
         System.out.println("Programme Name : " + programme.getProgrammeName());
         System.out.println("Faculty : " + programme.getFaculty());
+    }
+    
+    public void displayChooseOldTtlGroup() {
+        System.out.println("Please Choose The Old Tutorial Group");
+    }
+    
+    public void displayChooseNewTtlGroup() {
+        System.out.println("Please Choose The New Tutorial Group");
+    }
+    
+    public void displayAddSuccessMessage() {
+        System.out.println("Student Added Successfully");
+    }
+    
+    public void displayAddFailedMessage() {
+        System.out.println("Duplicated ID Is Found. Failed To Add Student");
+        System.out.println();
+        displaySystemPauseMessage();
+    }
+    
+    public void displayRemoveSuccessMessage() {
+        System.out.println("Student Removed Successfully");
+        System.out.println();
+        displaySystemPauseMessage();
+    }
+    
+    public void displayRemoveCancelMessage() {
+        System.out.println("Removing The Student Is Cancelled");
+        System.out.println();
+        displaySystemPauseMessage();
+    }
+    
+    public void displayChangeSuccessMessage() {
+        System.out.println("Student Successfully Change His/Her Tutorial Group");
+        System.out.println();
+        displaySystemPauseMessage();
+    }
+    
+    public void displayChangeCancelMessage() {
+        System.out.println("Changing Tutorial Group For Student Is Cancelled");
+        System.out.println();
+        displaySystemPauseMessage();
     }
 
     public void displayStudentNotFoundMessage() {
@@ -291,6 +333,11 @@ public class TutorialGroupUI {
         System.out.println();
 
         return new Student(id, name, ic, email, phoneNo, year, sem, ttlGroup);
+    }
+    
+    public boolean getConfirmationForRemoving(Student student) {
+        return InputHandling.getConfirmation("Are You Sure You Want To Remove " + student.getStudentName() + " (" + student.getStudentId()
+                + ") From His/Her Tutorial Group? (Y or N) : ");
     }
 
     public boolean getConfirmationForGroupChanging(TutorialGroup oldTtlGroup, TutorialGroup newTtlGroup) {
