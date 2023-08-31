@@ -188,6 +188,21 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     }
     
     @Override
+    public boolean remove(T entry) {
+        Node currentNode = firstNode;
+        for (int i = 1; i <= getSize(); i++) {
+            if (currentNode.entry.equals(entry)) {
+                remove(i);
+                return true;
+            }
+            
+            currentNode = currentNode.nextNode;
+        }
+        
+        return false;
+    }
+    
+    @Override
     public T get(int position) {
         return getNode(position).entry;
     }

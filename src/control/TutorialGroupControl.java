@@ -190,7 +190,7 @@ public class TutorialGroupControl {
         }
     }
     
-    public void filterTutorialGroups() { // completed
+    public void filterTutorialGroups() { // completed & tested
         int choice = tutorialGroupUI.displayCriteriaMenu();
         
         switch (choice) {
@@ -198,7 +198,7 @@ public class TutorialGroupControl {
                 Programme programme = chooseProgramme();
                 
                 // filter the list so that the tutorial groups in the programme only will be listed
-                tutorialGroupUI.listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(programme)));
+                listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(programme)));
                 break;
             case 2: // maybe will be remove (filter based on courses taken)
                 ListInterface<Course> allCourseList = new da.CourseDA().readFromFile(); // get the course list
@@ -212,14 +212,14 @@ public class TutorialGroupControl {
 
                 for (CourseProgramme courseProgramme : programmes) { // for each programme, list out all the tutorial groups
                     tutorialGroupUI.displayProgramme(courseProgramme.getProgrammeCode());
-                    tutorialGroupUI.listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(courseProgramme.getProgrammeCode())));
+                    listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(courseProgramme.getProgrammeCode())));
                 }
                 break;
             case 3: // filter based on the number of students
                 int num = tutorialGroupUI.getNumOfStudents();                
                 
                 // filter the list so that the tutorial groups with number of students higher than or equal to the num only will be listed
-                tutorialGroupUI.listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getNumOfStudent() >= num));
+                listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getNumOfStudent() >= num));
                 break;
             default:
                 tutorialGroupUI.displayInvalidChoiceMessage();
@@ -268,6 +268,15 @@ public class TutorialGroupControl {
                 break;
             default:
                 tutorialGroupUI.displayInvalidChoiceMessage();
+        }
+    }
+    
+    public void listTutorialGroups(ListInterface<TutorialGroup> tutorialGroupList) {
+        try {
+            tutorialGroupUI.listTutorialGroups(tutorialGroupList);
+            tutorialGroupUI.displaySystemPauseMessage();
+        } catch (IndexOutOfBoundsException ex) {
+            tutorialGroupUI.displayNoTtlGroupMessage();
         }
     }
     
@@ -350,8 +359,7 @@ public class TutorialGroupControl {
                         student = iterator.getCurrent();
                     } else {
                         tutorialGroupUI.displayInvalidChoiceMessage();
-                    }
-                    
+                    }                    
                 } while (option != 0 && option != 3);
                 break;
             default:

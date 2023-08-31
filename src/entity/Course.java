@@ -126,7 +126,7 @@ public class Course implements Serializable, Comparable<Course> {
 
     @Override
     public String toString() {
-        return courseCode + "\t" + courseName + "\t" + startDate + "\t" + endDate + "\n";
+        return courseCode + "\t" + courseName + "\t" + new SimpleDateFormat("yyyy-MM-dd").format(startDate) + "\t" + new SimpleDateFormat("yyyy-MM-dd").format(endDate) + "\n";
     }
     
 }

@@ -178,6 +178,8 @@ public class TutorialGroupUI {
             count++;
         }
         Helper.printLine('=', 36);
+        
+        System.out.println();
     }
 
     public void listProgrammes(ListInterface<Programme> programmeList) {

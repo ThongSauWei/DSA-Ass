@@ -21,6 +21,8 @@ public interface ListInterface<T extends Comparable<T>> extends Iterable<T> {
     // Delete
     public T remove(int position);
     
+    public boolean remove(T entry);
+    
     // Read
     public T get(int position);
     
