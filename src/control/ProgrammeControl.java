@@ -259,44 +259,58 @@ public class ProgrammeControl {
 
     //delete
     public void deleteProgramme() {
-        boolean yesNo;
+        boolean continueDeletion;
         do {
-            Programme existingProgramme;
-
             Programme programmeCode = programmeUI.checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
                 programmeUI.notExists();
-                return;
-            }
+            } else {
+                Programme existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
 
-            existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
+                LinkedList<TutorialGroup> tutorialGroupsToDelete = new LinkedList<>();
+                for (TutorialGroup tutorialGroup : ttlList) {
+                    if (tutorialGroup.getProgrammeCode().equals(existingProgramme)) {
+                        tutorialGroupsToDelete.add(tutorialGroup);
+                    }
+                }
 
-            // list selected program for formatting
-            LinkedList<Programme> selectedProgramList = new LinkedList<>();
-            selectedProgramList.add(existingProgramme);
+                if (!tutorialGroupsToDelete.isEmpty()) {
+                    displayTutorialGroups(existingProgramme);
 
-            String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
-            programmeUI.listAllProgrammes(formattedOutput); //display current - code
+                    if (programmeUI.comfirmInput()) {
+                        // Get tutorial group IDs
+                        ListInterface<String> tutorialGroupIdsToDelete = new LinkedList<>();
+                        for (TutorialGroup tutorialGroup : tutorialGroupsToDelete) {
+                            tutorialGroupIdsToDelete.add(tutorialGroup.getTutorialGroupId());
+                        }
 
-            if (programmeUI.comfirmInput()) {
-                int index = getIndexByProgrammeCode(existingProgramme.getProgrammeCode());
-                if (index != -1) {
-                    programmeList.remove(index);
+                        // Remove tutorial groups
+                        for (String tutorialGroupId : tutorialGroupIdsToDelete) {
+                            TutorialGroup tutorialGroupToRemove = getTutorialGroupById(tutorialGroupId, existingProgramme);
+                            int indexToRemove = getIndexByTutorialGroup(tutorialGroupToRemove);
+                            if (indexToRemove != -1) {
+                                ttlList.remove(indexToRemove);
+                            }
+                        }
+
+                        ttlDA.writeToFile(ttlList);
+                    }
+                }
+
+                // Remove programme
+                int indexToRemove = getIndexByProgrammeCode(existingProgramme.getProgrammeCode());
+                if (indexToRemove != -1) {
+                    programmeList.remove(indexToRemove);
                     programmeDA.writeToFile(programmeList);
                     programmeUI.success();
                 } else {
                     programmeUI.notFound();
                 }
-            } else {
-                programmeUI.unsuccess();
             }
 
-            formattedOutput = programmeUI.formatProgrammeList(programmeList);
-            programmeUI.listAllProgrammes(formattedOutput);
-
-            yesNo = programmeUI.continueInput();
-        } while (yesNo == true);
+            continueDeletion = programmeUI.continueInput();
+        } while (continueDeletion);
     }
 
     //find
