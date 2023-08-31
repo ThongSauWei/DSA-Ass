@@ -391,7 +391,7 @@ public class ProgrammeControl {
             } while (!programmeExists(newProgrammeCode.getProgrammeCode()));
 
             Programme existingProgramme = getProgrammeByCode(newProgrammeCode.getProgrammeCode().toUpperCase());
-            TutorialGroup newTutorial = programmeUI.addTutorialInput(newProgrammeCode);
+            TutorialGroup newTutorial = programmeUI.addTutorialInput(existingProgramme);
 
             if (newTutorial != null) {
                 if (programmeUI.ttlComfirm(newProgrammeCode)) {
