@@ -80,8 +80,8 @@ public class TutorialGroupControl {
     }
     
     public void addStudent() { // completed
-        TutorialGroup ttlGroup = chooseTutorialGroup();
-        
+        TutorialGroup ttlGroup = chooseTutorialGroup(); // Programme programme = getProgramme() and Course course = getCourse()
+        // courseProgrammeList.add(new CourseProgramme("1001", programme, course);
         Student newStudent = tutorialGroupUI.getStudentDetail(ttlGroup);
         boolean idRepeated = false;
         
@@ -119,6 +119,7 @@ public class TutorialGroupControl {
     }
     
     public void changeTutorialGroup() { // completed
+        
         TutorialGroup oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
         
         // filter the list so that the students in the tutorial group only will be listed
@@ -217,7 +218,7 @@ public class TutorialGroupControl {
         }
     }
     
-    public void generateReports() { // completed
+    public void generateReports() { // completed & tested
         int choice = tutorialGroupUI.displayReportMenu();
         
         switch (choice) {
@@ -245,12 +246,22 @@ public class TutorialGroupControl {
                 listStudents(tutorialGroup); // display all the students
                 break;
             case 2: // generate report for all the tutorial groups in a programme
-                Programme programmeChosen = chooseProgramme();
-                
+                Programme programmeDisplay = null;
                 // filter the list so that the tutorial group in the programme only will be listed
-                ListInterface<TutorialGroup> programmeTtlGroups = tutorialGroupList.filter(ttlGroup -> ttlGroup.getProgrammeCode().equals(programmeChosen));
+                ListInterface<TutorialGroup> programmeTtlGroups = new LinkedList<>();
                 
-                tutorialGroupUI.displayProgramme(programmeChosen);
+                do {                    
+                    Programme programmeChosen = chooseProgramme();
+                    programmeDisplay = programmeChosen;
+                    
+                    programmeTtlGroups = tutorialGroupList.filter(ttlGroup -> ttlGroup.getProgrammeCode().equals(programmeChosen));
+                    
+                    if (programmeTtlGroups.isEmpty()) {
+                        tutorialGroupUI.displayNoTtlGroupMessage();
+                    }
+                } while (programmeTtlGroups.isEmpty());
+             
+                tutorialGroupUI.displayProgramme(programmeDisplay);
                 for (TutorialGroup group : programmeTtlGroups) { // for each tutorial group, list all the students inside
                     tutorialGroupUI.displayTutorialGroup(group);
                     listStudents(group);

@@ -121,7 +121,7 @@ public class TutorialGroupUI {
     // Display Message/Entity
     public void displayTutorialGroup(TutorialGroup tutorialGroup) {
         System.out.println();
-        System.out.print("Tutorial Group : " + tutorialGroup.getTutorialGroupId());
+        System.out.println("Tutorial Group : " + tutorialGroup.getTutorialGroupId());
     }
 
     public void displayStudent(Student student) {

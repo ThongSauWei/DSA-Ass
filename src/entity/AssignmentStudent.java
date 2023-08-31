@@ -14,6 +14,8 @@ public class AssignmentStudent implements Serializable, Comparable<AssignmentStu
     private AssignmentTeam assignmentTeamId;
     private Student studentId;
     
+    private static int idNo = 1009;
+    
     public AssignmentStudent() {
         
     }
@@ -23,9 +25,11 @@ public class AssignmentStudent implements Serializable, Comparable<AssignmentStu
     }
     
     public AssignmentStudent(String id, AssignmentTeam assignmentTeamId, Student studentId) {
-        this.id = id;
+        this.id = idNo + "";
         this.assignmentTeamId = assignmentTeamId;
         this.studentId = studentId;
+        
+        idNo++;
     }
 
     public String getId() {

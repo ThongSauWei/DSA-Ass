@@ -14,18 +14,19 @@ public class CourseProgramme implements Serializable, Comparable<CourseProgramme
     private String id;
     private Programme programmeCode;
     private Course courseCode;
+    
+    private static int courseNo = 1005;
 
     public CourseProgramme() {
-    }
-
-    public CourseProgramme(String id) {
-        this.id = id;
+        
     }
     
     public CourseProgramme(String id, Programme programmeCode, Course courseCode) {
-        this.id = id;
+        this.id = programmeCode.getProgrammeCode() + courseNo;
         this.programmeCode = programmeCode;
         this.courseCode = courseCode;
+        
+        courseNo++;
     }
 
     public String getId() {
