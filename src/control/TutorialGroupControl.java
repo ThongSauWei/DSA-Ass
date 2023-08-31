@@ -81,7 +81,7 @@ public class TutorialGroupControl {
     
     public void addStudent() { // completed
         TutorialGroup ttlGroup = chooseTutorialGroup(); // Programme programme = getProgramme() and Course course = getCourse()
-        // courseProgrammeList.add(new CourseProgramme("1001", programme, course);
+        // courseProgrammeList.add(new CourseProgramme(programme, course);
         Student newStudent = tutorialGroupUI.getStudentDetail(ttlGroup);
         boolean idRepeated = false;
         

@@ -43,9 +43,9 @@ public class StartUp {
         Course course2 = null;
         Course course3 = null;
         try {
-            course1 = new Course("BACS2063", "Data Structure and Algorithms", "It's All About ADTs.", new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-02") , new SimpleDateFormat("yyyy-MM-dd").parse("2023-10-10"), 2);
-            course2 = new Course("BAIT2203", "Human Computer Interaction", "It's All About Laws.", new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-02") , new SimpleDateFormat("yyyy-MM-dd").parse("2023-10-10"), 1);
-            course3 = new Course("AACS3253", "Cloud Computing for Business", "Lapsap Course.", new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-02") , new SimpleDateFormat("yyyy-MM-dd").parse("2023-10-10"), 2);
+            course1 = new Course("BACS2063", "Data Structure and Algorithms", "It's All About ADTs.", new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-02") , new SimpleDateFormat("yyyy-MM-dd").parse("2023-10-10"));
+            course2 = new Course("BAIT2203", "Human Computer Interaction", "It's All About Laws.", new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-02") , new SimpleDateFormat("yyyy-MM-dd").parse("2023-10-10"));
+            course3 = new Course("AACS3253", "Cloud Computing for Business", "Lapsap Course.", new SimpleDateFormat("yyyy-MM-dd").parse("2023-07-02") , new SimpleDateFormat("yyyy-MM-dd").parse("2023-10-10"));
         } catch (ParseException ex) {
             ExceptionHandling.dateParseException();
         }
@@ -58,10 +58,10 @@ public class StartUp {
         
         // initialise course programme file
         ListInterface<CourseProgramme> courseProgrammeList = new LinkedList<>();
-        CourseProgramme courseProgramme1 = new CourseProgramme("RSD1001", programme1, course1);
-        CourseProgramme courseProgramme2 = new CourseProgramme("RSD1002", programme1, course2);
-        CourseProgramme courseProgramme3 = new CourseProgramme("RSD1003", programme1, course3);
-        CourseProgramme courseProgramme4 = new CourseProgramme("DFT1004", programme2, course3);
+        CourseProgramme courseProgramme1 = new CourseProgramme(programme1, course1);
+        CourseProgramme courseProgramme2 = new CourseProgramme(programme1, course2);
+        CourseProgramme courseProgramme3 = new CourseProgramme(programme1, course3);
+        CourseProgramme courseProgramme4 = new CourseProgramme(programme2, course3);
         
         courseProgrammeList.add(courseProgramme1);
         courseProgrammeList.add(courseProgramme2);
@@ -124,14 +124,14 @@ public class StartUp {
         
         // initialise tutorial group file
         ListInterface<AssignmentStudent> assignmentStudentList = new LinkedList<>();
-        AssignmentStudent assignmentStudent1 = new AssignmentStudent("1001", assignmentTeam1, student1);
-        AssignmentStudent assignmentStudent2 = new AssignmentStudent("1002", assignmentTeam1, student2);
-        AssignmentStudent assignmentStudent3 = new AssignmentStudent("1003", assignmentTeam2, student3);
-        AssignmentStudent assignmentStudent4 = new AssignmentStudent("1004", assignmentTeam3, student4);
-        AssignmentStudent assignmentStudent5 = new AssignmentStudent("1005", assignmentTeam3, student5);
-        AssignmentStudent assignmentStudent6 = new AssignmentStudent("1006", assignmentTeam4, student6);
-        AssignmentStudent assignmentStudent7 = new AssignmentStudent("1007", assignmentTeam4, student7);
-        AssignmentStudent assignmentStudent8 = new AssignmentStudent("1008", assignmentTeam5, student8);
+        AssignmentStudent assignmentStudent1 = new AssignmentStudent(assignmentTeam1, student1);
+        AssignmentStudent assignmentStudent2 = new AssignmentStudent(assignmentTeam1, student2);
+        AssignmentStudent assignmentStudent3 = new AssignmentStudent(assignmentTeam2, student3);
+        AssignmentStudent assignmentStudent4 = new AssignmentStudent(assignmentTeam3, student4);
+        AssignmentStudent assignmentStudent5 = new AssignmentStudent(assignmentTeam3, student5);
+        AssignmentStudent assignmentStudent6 = new AssignmentStudent(assignmentTeam4, student6);
+        AssignmentStudent assignmentStudent7 = new AssignmentStudent(assignmentTeam4, student7);
+        AssignmentStudent assignmentStudent8 = new AssignmentStudent(assignmentTeam5, student8);
         
         assignmentStudentList.add(assignmentStudent1);
         assignmentStudentList.add(assignmentStudent2);

@@ -21,7 +21,7 @@ public class CourseProgramme implements Serializable, Comparable<CourseProgramme
         
     }
     
-    public CourseProgramme(String id, Programme programmeCode, Course courseCode) {
+    public CourseProgramme(Programme programmeCode, Course courseCode) {
         this.id = programmeCode.getProgrammeCode() + courseNo;
         this.programmeCode = programmeCode;
         this.courseCode = courseCode;
@@ -31,10 +31,6 @@ public class CourseProgramme implements Serializable, Comparable<CourseProgramme
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
     
     public Programme getProgrammeCode() {

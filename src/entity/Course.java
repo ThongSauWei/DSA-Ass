@@ -18,7 +18,6 @@ public class Course implements Serializable, Comparable<Course> {
     private String courseDetail;
     private Date startDate;
     private Date endDate;
-    private int assignmentNum;
 
     public Course() {
     }
@@ -27,17 +26,16 @@ public class Course implements Serializable, Comparable<Course> {
         this.courseCode = courseCode;
     }
     
-    public Course(String courseCode, String courseName, Date startDate, Date endDate, int assignmentNum) {
-        this(courseCode, courseName, null, startDate, endDate, assignmentNum);
+    public Course(String courseCode, String courseName, Date startDate, Date endDate) {
+        this(courseCode, courseName, null, startDate, endDate);
     }
 
-    public Course(String courseCode, String courseName, String courseDetail, Date startDate, Date endDate, int assignmentNum) {
+    public Course(String courseCode, String courseName, String courseDetail, Date startDate, Date endDate) {
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.courseDetail = courseDetail;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.assignmentNum = assignmentNum;
     }
 
     public String getCourseCode() {
@@ -80,14 +78,6 @@ public class Course implements Serializable, Comparable<Course> {
         this.endDate = endDate;
     }
 
-    public int getAssignmentNum() {
-        return assignmentNum;
-    }
-
-    public void setAssignmentNum(int assignmentNum) {
-        this.assignmentNum = assignmentNum;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,7 +111,7 @@ public class Course implements Serializable, Comparable<Course> {
     
     public String saveToFile() {
         return courseCode + "|" + courseName + "|" + courseDetail + "|" + new SimpleDateFormat("yyyy-MM-dd").format(startDate) + "|" + 
-                new SimpleDateFormat("yyyy-MM-dd").format(endDate) + "|" + assignmentNum;
+                new SimpleDateFormat("yyyy-MM-dd").format(endDate);
     }
 
     @Override
