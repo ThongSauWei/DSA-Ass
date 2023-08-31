@@ -298,7 +298,12 @@ public class ProgrammeManageUI {
 
     //not found
     public void notFound() {
-        System.out.println("Error: Programme not found!");
+        System.out.println("Error: Programme not Found!");
+    }
+    
+    //ttl not found
+    public void ttlNotFound() {
+        System.out.println("Error: Tutorial Group not Found!");
     }
 
     //continue
