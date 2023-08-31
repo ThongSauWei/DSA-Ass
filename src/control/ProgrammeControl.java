@@ -42,7 +42,7 @@ public class ProgrammeControl {
             choice = programmeUI.programmeMenu();
             switch (choice) {
                 case 0:
-                    System.out.println("\nThank You ~ Have a nice day ^_^");
+                    programmeUI.thankYou();
                     break;
                 case 1:
                     listProgramme();
@@ -89,7 +89,7 @@ public class ProgrammeControl {
             programmeUI.listAllProgrammes(formattedOutput);
 
             // Ask user if they want to sort the output
-            if (InputHandling.getConfirmation("\nDo you want to sort the programme list? (Y or N): ")) {
+            if (programmeUI.sortComfirm()) {
                 int sortOption = programmeUI.sortOptions();
                 if (sortOption == 0) {
                     return;
@@ -148,14 +148,11 @@ public class ProgrammeControl {
     public void addProgramme() {
         boolean yesNo;
         do {
-            System.out.println("\nEnter Programme Details to Add :");
-
             Programme newProgrammeCode;
             do {
                 newProgrammeCode = programmeUI.checkProgrammeCode();
 
                 if (programmeExists(newProgrammeCode.getProgrammeCode())) {
-//                    System.out.println("Error: the Programme Code - " + newProgrammeCode.getProgrammeCode().toUpperCase() + " already exists.\n");
                     System.out.println(programmeUI.checkExists(newProgrammeCode));
                 }
             } while (programmeExists(newProgrammeCode.getProgrammeCode()));
@@ -163,12 +160,12 @@ public class ProgrammeControl {
             Programme newProgramme = programmeUI.addProgrammeInput(newProgrammeCode);
 
             if (newProgramme != null) {
-                if (InputHandling.getConfirmation("Confirm to add this programme? (Y or N): ")) {
+                if (programmeUI.comfirmInput()) {
                     programmeList.add(newProgramme);
                     programmeDA.writeToFile(programmeList);
-                    System.out.println("\nProgramme added successfully!");
+                    programmeUI.success();
                 } else {
-                    System.out.println("\nProgramme added unsuccessfully. The Programme List remain same !");
+                    programmeUI.unsuccess();
                 }
                 // Display 
                 String formattedOutput = programmeUI.formatProgrammeList(programmeList);
@@ -182,8 +179,6 @@ public class ProgrammeControl {
     public void updateProgramme() {
         boolean yesNo;
         do {
-            System.out.println("\nEnter Programme Code to Update:");
-
             Programme existingProgramme;
 
             Programme programmeCode = programmeUI.checkProgrammeCode();
@@ -225,18 +220,18 @@ public class ProgrammeControl {
             String formattedOutput = programmeUI.formatProgrammeList(updateList);
             programmeUI.listAllProgrammes(formattedOutput); //display current - code
 
-            if (InputHandling.getConfirmation("Confirm to update this programme? (Y or N): ")) {
+            if (programmeUI.comfirmInput()) {
                 int index = getIndexByProgrammeCode(updatedProgramme.getProgrammeCode());
                 if (index != -1) {
                     Programme existingProgramme = programmeList.get(index);
                     updateProgrammeProperties(existingProgramme, updatedProgramme);
                     programmeDA.writeToFile(programmeList);
-                    System.out.println("\nProgramme updated successfully!");
+                    programmeUI.success();
                 } else {
                     programmeUI.notFound();
                 }
             } else {
-                System.out.println("\nProgramme update cancelled.");
+                programmeUI.unsuccess();
             }
 
             formattedOutput = programmeUI.formatProgrammeList(programmeList);
@@ -266,7 +261,6 @@ public class ProgrammeControl {
     public void deleteProgramme() {
         boolean yesNo;
         do {
-            System.out.println("\nEnter Programme Code to Delete:");
             Programme existingProgramme;
 
             Programme programmeCode = programmeUI.checkProgrammeCode();
@@ -285,17 +279,17 @@ public class ProgrammeControl {
             String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
             programmeUI.listAllProgrammes(formattedOutput); //display current - code
 
-            if (InputHandling.getConfirmation("Confirm to delete this programme? (Y or N): ")) {
+            if (programmeUI.comfirmInput()) {
                 int index = getIndexByProgrammeCode(existingProgramme.getProgrammeCode());
                 if (index != -1) {
                     programmeList.remove(index);
                     programmeDA.writeToFile(programmeList);
-                    System.out.println("\nProgramme deleted successfully!");
+                    programmeUI.success();
                 } else {
                     programmeUI.notFound();
                 }
             } else {
-                System.out.println("\nProgramme deleted unsuccessfully.");
+                programmeUI.unsuccess();
             }
 
             formattedOutput = programmeUI.formatProgrammeList(programmeList);
@@ -332,7 +326,7 @@ public class ProgrammeControl {
     }
 
     private void searchByCriteria(ListInterface<Programme> programmeList, String fieldLabel) {
-        String targetValue = InputHandling.getString("Enter " + fieldLabel + " to search: ");
+        String targetValue = programmeUI.getSearchInput(fieldLabel);
 
         Predicate<Programme> criteria = programme -> {
             String fieldValue = "";
@@ -370,8 +364,6 @@ public class ProgrammeControl {
     public void addTutorialGroup() {
         boolean yesNo;
         do {
-            System.out.println("\nAdd Tutorial Group to Programme :");
-
             Programme newProgrammeCode;
             do {
                 newProgrammeCode = programmeUI.checkProgrammeCode(); // Get programme code
@@ -385,13 +377,13 @@ public class ProgrammeControl {
             TutorialGroup newTutorial = programmeUI.addTutorialInput(newProgrammeCode);
 
             if (newTutorial != null) {
-                if (InputHandling.getConfirmation("Confirm to add this tutorial to " + newProgrammeCode.getProgrammeCode().toUpperCase() + " ? (Y or N): ")) {
+                if (programmeUI.ttlComfirm(newProgrammeCode)) {
                     ttlList.add(newTutorial);
                     ttlDA.writeToFile(ttlList);
-                    System.out.println("Tutorial Group added successfully!\n");
+                    programmeUI.success();
                     displayTutorialGroups(existingProgramme);
                 } else {
-                    System.out.println("Tutorial Group addition cancelled. The Tutorial Group List remains the same.\n");
+                    programmeUI.unsuccess();
                     programmeUI.displayTtl(ttlList);
                 }
             }
@@ -403,8 +395,6 @@ public class ProgrammeControl {
     public void removeTutorialGroup() {
         boolean continueRemoval;
         do {
-            System.out.println("\nRemove Tutorial Group from Programme:");
-
             Programme programmeCode = programmeUI.checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
@@ -418,22 +408,21 @@ public class ProgrammeControl {
                 TutorialGroup tutorialGroupToRemove = getTutorialGroupById(tutorialGroupId, existingProgramme);
 
                 if (tutorialGroupToRemove != null) {
-                    if (InputHandling.getConfirmation("Confirm to remove this tutorial group? (Y or N): ")) {
+                    if (programmeUI.ttlComfirm(programmeCode)) {
                         int indexToRemove = getIndexByTutorialGroup(tutorialGroupToRemove);
                         if (indexToRemove != -1) {
                             ttlList.remove(indexToRemove);
                             ttlDA.writeToFile(ttlList);
-                            System.out.println("\nTutorial Group removed successfully!");
+                            programmeUI.success();
                         } else {
-                            System.out.println("\nError: Tutorial Group not found in the list.");
+                            programmeUI.ttlNotFound();
                         }
                     } else {
-                        System.out.println("\nTutorial Group removal cancelled.");
+                        programmeUI.unsuccess();
                     }
                     programmeUI.displayTtl(ttlList);
                 } else {
-//                    System.out.println("\nTutorial Group not found in the selected programme.");
-                      programmeUI.ttlNotFound();
+                    programmeUI.ttlNotFound();
                 }
             }
 
@@ -446,8 +435,6 @@ public class ProgrammeControl {
         if (ttlList.isEmpty()) {
             programmeUI.ttlNotFound();
         } else {
-            System.out.println("\nDisplay Tutorial Group from Programme:");
-
             Programme programmeCode = programmeUI.checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
@@ -478,22 +465,43 @@ public class ProgrammeControl {
     }
 
     public void generateFacultyReport(ListInterface<Programme> programmeList) {
-        Map<String, Integer> facultyCounts = new HashMap<>();
+        ListInterface<String> faculties = new LinkedList<>();
+        ListInterface<Integer> facultyCounts = new LinkedList<>();
         int totalProgrammes = programmeList.getSize();
 
-        for (Programme programme : programmeList) {
-            facultyCounts.put(programme.getFaculty(), facultyCounts.getOrDefault(programme.getFaculty(), 0) + 1);
+        for (int i = 1; i <= totalProgrammes; i++) {
+            Programme programme = programmeList.get(i);
+            String faculty = programme.getFaculty();
+
+            boolean facultyExists = false;
+            int facultyIndex = -1;
+
+            for (int j = 1; j <= faculties.getSize(); j++) {
+                if (faculties.get(j).equals(faculty)) {
+                    facultyExists = true;
+                    facultyIndex = j;
+                    break;
+                }
+            }
+
+            if (facultyExists) {
+                int currentCount = facultyCounts.get(facultyIndex);
+                facultyCounts.replace(currentCount + 1, facultyIndex);
+            } else {
+                faculties.add(faculty);
+                facultyCounts.add(1);
+            }
         }
 
         String highestFaculty = null;
-        double highestPercentage = 0;
+        double highestPercentage = 0.0;
 
-        System.out.println("- Faculty Report -");
-        System.out.println("Total Faculty Available - " + facultyCounts.size());
+        programmeUI.reportHeader(faculties);
 
         int facultyNumber = 1;
-        for (String faculty : facultyCounts.keySet()) {
-            int count = facultyCounts.get(faculty);
+        for (int i = 1; i <= faculties.getSize(); i++) {
+            String faculty = faculties.get(i);
+            int count = facultyCounts.get(i);
             double percentage = (count * 100.0) / totalProgrammes;
 
             if (percentage > highestPercentage) {
@@ -501,45 +509,76 @@ public class ProgrammeControl {
                 highestFaculty = faculty;
             }
 
-            System.out.println(facultyNumber + ". " + faculty + " - (" + String.format("%.2f", percentage) + "%)");
+            programmeUI.reportPercentageFaculty(facultyNumber, faculty, percentage);
             facultyNumber++;
         }
 
         if (highestFaculty != null) {
-            System.out.println("The highest percentage of faculty is " + highestFaculty + " which have (" + String.format("%.2f", highestPercentage) + "%)");
+            programmeUI.reportHighest(highestFaculty, highestPercentage);
         } else {
-            System.out.println("No faculty information available.");
+            programmeUI.notFound();
         }
 
-        // Display 
-        System.out.println("\nProgramme Lists:");
+        // Display programme lists for each faculty
         facultyNumber = 1;
-        for (String faculty : facultyCounts.keySet()) {
-            System.out.println(facultyNumber + ". " + faculty);
+        for (int i = 1; i <= faculties.getSize(); i++) {
+            String faculty = faculties.get(i);
             ListInterface<Programme> programmesInFaculty = filterProgrammesByFaculty(programmeList, faculty);
+            System.out.println(facultyNumber + ". " + faculty);
             String formattedOutput = programmeUI.formatProgrammeList(programmesInFaculty);
-            System.out.println(formattedOutput);
+            programmeUI.listAllProgrammes(formattedOutput);
             facultyNumber++;
         }
     }
 
+    private int countOccurrences(ListInterface<String> list, String item) {
+        int count = 0;
+        for (int i = 1; i <= list.getSize(); i++) {
+            if (list.get(i).equals(item)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public void generateLevelReport(ListInterface<Programme> programmeList) {
-        Map<Character, Integer> levelCounts = new HashMap<>();
+        ListInterface<Character> levels = new LinkedList<>();
+        ListInterface<Integer> levelCounts = new LinkedList<>();
         int totalProgrammes = programmeList.getSize();
 
-        for (Programme programme : programmeList) {
-            levelCounts.put(programme.getProgrammeLevel(), levelCounts.getOrDefault(programme.getProgrammeLevel(), 0) + 1);
+        for (int i = 1; i <= totalProgrammes; i++) {
+            Programme programme = programmeList.get(i);
+            Character level = programme.getProgrammeLevel();
+
+            boolean levelExists = false;
+            int levelIndex = -1;
+
+            for (int j = 1; j <= levels.getSize(); j++) {
+                if (levels.get(j).equals(level)) {
+                    levelExists = true;
+                    levelIndex = j;
+                    break;
+                }
+            }
+
+            if (levelExists) {
+                int currentCount = levelCounts.get(levelIndex);
+                levelCounts.replace(currentCount + 1, levelIndex);
+            } else {
+                levels.add(level);
+                levelCounts.add(1);
+            }
         }
 
         Character highestLevel = null;
-        double highestPercentage = 0;
+        double highestPercentage = 0.0;
 
-        System.out.println("- Programme Level Report -");
-        System.out.println("Total Programme Levels Available - " + levelCounts.size());
+        programmeUI.reportHeaderLevel(levels);
 
         int levelNumber = 1;
-        for (Character level : levelCounts.keySet()) {
-            int count = levelCounts.get(level);
+        for (int i = 1; i <= levels.getSize(); i++) {
+            Character level = levels.get(i);
+            int count = levelCounts.get(i);
             double percentage = (count * 100.0) / totalProgrammes;
 
             if (percentage > highestPercentage) {
@@ -547,26 +586,25 @@ public class ProgrammeControl {
                 highestLevel = level;
             }
 
-            System.out.println(levelNumber + ". " + level + " - (" + String.format("%.2f", percentage) + "%)");
+            programmeUI.reportPercentageLevel(levelNumber, level, percentage);
             levelNumber++;
         }
 
         if (highestLevel != null) {
-            System.out.println("The highest percentage of programme level is " + highestLevel + " which have (" + String.format("%.2f", highestPercentage) + "%)");
+            programmeUI.reportHighestLevel(highestLevel, highestPercentage);
         } else {
-            System.out.println("No programme level information available.");
+            programmeUI.notFound();
         }
 
-        // Display
-        System.out.println("\nProgramme Lists:");
+        // Display programme lists for each level
         levelNumber = 1;
-        for (Character level : levelCounts.keySet()) {
-            System.out.println(levelNumber + ". " + level);
-            //filter ta~gogogo
+        for (int i = 1; i <= levels.getSize(); i++) {
+            Character level = levels.get(i);
             Predicate<Programme> levelFilter = programme -> programme.getProgrammeLevel() == level;
             ListInterface<Programme> programmesInLevel = programmeList.filter(levelFilter);
+            System.out.println(levelNumber + ". " + level);
             String formattedOutput = programmeUI.formatProgrammeList(programmesInLevel);
-            System.out.println(formattedOutput);
+            programmeUI.listAllProgrammes(formattedOutput);
             levelNumber++;
         }
     }
@@ -621,15 +659,6 @@ public class ProgrammeControl {
     }
 
     //check code exists
-//    private boolean programmeExists(String programmeCode) {
-//        String upCode = programmeCode.toUpperCase();
-//        for (Programme existingProgramme : programmeList) {
-//            if (existingProgramme.getProgrammeCode().equals(upCode)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
     private boolean programmeExists(String programmeCode) {
         String upCode = programmeCode.toUpperCase();
 

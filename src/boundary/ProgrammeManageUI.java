@@ -41,7 +41,7 @@ public class ProgrammeManageUI {
 
     //list all programme
     public void listAllProgrammes(String formattedOutput) {
-        displayMessage("\nProgramme List:\n" + formattedOutput);
+        displayMessage("Programme List: \n" + formattedOutput);
     }
 
     //formatDisplay
@@ -52,6 +52,7 @@ public class ProgrammeManageUI {
 
         StringBuilder formattedOutput = new StringBuilder();
 
+//        formattedOutput.append("\nProgramme List :\n");
         formattedOutput.append("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         formattedOutput.append(String.format("%-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n", "Programme Code", "Programme Name", "Programme Details",
                 "Level", "Faculty", "Duration(Months)"));
@@ -246,7 +247,7 @@ public class ProgrammeManageUI {
     }
 
     public int sortOptions() {
-        System.out.println("\nChoose how to sort the programme list:");
+        System.out.println("\nChoose what type of the programme list :");
         Helper.printLine('-', 20);
         System.out.println("1. By Programme Code");
         System.out.println("2. By Faculty");
@@ -269,6 +270,11 @@ public class ProgrammeManageUI {
         return InputHandling.getString("Enter Tutorial Group ID to delete: ");
     }
 
+    //search
+    public String getSearchInput(String fieldLabel) {
+        return InputHandling.getString("Enter " + fieldLabel + " to search: ");
+    }
+
     //report
     public int report() {
         System.out.println("\nChoose Type Of Report :");
@@ -286,6 +292,33 @@ public class ProgrammeManageUI {
 
         return choice;
     }
+    
+    //report Faculty header
+    public void reportHeader(ListInterface<String> input){
+        System.out.println("- Faculty Report -");
+        System.out.println("Total Faculty Available - " + input.getSize());
+    }
+    
+    public void reportHeaderLevel(ListInterface<Character> input){
+        System.out.println("- Level Report -");
+        System.out.println("Total Programme Level Available - " + input.getSize());
+    }
+    
+    //report highest
+    public void reportHighest(String highestInput, double highestPercentage){
+        System.out.println("The highest percentage of Faculty is " + highestInput + " which have (" + String.format("%.2f", highestPercentage) + "%).\n\n");
+    }
+    public void reportHighestLevel(char highestInput, double highestPercentage){
+        System.out.println("The highest percentage of Programme Level is " + highestInput + " which have (" + String.format("%.2f", highestPercentage) + "%).\n\n");
+    }
+    
+    //report percentage
+    public void reportPercentageFaculty(int facultyNumber, String faculty, double percentage){
+        System.out.println(facultyNumber + ". " + faculty + " -> (" + String.format("%.2f", percentage) + "%)");
+    }
+    public void reportPercentageLevel(int levelNumber, char level, double percentage){
+        System.out.println(levelNumber + ". " + level + " -> (" + String.format("%.2f", percentage) + "%)");
+    }
 
     //code does not exists
     public void notExists() {
@@ -300,10 +333,16 @@ public class ProgrammeManageUI {
     public void notFound() {
         System.out.println("Error: Programme not Found!");
     }
-    
+
     //ttl not found
     public void ttlNotFound() {
         System.out.println("Error: Tutorial Group not Found!");
+    }
+
+    //sort
+    public boolean ttlComfirm(Programme programme) {
+        boolean yesNo = InputHandling.getConfirmation("Confirm to made changes to the tutorial group of " + programme.getProgrammeCode().toUpperCase() + " ? (Y or N): ");
+        return yesNo;
     }
 
     //continue
@@ -313,9 +352,34 @@ public class ProgrammeManageUI {
         return yesNo;
     }
 
+    //comfirm
+    public boolean comfirmInput() {
+        boolean yesNo = InputHandling.getConfirmation("Confirm ? (Y or N): ");
+        return yesNo;
+    }
+
+    public void success() {
+        System.out.println("\nUpdated Successfully!");
+    }
+
+    public void unsuccess() {
+        System.out.println("\nUpdated Unsuccessfully! Data Remain Same!");
+    }
+
+    //sort
+    public boolean sortComfirm() {
+        boolean yesNo = InputHandling.getConfirmation("\nDo you want to sort the programme list? (Y or N): ");
+        return yesNo;
+    }
+
     //invalid message
     public void invalidInput() {
         System.out.println("Invalid input, please enter again...");
+    }
+
+    //thank you
+    public void thankYou() {
+        System.out.println("\nThank You ~ Have a nice day ^_^");
     }
 
 }
