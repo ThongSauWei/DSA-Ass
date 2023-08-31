@@ -33,7 +33,7 @@ public class ProgrammeManageUI {
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
 
-        while (!Helper.choiceValidation(choice, 0, 8)) {
+        while (!Helper.choiceValidation(choice, 0, 9)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
         }
 
@@ -81,7 +81,7 @@ public class ProgrammeManageUI {
             System.out.printf("%-12s | %-8s | %-17s | %-15s\n", ttlgroup.getTutorialGroupId(), ttlgroup.getGroupNo(), ttlgroup.getNumOfStudent(), ttlgroup.getProgrammeCode());
         }
 
-        System.out.println("\nTotal Tutorial Group -> " + ttlList.getSize() + "\n");
+        System.out.println("\nTotal Tutorial Group -> " + ttlList.getSize());
     }
 
     //for display the message out
@@ -267,6 +267,24 @@ public class ProgrammeManageUI {
     //delete ttl
     public String getTutorialGroupIdToDelete() {
         return InputHandling.getString("Enter Tutorial Group ID to delete: ");
+    }
+    
+    //report
+    public int report(){
+        System.out.println("\nChoose Type Of Report :");
+        Helper.printLine('-', 20);
+        System.out.println("1. Faculty");
+        System.out.println("2. Programme Level");
+        System.out.println("0. EXIT");
+        Helper.printLine('-', 20);
+
+        int choice = InputHandling.getInt("Please Choose Your Option : ");
+
+        while (!Helper.choiceValidation(choice, 0, 2)) {
+            choice = InputHandling.getInt("Please Choose Your Option : ");
+        }
+
+        return choice;
     }
 
     //code does not exists

@@ -11,7 +11,10 @@ import entity.*;
 import adt.ListInterface;
 import da.*;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.function.Predicate;
 import utility.*;
 
 /**
@@ -65,6 +68,9 @@ public class ProgrammeControl {
                     break;
                 case 8:
                     listTtl();
+                    break;
+                case 9:
+                    generateReport();
                     break;
                 default:
                     programmeUI.invalidInput();
@@ -411,10 +417,10 @@ public class ProgrammeControl {
                 if (InputHandling.getConfirmation("Confirm to add this tutorial to " + newProgrammeCode.getProgrammeCode().toUpperCase() + " ? (Y or N): ")) {
                     ttlList.add(newTutorial);
                     ttlDA.writeToFile(ttlList);
-                    System.out.println("\nTutorial Group added successfully!");
+                    System.out.println("Tutorial Group added successfully!\n");
                     displayTutorialGroups(existingProgramme);
                 } else {
-                    System.out.println("\nTutorial Group addition cancelled. The Tutorial Group List remains the same.");
+                    System.out.println("Tutorial Group addition cancelled. The Tutorial Group List remains the same.\n");
                     programmeUI.displayTtl(ttlList);
                 }
 
@@ -465,12 +471,12 @@ public class ProgrammeControl {
         } while (continueRemoval);
     }
 
-    //display ttl
+    //display ttl - code
     public void listTtl() {
         if (ttlList.isEmpty()) {
             programmeUI.displayMessage("No Tutorial Group found.");
         } else {
-            System.out.println("\nRemove Tutorial Group from Programme:");
+            System.out.println("\nDisplay Tutorial Group from Programme:");
 
             Programme programmeCode = programmeUI.checkProgrammeCode();
 
@@ -481,6 +487,121 @@ public class ProgrammeControl {
                 displayTutorialGroups(existingProgramme);
             }
 
+        }
+    }
+
+    //report 
+    public void generateReport() {
+        int reportOption = programmeUI.report();
+        switch (reportOption) {
+            case 0:
+                return;
+            case 1:
+                generateFacultyReport(programmeList);
+                break;
+            case 2:
+                generateLevelReport(programmeList);
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+
+    public void generateFacultyReport(ListInterface<Programme> programmeList) {
+        Map<String, Integer> facultyCounts = new HashMap<>();
+        int totalProgrammes = programmeList.getSize();
+
+        for (Programme programme : programmeList) {
+            facultyCounts.put(programme.getFaculty(), facultyCounts.getOrDefault(programme.getFaculty(), 0) + 1);
+        }
+
+        String highestFaculty = null;
+        double highestPercentage = 0;
+
+        System.out.println("- Faculty Report -");
+        System.out.println("Total Faculty Available - " + facultyCounts.size());
+
+        int facultyNumber = 1;
+        for (String faculty : facultyCounts.keySet()) {
+            int count = facultyCounts.get(faculty);
+            double percentage = (count * 100.0) / totalProgrammes;
+
+            if (percentage > highestPercentage) {
+                highestPercentage = percentage;
+                highestFaculty = faculty;
+            }
+
+            System.out.println(facultyNumber + ". " + faculty + " - (" + String.format("%.2f", percentage) + "%)");
+            facultyNumber++;
+        }
+
+        if (highestFaculty != null) {
+            System.out.println("The highest percentage of faculty is " + highestFaculty + " which have (" + String.format("%.2f", highestPercentage) + "%)");
+        } else {
+            System.out.println("No faculty information available.");
+        }
+
+        // Display 
+        System.out.println("\nProgramme Lists:");
+        facultyNumber = 1;
+        for (String faculty : facultyCounts.keySet()) {
+            System.out.println(facultyNumber + ". " + faculty);
+            ListInterface<Programme> programmesInFaculty = filterProgrammesByFaculty(programmeList, faculty);
+            String formattedOutput = programmeUI.formatProgrammeList(programmesInFaculty);
+            System.out.println(formattedOutput);
+            facultyNumber++;
+        }
+    }
+
+    private ListInterface<Programme> filterProgrammesByFaculty(ListInterface<Programme> programmeList, String faculty) {
+        Predicate<Programme> facultyFilter = programme -> programme.getFaculty().equalsIgnoreCase(faculty);
+        return programmeList.filter(facultyFilter);
+    }
+
+    public void generateLevelReport(ListInterface<Programme> programmeList) {
+        Map<Character, Integer> levelCounts = new HashMap<>();
+        int totalProgrammes = programmeList.getSize();
+
+        for (Programme programme : programmeList) {
+            levelCounts.put(programme.getProgrammeLevel(), levelCounts.getOrDefault(programme.getProgrammeLevel(), 0) + 1);
+        }
+
+        Character highestLevel = null;
+        double highestPercentage = 0;
+
+        System.out.println("- Programme Level Report -");
+        System.out.println("Total Programme Levels Available - " + levelCounts.size());
+
+        int levelNumber = 1;
+        for (Character level : levelCounts.keySet()) {
+            int count = levelCounts.get(level);
+            double percentage = (count * 100.0) / totalProgrammes;
+
+            if (percentage > highestPercentage) {
+                highestPercentage = percentage;
+                highestLevel = level;
+            }
+
+            System.out.println(levelNumber + ". " + level + " - (" + String.format("%.2f", percentage) + "%)");
+            levelNumber++;
+        }
+
+        if (highestLevel != null) {
+            System.out.println("The highest percentage of programme level is " + highestLevel + " which have (" + String.format("%.2f", highestPercentage) + "%)");
+        } else {
+            System.out.println("No programme level information available.");
+        }
+
+        // Display
+        System.out.println("\nProgramme Lists:");
+        levelNumber = 1;
+        for (Character level : levelCounts.keySet()) {
+            System.out.println(levelNumber + ". " + level);
+            Predicate<Programme> levelFilter = programme -> programme.getProgrammeLevel() == level;
+            ListInterface<Programme> programmesInLevel = programmeList.filter(levelFilter);
+            String formattedOutput = programmeUI.formatProgrammeList(programmesInLevel);
+            System.out.println(formattedOutput);
+            levelNumber++;
         }
     }
 
