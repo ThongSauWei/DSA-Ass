@@ -114,55 +114,36 @@ public class ProgrammeControl {
 
     //sort
     private void sortProgrammeListAscending(int sortOption) {
-        LinkedList<Programme> sortedList = new LinkedList<>();
-
-        for (int i = 1; i <= programmeList.getSize(); i++) {
-            Programme currentProgramme = programmeList.get(i);
-            insertSorted(sortedList, sortOption, currentProgramme, true);
-        }
-
-        programmeList = sortedList;
+        Comparator<Programme> comparator = getComparator(sortOption);
+        programmeList.sort(comparator);
     }
 
     private void sortProgrammeListDescending(int sortOption) {
-        LinkedList<Programme> sortedList = new LinkedList<>();
-
-        for (int i = 1; i <= programmeList.getSize(); i++) {
-            Programme currentProgramme = programmeList.get(i);
-            insertSorted(sortedList, sortOption, currentProgramme, false);
-        }
-
-        programmeList = sortedList;
+        Comparator<Programme> comparator = getComparator(sortOption).reversed();
+        programmeList.sort(comparator);
     }
 
-    private void insertSorted(LinkedList<Programme> list, int option, Programme programme, boolean ascending) {
-        int position = 1;
-
-        // Find the position to insert the current programme
-        while (position <= list.getSize()) {
-            Programme current = list.get(position);
-
-            int comparison = 0;
-            if (option == 1) {
-                comparison = programme.getProgrammeCode().compareTo(current.getProgrammeCode());
-            } else if (option == 2) {
-                comparison = programme.getFaculty().compareTo(current.getFaculty());
-            } else if (option == 3) {
-                comparison = programme.getProgrammeName().compareTo(current.getProgrammeName());
-            } else if (option == 4) {
-                comparison = programme.getProgrammeLevel().compareTo(current.getProgrammeLevel());
-            }
-
-            if ((ascending && comparison < 0) || (!ascending && comparison > 0)) {
-                list.add(programme, position);
-                return;
-            }
-
-            position++;
+// Helper method to get the appropriate Comparator based on sortOption
+    private Comparator<Programme> getComparator(int sortOption) {
+        Comparator<Programme> comparator = null;
+        switch (sortOption) {
+            case 1:
+                comparator = Comparator.comparing(Programme::getProgrammeCode);
+                break;
+            case 2:
+                comparator = Comparator.comparing(Programme::getFaculty);
+                break;
+            case 3:
+                comparator = Comparator.comparing(Programme::getProgrammeName);
+                break;
+            case 4:
+                comparator = Comparator.comparing(Programme::getProgrammeLevel);
+                break;
+            default:
+                System.out.println("Invalid sort option.");
+                break;
         }
-
-        // If not inserted yet, add it to the end~
-        list.add(programme);
+        return comparator;
     }
 
     //add
