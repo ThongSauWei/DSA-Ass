@@ -6,7 +6,6 @@ package boundary;
 
 import adt.*;
 import entity.*;
-import java.util.Scanner;
 import utility.*;
 
 /**
@@ -33,7 +32,7 @@ public class ProgrammeManageUI {
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
 
-        while (!Helper.choiceValidation(choice, 0, 8)) {
+        while (!Helper.choiceValidation(choice, 0, 9)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
         }
 
@@ -81,7 +80,7 @@ public class ProgrammeManageUI {
             System.out.printf("%-12s | %-8s | %-17s | %-15s\n", ttlgroup.getTutorialGroupId(), ttlgroup.getGroupNo(), ttlgroup.getNumOfStudent(), ttlgroup.getProgrammeCode());
         }
 
-        System.out.println("\nTotal Tutorial Group -> " + ttlList.getSize() + "\n");
+        System.out.println("\nTotal Tutorial Group -> " + ttlList.getSize());
     }
 
     //for display the message out
@@ -163,34 +162,48 @@ public class ProgrammeManageUI {
         updatedProgramme.setFaculty(existingProgramme.getFaculty());
         updatedProgramme.setDuration(existingProgramme.getDuration());
 
+        String newName, newDetail, newFaculty;
+        int newDuration;
+        char newLevel;
+
         switch (updateOption) {
             case 1:
-                String newName = InputHandling.getString("Enter new Programme Name: ");
+                newName = InputHandling.getString("Enter new Programme Name: ");
                 updatedProgramme.setProgrammeName(newName);
                 break;
             case 2:
-                String newDetail = InputHandling.getString("Enter new Programme Detail: ");
+                newDetail = InputHandling.getString("Enter new Programme Detail: ");
                 updatedProgramme.setProgrammeDetail(newDetail);
                 break;
             case 3:
-                char newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
+                newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
                 updatedProgramme.setProgrammeLevel(newLevel);
                 break;
             case 4:
-                String newFaculty = InputHandling.getString("Enter new Faculty: ");
+                newFaculty = InputHandling.getString("Enter new Faculty: ");
                 updatedProgramme.setFaculty(newFaculty);
                 break;
             case 5:
-                int newDuration = InputHandling.getInt("Enter new Duration (in months): ");
+                newDuration = InputHandling.getInt("Enter new Duration (in months): ");
+                updatedProgramme.setDuration(newDuration);
+                break;
+            case 6:
+                newName = InputHandling.getString("Enter new Programme Name: ");
+                newDetail = InputHandling.getString("Enter new Programme Detail: ");
+                newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
+                newFaculty = InputHandling.getString("Enter new Faculty: ");
+                newDuration = InputHandling.getInt("Enter new Duration (in months): ");
+
+                updatedProgramme.setProgrammeName(newName);
+                updatedProgramme.setProgrammeDetail(newDetail);
+                updatedProgramme.setProgrammeLevel(newLevel);
+                updatedProgramme.setFaculty(newFaculty);
                 updatedProgramme.setDuration(newDuration);
                 break;
             default:
                 System.out.println("Invalid choice.");
                 return null;
         }
-
-//        System.out.println("\nUpdated Programme Details:");
-//        System.out.println(updatedProgramme);
         return updatedProgramme;
     }
 
@@ -256,14 +269,41 @@ public class ProgrammeManageUI {
         return InputHandling.getString("Enter Tutorial Group ID to delete: ");
     }
 
+    //report
+    public int report() {
+        System.out.println("\nChoose Type Of Report :");
+        Helper.printLine('-', 20);
+        System.out.println("1. Faculty");
+        System.out.println("2. Programme Level");
+        System.out.println("0. EXIT");
+        Helper.printLine('-', 20);
+
+        int choice = InputHandling.getInt("Please Choose Your Option : ");
+
+        while (!Helper.choiceValidation(choice, 0, 2)) {
+            choice = InputHandling.getInt("Please Choose Your Option : ");
+        }
+
+        return choice;
+    }
+
     //code does not exists
     public void notExists() {
         System.out.println("Error: Programme with the given code does not exist.");
     }
 
+    public String checkExists(Programme programme) {
+        return "Error: the Programme Code - " + programme.getProgrammeCode().toUpperCase() + " already exists.\n";
+    }
+
     //not found
     public void notFound() {
-        System.out.println("Error: Programme not found!");
+        System.out.println("Error: Programme not Found!");
+    }
+    
+    //ttl not found
+    public void ttlNotFound() {
+        System.out.println("Error: Tutorial Group not Found!");
     }
 
     //continue
