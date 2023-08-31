@@ -102,7 +102,7 @@ public class FileHandling {
             String[] attr = data.split("\\|");
             
             if (primaryKey.equals(attr[0])) {
-                return new CourseProgramme(attr[0], getProgramme(attr[1]), getCourse(attr[2]));
+                return new CourseProgramme(getProgramme(attr[1]), getCourse(attr[2]));
             }
         }
         
@@ -118,7 +118,7 @@ public class FileHandling {
             if (primaryKey.equals(attr[0])) {
                 try {
                     return new Course(attr[0], attr[1], attr[2], new SimpleDateFormat("yyyy-MM-dd").parse(attr[3]),
-                            new SimpleDateFormat("yyyy-MM-dd").parse(attr[4]), Integer.parseInt(attr[5]));
+                            new SimpleDateFormat("yyyy-MM-dd").parse(attr[4]));
                 } catch (ParseException ex) {
                     ExceptionHandling.dateParseException();
                 }
@@ -165,7 +165,7 @@ public class FileHandling {
             String[] attr = data.split("\\|");
             
             if (primaryKey.equals(attr[0])) {
-                return new AssignmentStudent(attr[0], getAssignmentTeam(attr[1]), getStudent(attr[2]));
+                return new AssignmentStudent(getAssignmentTeam(attr[1]), getStudent(attr[2]));
             }
         }
         
