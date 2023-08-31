@@ -25,10 +25,12 @@ public class ProgrammeControl {
     //da
     private ProgrammeDA programmeDA = new ProgrammeDA();
     private TutorialGroupDA ttlDA = new TutorialGroupDA();
+    private StudentDA studentDA = new StudentDA();
 
     //list
     private ListInterface<Programme> programmeList;
     private ListInterface<TutorialGroup> ttlList = new LinkedList<>();
+    private ListInterface<Student> studentList = new LinkedList<>();
 
     //boundary
     private ProgrammeManageUI programmeUI = new ProgrammeManageUI();
@@ -36,6 +38,7 @@ public class ProgrammeControl {
     public void runProgramme() {
         programmeList = programmeDA.readFromFile();
         ttlList = ttlDA.readFromFile();
+        studentList = studentDA.readFromFile();
 
         int choice;
         do {
@@ -425,6 +428,35 @@ public class ProgrammeControl {
                     if (programmeUI.ttlComfirm(programmeCode)) {
                         int indexToRemove = getIndexByTutorialGroup(tutorialGroupToRemove);
                         if (indexToRemove != -1) {
+
+                            LinkedList<Student> studentToDelete = new LinkedList<>();
+                            for (Student student : studentList) {
+                                if (student.getTutorialGroupId().equals(tutorialGroupToRemove)) {
+                                    studentToDelete.add(student);
+                                }
+                            }
+
+                            if (!studentToDelete.isEmpty()) {
+                                // displayTutorialGroups(existingProgramme);
+
+                                // Get tutorial group IDs
+                                ListInterface<String> studentIdsToDelete = new LinkedList<>();
+                                for (Student students : studentToDelete) {
+                                    studentIdsToDelete.add(students.getStudentId());
+                                }
+
+                                // Remove tutorial groups
+                                for (String studentId : studentIdsToDelete) {
+                                    Student studentToRemove = getStudentById(studentId, tutorialGroupToRemove);
+                                    int indexToRemoveS = getIndexByStudent(studentToRemove);
+                                    if (indexToRemoveS != -1) {
+                                        studentList.remove(indexToRemoveS);
+                                    }
+                                }
+
+                                studentDA.writeToFile(studentList);
+                            }
+
                             ttlList.remove(indexToRemove);
                             ttlDA.writeToFile(ttlList);
                             programmeUI.success();
@@ -648,10 +680,29 @@ public class ProgrammeControl {
         return -1;
     }
 
+    private int getIndexByStudent(Student student) {
+        for (int i = 1; i <= studentList.getSize(); i++) {
+            Student existingstudent = studentList.get(i);
+            if (existingstudent.equals(student)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private TutorialGroup getTutorialGroupById(String tutorialGroupId, Programme programme) {
         for (TutorialGroup tutorialGroup : ttlList) {
             if (tutorialGroup.getTutorialGroupId().equals(tutorialGroupId) && tutorialGroup.getProgrammeCode().equals(programme)) {
                 return tutorialGroup;
+            }
+        }
+        return null;
+    }
+
+    private Student getStudentById(String studentId, TutorialGroup tutorialGroup) {
+        for (Student student : studentList) {
+            if (student.getStudentId().equals(studentId) && student.getTutorialGroupId().equals(tutorialGroup)) {
+                return student;
             }
         }
         return null;
