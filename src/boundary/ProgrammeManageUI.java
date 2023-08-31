@@ -146,9 +146,9 @@ public class ProgrammeManageUI {
 
         tutorialGroupId = InputHandling.getString("Tutorial ID: ");
         groupNo = InputHandling.getInt("Group No : ");
-        numOfStudent = InputHandling.getInt("Number of Student : ");
+//        numOfStudent = InputHandling.getInt("Number of Student : ");
 
-        return new TutorialGroup(tutorialGroupId, groupNo, numOfStudent, programmeCode);
+        return new TutorialGroup(tutorialGroupId, groupNo, 0, programmeCode);
     }
 
     //update

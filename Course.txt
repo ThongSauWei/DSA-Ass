@@ -1,3 +1,5 @@
-BACS2063|Data Structure and Algorithms|It's All About ADTs.|2023-07-02|2023-10-10|2
-BAIT2203|Human Computer Interaction|It's All About Laws.|2023-07-02|2023-10-10|1
-AACS3253|Cloud Computing for Business|Lapsap Course.|2023-07-02|2023-10-10|2
+BACS2063|Data Structure and Algorithms|It's All About ADTs.|2023-07-02|2023-10-10
+BAIT2203|Human Computer Interaction|It's All About Laws.|2023-07-02|2023-10-10
+AACS3253|Cloud Computing for Business|Lapsap Course.|2023-07-02|2023-10-10
+AMIT1234|Calculus?|Maths IS THE BEST!!!!|2023-07-23|2023-10-10
+AMIT9876|Calculus Again!!!|It's Me Again!!! Math Is The BEST!!!!!!!|2023-07-03|2023-10-10

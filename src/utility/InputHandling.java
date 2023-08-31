@@ -4,15 +4,20 @@
  */
 package utility;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author User
  */
 public class InputHandling {
     private static final Scanner scanner = new Scanner(System.in);
-    
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static int getInt() {
         return getInt("Please Enter A Digit : ");
     }
@@ -75,6 +80,20 @@ public class InputHandling {
         String str = scanner.nextLine();
         System.out.println();
         return str;
+    }
+    
+    public static Date getDate(String promptMsg) {
+        System.out.print(promptMsg);
+
+        do {
+            String input = scanner.nextLine();
+            try {
+                Date date = dateFormat.parse(input);
+                return date;
+            } catch (ParseException ex) {
+                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            }
+        } while (true);
     }
     
     public static boolean getConfirmation() {
