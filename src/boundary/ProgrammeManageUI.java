@@ -6,7 +6,6 @@ package boundary;
 
 import adt.*;
 import entity.*;
-import java.util.Scanner;
 import utility.*;
 
 /**
@@ -162,9 +161,10 @@ public class ProgrammeManageUI {
         updatedProgramme.setProgrammeLevel(existingProgramme.getProgrammeLevel());
         updatedProgramme.setFaculty(existingProgramme.getFaculty());
         updatedProgramme.setDuration(existingProgramme.getDuration());
-        
+
         String newName, newDetail, newFaculty;
-        int newDuration; char newLevel;
+        int newDuration;
+        char newLevel;
 
         switch (updateOption) {
             case 1:
@@ -193,7 +193,7 @@ public class ProgrammeManageUI {
                 newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
                 newFaculty = InputHandling.getString("Enter new Faculty: ");
                 newDuration = InputHandling.getInt("Enter new Duration (in months): ");
-                
+
                 updatedProgramme.setProgrammeName(newName);
                 updatedProgramme.setProgrammeDetail(newDetail);
                 updatedProgramme.setProgrammeLevel(newLevel);
@@ -268,9 +268,9 @@ public class ProgrammeManageUI {
     public String getTutorialGroupIdToDelete() {
         return InputHandling.getString("Enter Tutorial Group ID to delete: ");
     }
-    
+
     //report
-    public int report(){
+    public int report() {
         System.out.println("\nChoose Type Of Report :");
         Helper.printLine('-', 20);
         System.out.println("1. Faculty");
@@ -290,6 +290,10 @@ public class ProgrammeManageUI {
     //code does not exists
     public void notExists() {
         System.out.println("Error: Programme with the given code does not exist.");
+    }
+
+    public String checkExists(Programme programme) {
+        return "Error: the Programme Code - " + programme.getProgrammeCode().toUpperCase() + " already exists.\n";
     }
 
     //not found

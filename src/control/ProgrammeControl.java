@@ -12,7 +12,6 @@ import adt.ListInterface;
 import da.*;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Predicate;
 import utility.*;
@@ -84,7 +83,7 @@ public class ProgrammeControl {
         programmeList = programmeDA.readFromFile();
 
         if (programmeList.isEmpty()) {
-            programmeUI.displayMessage("No programmes found.");
+            programmeUI.notFound();
         } else {
             String formattedOutput = programmeUI.formatProgrammeList(programmeList);
             programmeUI.listAllProgrammes(formattedOutput);
@@ -102,7 +101,7 @@ public class ProgrammeControl {
                 } else if (sortChoice == 2) {
                     sortProgrammeListDescending(sortOption);
                 } else if (sortChoice != 3) {
-                    System.out.println("Invalid choice.");
+                    programmeUI.invalidInput();
                 }
 
                 formattedOutput = programmeUI.formatProgrammeList(programmeList);
@@ -123,7 +122,6 @@ public class ProgrammeControl {
         programmeList.sort(comparator);
     }
 
-// Helper method to get the appropriate Comparator based on sortOption
     private Comparator<Programme> getComparator(int sortOption) {
         Comparator<Programme> comparator = null;
         switch (sortOption) {
@@ -140,7 +138,7 @@ public class ProgrammeControl {
                 comparator = Comparator.comparing(Programme::getProgrammeLevel);
                 break;
             default:
-                System.out.println("Invalid sort option.");
+                programmeUI.invalidInput();
                 break;
         }
         return comparator;
@@ -155,10 +153,10 @@ public class ProgrammeControl {
             Programme newProgrammeCode;
             do {
                 newProgrammeCode = programmeUI.checkProgrammeCode();
-//                String programmeCode = InputHandling.getString("Programme Code (exp. RSD): ");
 
                 if (programmeExists(newProgrammeCode.getProgrammeCode())) {
-                    System.out.println("Error: the Programme Code - " + newProgrammeCode.getProgrammeCode().toUpperCase() + " already exists.");
+//                    System.out.println("Error: the Programme Code - " + newProgrammeCode.getProgrammeCode().toUpperCase() + " already exists.\n");
+                    System.out.println(programmeUI.checkExists(newProgrammeCode));
                 }
             } while (programmeExists(newProgrammeCode.getProgrammeCode()));
 
@@ -191,13 +189,10 @@ public class ProgrammeControl {
             Programme programmeCode = programmeUI.checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode())) {
-//            System.out.println("Error: Programme with the given code does not exist.");
                 programmeUI.notExists();
-                return; // Exit the function if programme doesn't exist
+                return;
             }
 
-//        ListInterface<Programme> programme1 = programmeList.filter(programme -> programme.getProgrammeCode().equals(programmeCode.getProgrammeCode().toUpperCase()));
-//        Programme prog1 = FileHandling.getProgramme(primaryKey);
             existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
 
             // list selected program for formatting
@@ -238,7 +233,7 @@ public class ProgrammeControl {
                     programmeDA.writeToFile(programmeList);
                     System.out.println("\nProgramme updated successfully!");
                 } else {
-                    System.out.println("\nError: Programme not found in the list.");
+                    programmeUI.notFound();
                 }
             } else {
                 System.out.println("\nProgramme update cancelled.");
@@ -277,16 +272,14 @@ public class ProgrammeControl {
             Programme programmeCode = programmeUI.checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
-//            System.out.println("Error: Programme with the given code does not exist.");
                 programmeUI.notExists();
-                return; // Exit the function if programme doesn't exist
+                return;
             }
 
             existingProgramme = getProgrammeByCode(programmeCode.getProgrammeCode().toUpperCase());
 
             // list selected program for formatting
             LinkedList<Programme> selectedProgramList = new LinkedList<>();
-//        ListInterface<Programme> programme1 = programmeList.filter(programme -> programme.getProgrammeCode().equals(programmeCode.getProgrammeCode().toUpperCase()));
             selectedProgramList.add(existingProgramme);
 
             String formattedOutput = programmeUI.formatProgrammeList(selectedProgramList);
@@ -334,16 +327,14 @@ public class ProgrammeControl {
                 System.out.println("Returning to the main menu.");
                 break;
             default:
-                System.out.println("Invalid choice.");
+                programmeUI.invalidInput();
         }
     }
 
     private void searchByCriteria(ListInterface<Programme> programmeList, String fieldLabel) {
         String targetValue = InputHandling.getString("Enter " + fieldLabel + " to search: ");
-        LinkedList<Programme> results = new LinkedList<>();
-        boolean matches = false;
 
-        for (Programme programme : programmeList) {
+        Predicate<Programme> criteria = programme -> {
             String fieldValue = "";
 
             switch (fieldLabel) {
@@ -357,20 +348,19 @@ public class ProgrammeControl {
                     fieldValue = programme.getProgrammeName();
                     break;
                 case "Programme Level":
-                    fieldValue = programme.getProgrammeLevel() + "";
+                    fieldValue = String.valueOf(programme.getProgrammeLevel());
                     break;
             }
 
-            if (fieldValue.equalsIgnoreCase(targetValue)) {
-                results.add(programme);
-                matches = true; // At least one match found
-            }
-        }
+            return fieldValue.equalsIgnoreCase(targetValue);
+        };
+
+        ListInterface<Programme> results = programmeList.filter(criteria);
 
         if (!results.isEmpty()) {
             String formattedOutput = programmeUI.formatProgrammeList(results);
             programmeUI.listAllProgrammes(formattedOutput);
-        } else if (!matches) {
+        } else {
             programmeUI.notFound();
         }
     }
@@ -404,9 +394,7 @@ public class ProgrammeControl {
                     System.out.println("Tutorial Group addition cancelled. The Tutorial Group List remains the same.\n");
                     programmeUI.displayTtl(ttlList);
                 }
-
             }
-
             yesNo = programmeUI.continueInput();
         } while (yesNo);
     }
@@ -444,7 +432,8 @@ public class ProgrammeControl {
                     }
                     programmeUI.displayTtl(ttlList);
                 } else {
-                    System.out.println("\nTutorial Group not found in the selected programme.");
+//                    System.out.println("\nTutorial Group not found in the selected programme.");
+                      programmeUI.ttlNotFound();
                 }
             }
 
@@ -455,7 +444,7 @@ public class ProgrammeControl {
     //display ttl - code
     public void listTtl() {
         if (ttlList.isEmpty()) {
-            programmeUI.displayMessage("No Tutorial Group found.");
+            programmeUI.ttlNotFound();
         } else {
             System.out.println("\nDisplay Tutorial Group from Programme:");
 
@@ -484,7 +473,7 @@ public class ProgrammeControl {
                 generateLevelReport(programmeList);
                 break;
             default:
-                System.out.println("Invalid choice.");
+                programmeUI.invalidInput();
         }
     }
 
@@ -534,11 +523,6 @@ public class ProgrammeControl {
         }
     }
 
-    private ListInterface<Programme> filterProgrammesByFaculty(ListInterface<Programme> programmeList, String faculty) {
-        Predicate<Programme> facultyFilter = programme -> programme.getFaculty().equalsIgnoreCase(faculty);
-        return programmeList.filter(facultyFilter);
-    }
-
     public void generateLevelReport(ListInterface<Programme> programmeList) {
         Map<Character, Integer> levelCounts = new HashMap<>();
         int totalProgrammes = programmeList.getSize();
@@ -578,6 +562,7 @@ public class ProgrammeControl {
         levelNumber = 1;
         for (Character level : levelCounts.keySet()) {
             System.out.println(levelNumber + ". " + level);
+            //filter ta~gogogo
             Predicate<Programme> levelFilter = programme -> programme.getProgrammeLevel() == level;
             ListInterface<Programme> programmesInLevel = programmeList.filter(levelFilter);
             String formattedOutput = programmeUI.formatProgrammeList(programmesInLevel);
@@ -595,7 +580,7 @@ public class ProgrammeControl {
         }
 
         if (tutorialGroupsInProgramme.isEmpty()) {
-            System.out.println("No tutorial groups found in the selected programme.");
+            programmeUI.ttlNotFound();
         } else {
             programmeUI.displayTtl(tutorialGroupsInProgramme);
         }
@@ -630,16 +615,29 @@ public class ProgrammeControl {
         return null;
     }
 
+    private ListInterface<Programme> filterProgrammesByFaculty(ListInterface<Programme> programmeList, String faculty) {
+        Predicate<Programme> facultyFilter = programme -> programme.getFaculty().equalsIgnoreCase(faculty);
+        return programmeList.filter(facultyFilter);
+    }
+
     //check code exists
+//    private boolean programmeExists(String programmeCode) {
+//        String upCode = programmeCode.toUpperCase();
+//        for (Programme existingProgramme : programmeList) {
+//            if (existingProgramme.getProgrammeCode().equals(upCode)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     private boolean programmeExists(String programmeCode) {
         String upCode = programmeCode.toUpperCase();
-//        ListInterface<Programme> programme1 = programmeList.filter(programme -> programme.getProgrammeCode().equals(upCode));
-        for (Programme existingProgramme : programmeList) {
-            if (existingProgramme.getProgrammeCode().equals(upCode)) {
-                return true;
-            }
-        }
-        return false;
+
+        Predicate<Programme> criteria = existingProgramme -> existingProgramme.getProgrammeCode().equals(upCode);
+
+        ListInterface<Programme> filteredProgrammes = programmeList.filter(criteria);
+
+        return !filteredProgrammes.isEmpty();
     }
 
     public static void main(String[] args) {
