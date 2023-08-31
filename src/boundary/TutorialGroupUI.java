@@ -120,7 +120,8 @@ public class TutorialGroupUI {
 
     // Display Message/Entity
     public void displayTutorialGroup(TutorialGroup tutorialGroup) {
-        System.out.println(tutorialGroup);
+        System.out.println();
+        System.out.print("Tutorial Group : " + tutorialGroup.getTutorialGroupId());
     }
 
     public void displayStudent(Student student) {
@@ -160,6 +161,10 @@ public class TutorialGroupUI {
         System.out.println("There is No Student In This Tutorial Group...");
         System.out.println();
         displaySystemPauseMessage();
+    }
+    
+    public void displayNoCourseMessage() {
+        System.out.println("There is No Course In This Tutorial Group...");
     }
 
     public void displaySystemPauseMessage() {

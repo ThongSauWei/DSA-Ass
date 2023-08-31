@@ -109,17 +109,8 @@ public class TutorialGroupControl {
         // filter the list so that the students in the tutorial group only will be listed
         Student studentRemove = getStudent(studentList.filter(student -> student.getTutorialGroupId().equals(ttlGroup)));
         
-        int count = 1;
-        for (Student student : studentList) {
-            if (student.equals(studentRemove)) { // find the student in the student list and get its index
-                break;
-            }
-            
-            count++;
-        }
-        
         // remove the student and save to student file
-        studentList.remove(count);        
+        studentList.remove(studentRemove);        
         studentDA.writeToFile(studentList);
         
         // update the tutorial group data and save to tutorial group file
@@ -197,7 +188,7 @@ public class TutorialGroupControl {
             case 1: // filter based on programme
                 Programme programme = chooseProgramme();
                 
-                // filter the list so that the tutorial groups in the programme only will be listed
+                // filter the list so that the tutorial groups in the programme only will be listed               
                 listTutorialGroups(tutorialGroupList.filter(tutorialGroup -> tutorialGroup.getProgrammeCode().equals(programme)));
                 break;
             case 2: // maybe will be remove (filter based on courses taken)
@@ -234,8 +225,14 @@ public class TutorialGroupControl {
                 TutorialGroup tutorialGroup = chooseTutorialGroup();
                 Programme programme = tutorialGroup.getProgrammeCode();
                 
+                ListInterface<CourseProgramme> courseProgrammeList = new LinkedList<>();
+                
                 // filter the course programme list so that only courses available in the programme is listed
-                ListInterface<CourseProgramme> courseProgrammeList = new da.CourseProgrammeDA().readFromFile().filter(courseProgramme -> courseProgramme.getProgrammeCode().equals(programme));
+                try {
+                    courseProgrammeList = new da.CourseProgrammeDA().readFromFile().filter(courseProgramme -> courseProgramme.getProgrammeCode().equals(programme));
+                } catch (IndexOutOfBoundsException ex) {
+                    
+                }
                 
                 ListInterface<Course> courseList = new LinkedList<>();
                 for (CourseProgramme courseProgramme : courseProgrammeList) { // the courses are stored into the course list
