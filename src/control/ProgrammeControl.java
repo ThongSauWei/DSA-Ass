@@ -412,11 +412,12 @@ public class ProgrammeControl {
                     ttlList.add(newTutorial);
                     ttlDA.writeToFile(ttlList);
                     System.out.println("\nTutorial Group added successfully!");
+                    displayTutorialGroups(existingProgramme);
                 } else {
                     System.out.println("\nTutorial Group addition cancelled. The Tutorial Group List remains the same.");
+                    programmeUI.displayTtl(ttlList);
                 }
 
-                programmeUI.displayTtl(ttlList);
             }
 
             yesNo = programmeUI.continueInput();

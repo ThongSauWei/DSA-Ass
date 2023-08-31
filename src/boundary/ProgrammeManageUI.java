@@ -162,35 +162,48 @@ public class ProgrammeManageUI {
         updatedProgramme.setProgrammeLevel(existingProgramme.getProgrammeLevel());
         updatedProgramme.setFaculty(existingProgramme.getFaculty());
         updatedProgramme.setDuration(existingProgramme.getDuration());
+        
+        String newName, newDetail, newFaculty;
+        int newDuration; char newLevel;
 
         switch (updateOption) {
             case 1:
-                String newName = InputHandling.getString("Enter new Programme Name: ");
+                newName = InputHandling.getString("Enter new Programme Name: ");
                 updatedProgramme.setProgrammeName(newName);
                 break;
             case 2:
-                String newDetail = InputHandling.getString("Enter new Programme Detail: ");
+                newDetail = InputHandling.getString("Enter new Programme Detail: ");
                 updatedProgramme.setProgrammeDetail(newDetail);
                 break;
             case 3:
-                char newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
+                newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
                 updatedProgramme.setProgrammeLevel(newLevel);
                 break;
             case 4:
-                String newFaculty = InputHandling.getString("Enter new Faculty: ");
+                newFaculty = InputHandling.getString("Enter new Faculty: ");
                 updatedProgramme.setFaculty(newFaculty);
                 break;
             case 5:
-                int newDuration = InputHandling.getInt("Enter new Duration (in months): ");
+                newDuration = InputHandling.getInt("Enter new Duration (in months): ");
+                updatedProgramme.setDuration(newDuration);
+                break;
+            case 6:
+                newName = InputHandling.getString("Enter new Programme Name: ");
+                newDetail = InputHandling.getString("Enter new Programme Detail: ");
+                newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
+                newFaculty = InputHandling.getString("Enter new Faculty: ");
+                newDuration = InputHandling.getInt("Enter new Duration (in months): ");
+                
+                updatedProgramme.setProgrammeName(newName);
+                updatedProgramme.setProgrammeDetail(newDetail);
+                updatedProgramme.setProgrammeLevel(newLevel);
+                updatedProgramme.setFaculty(newFaculty);
                 updatedProgramme.setDuration(newDuration);
                 break;
             default:
                 System.out.println("Invalid choice.");
                 return null;
         }
-
-//        System.out.println("\nUpdated Programme Details:");
-//        System.out.println(updatedProgramme);
         return updatedProgramme;
     }
 

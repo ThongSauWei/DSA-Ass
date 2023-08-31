@@ -1,18 +1,18 @@
-RSD|updated|heyheyhey|L|FFFF|3
-DFT|Diploma in Information Technology|Diploma Is Used For Playing!!!|D|FOCS|2
-FCP|Foundation in Computing Track A|Foundation Not To Say One. No Experience.|F|FOCS|1
-RRR|testing testing|testing detail testing|D|FOCS|12
-QQQ|testing|testing123|D|FAFB|2
-X|X|null|X|FOXX|1
-A|hccccbcbsdhcbdshc|null|A|AAAA|1
-ZZ|ZZ|null|Z|ZZZZ|1
 xxx|haha|hahaha|q|focs|1
+vvv|vvv|vvv|V|VVVV|1
+ttt|ttt|ttt|T|TTTT|4
+ssi|ssi|ssi|S|SSSS|1
+ggg|ggg|gggggggggggggggggggggg|G|GGGG|3
+fff|fff|fff|F|FFFF|2
 eee|e|e|E|EEEE|1
 ddd|ddd|ddd|D|DDDD|2
-vvv|vvv|vvv|V|VVVV|1
-ssi|ssi|ssi|S|SSSS|1
 aaa|aaa|aaa|A|AAAA|1
-fff|fff|fff|F|FFFF|2
-ttt|ttt|ttt|T|TTTT|4
-ggg|ggg|gggggggggggggggggggggg|G|GGGG|3
-NNN|nnn|nnnnnnnnnnnnnn|N|NNNN|2
+ZZ|ZZ|null|Z|ZZZZ|1
+X|X|null|X|FOXX|1
+RSD|updated|heyheyhey|L|FFFF|3
+RRR|testing testing|testing detail testing|D|FOCS|12
+QQQ|testing|testing123|D|FAFB|2
+FCP|Foundation in Computing Track A|Foundation Not To Say One. No Experience.|F|FOCS|1
+DFT|Diploma in Information Technology|Diploma Is Used For Playing!!!|D|FOCS|2
+A|hccccbcbsdhcbdshc|null|A|AAAA|1
+FFF|Foundation Meh|Mehhhhhhhhhhhhhhhhhhh|M|FMMM|10
