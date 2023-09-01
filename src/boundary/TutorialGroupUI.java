@@ -242,17 +242,6 @@ public class TutorialGroupUI {
         System.out.println();
     }
 
-    public void listProgrammes(ListInterface<Programme> programmeList) {
-        int count = 1;
-        System.out.println("The Programmes Available");
-        Helper.printLine('=', 24);
-        for (Programme programme : programmeList) {
-            System.out.println(count + ". " + programme.getProgrammeCode() + "\t" + programme.getProgrammeName() + "\t" + programme.getFaculty());
-            count++;
-        }
-        Helper.printLine('=', 24);
-    }
-
     public void listStudents(ListInterface<Student> studentList) {
         listStudents(studentList, true);
     }

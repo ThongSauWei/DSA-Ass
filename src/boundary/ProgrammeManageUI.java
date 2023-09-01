@@ -54,14 +54,16 @@ public class ProgrammeManageUI {
 
 //        formattedOutput.append("\nProgramme List :\n");
         formattedOutput.append("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        formattedOutput.append(String.format("%-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n", "Programme Code", "Programme Name", "Programme Details",
+        formattedOutput.append(String.format("%8s %-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n", "No.", "Programme Code", "Programme Name", "Programme Details",
                 "Level", "Faculty", "Duration(Months)"));
         formattedOutput.append("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
+        int count = 1;
         for (Programme programme : programmeList) {
-            formattedOutput.append(String.format("%-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n",
+            formattedOutput.append(String.format("%2d%-6s %-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n", count, ".",
                     programme.getProgrammeCode(), programme.getProgrammeName(), programme.getProgrammeDetail(),
                     programme.getProgrammeLevel(), programme.getFaculty(), programme.getDuration()));
+            count++;
         }
 
         // Calculate total and add it to the message

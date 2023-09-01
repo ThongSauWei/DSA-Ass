@@ -82,14 +82,18 @@ public class ProgrammeControl {
     }
 
     //display programme
+    public void listProgramme(ListInterface<Programme> programmeList) {
+        String formattedOutput = programmeUI.formatProgrammeList(programmeList);
+        programmeUI.listAllProgrammes(formattedOutput);
+    }
+    
     public void listProgramme() {
         programmeList = programmeDA.readFromFile();
 
         if (programmeList.isEmpty()) {
             programmeUI.notFound();
         } else {
-            String formattedOutput = programmeUI.formatProgrammeList(programmeList);
-            programmeUI.listAllProgrammes(formattedOutput);
+            listProgramme(programmeList);
 
             // Ask user if they want to sort the output
             if (programmeUI.sortComfirm()) {
@@ -106,11 +110,9 @@ public class ProgrammeControl {
                 } else if (sortChoice != 3) {
                     programmeUI.invalidInput();
                 }
-
-                formattedOutput = programmeUI.formatProgrammeList(programmeList);
-                programmeUI.listAllProgrammes(formattedOutput);
             }
 
+            listProgramme(programmeList);
         }
     }
 

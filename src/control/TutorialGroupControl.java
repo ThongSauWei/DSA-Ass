@@ -303,7 +303,7 @@ public class TutorialGroupControl {
     }
     
     public Programme chooseProgramme() {
-        tutorialGroupUI.listProgrammes(programmeList); // list all the programmes
+        new ProgrammeControl().listProgramme(programmeList); // list all the programmes
         
         int choice = tutorialGroupUI.getProgrammeChoice(programmeList.getSize());
         
