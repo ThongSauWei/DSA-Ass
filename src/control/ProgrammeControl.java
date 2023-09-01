@@ -26,11 +26,13 @@ public class ProgrammeControl {
     private ProgrammeDA programmeDA = new ProgrammeDA();
     private TutorialGroupDA ttlDA = new TutorialGroupDA();
     private StudentDA studentDA = new StudentDA();
+    private CourseProgrammeDA courseProgDA = new CourseProgrammeDA();
 
     //list
     private ListInterface<Programme> programmeList;
     private ListInterface<TutorialGroup> ttlList = new LinkedList<>();
     private ListInterface<Student> studentList = new LinkedList<>();
+    private ListInterface<CourseProgramme> courseProgList = new LinkedList<>();
 
     //boundary
     private ProgrammeManageUI programmeUI = new ProgrammeManageUI();
@@ -39,6 +41,7 @@ public class ProgrammeControl {
         programmeList = programmeDA.readFromFile();
         ttlList = ttlDA.readFromFile();
         studentList = studentDA.readFromFile();
+        courseProgList = courseProgDA.readFromFile();
 
         int choice;
         do {
@@ -86,7 +89,7 @@ public class ProgrammeControl {
         String formattedOutput = programmeUI.formatProgrammeList(programmeList);
         programmeUI.listAllProgrammes(formattedOutput);
     }
-    
+
     public void listProgramme() {
         programmeList = programmeDA.readFromFile();
 
@@ -279,8 +282,16 @@ public class ProgrammeControl {
                         tutorialGroupsToDelete.add(tutorialGroup);
                     }
                 }
+                
+                //course prog del
+                LinkedList<CourseProgramme> courseProgToDelete = new LinkedList<>();
+                for (CourseProgramme courseProg : courseProgList) {
+                    if (courseProg.getProgrammeCode().equals(existingProgramme)) {
+                        courseProgToDelete.add(courseProg);
+                    }
+                }
 
-                if (!tutorialGroupsToDelete.isEmpty()) {
+                if (!tutorialGroupsToDelete.isEmpty() && !courseProgToDelete.isEmpty()) {
                     displayTutorialGroups(existingProgramme);
 
                     if (programmeUI.comfirmInput()) {
@@ -300,6 +311,24 @@ public class ProgrammeControl {
                         }
 
                         ttlDA.writeToFile(ttlList);
+
+                        //course programme
+                        // Get course programme IDs
+                        ListInterface<String> courseProgIdsToDelete = new LinkedList<>();
+                        for (CourseProgramme courseProgramme : courseProgToDelete) {
+                            courseProgIdsToDelete.add(courseProgramme.getId());
+                        }
+
+                        // Remove course programme
+                        for (String courseProgId : courseProgIdsToDelete) {
+                            CourseProgramme courseProgToRemove = getCourseProgById(courseProgId, existingProgramme);
+                            int indexToRemoveC = getIndexByCourseProgramme(courseProgToRemove);
+                            if (indexToRemoveC != -1) {
+                                courseProgList.remove(indexToRemoveC);
+                            }
+                        }
+
+                        courseProgDA.writeToFile(courseProgList);
                     }
                 }
 
@@ -682,6 +711,17 @@ public class ProgrammeControl {
         return -1;
     }
 
+    //course Programme
+    private int getIndexByCourseProgramme(CourseProgramme courseProgramme) {
+        for (int i = 1; i <= courseProgList.getSize(); i++) {
+            CourseProgramme existingCourseProgramme = courseProgList.get(i);
+            if (existingCourseProgramme.equals(courseProgramme)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private int getIndexByStudent(Student student) {
         for (int i = 1; i <= studentList.getSize(); i++) {
             Student existingstudent = studentList.get(i);
@@ -696,6 +736,16 @@ public class ProgrammeControl {
         for (TutorialGroup tutorialGroup : ttlList) {
             if (tutorialGroup.getTutorialGroupId().equals(tutorialGroupId) && tutorialGroup.getProgrammeCode().equals(programme)) {
                 return tutorialGroup;
+            }
+        }
+        return null;
+    }
+
+    //course programme
+    private CourseProgramme getCourseProgById(String courseProgId, Programme programme) {
+        for (CourseProgramme courseProgramme : courseProgList) {
+            if (courseProgramme.getId().equals(courseProgId) && courseProgramme.getProgrammeCode().equals(programme)) {
+                return courseProgramme;
             }
         }
         return null;
