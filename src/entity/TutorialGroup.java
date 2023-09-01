@@ -103,7 +103,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 
     @Override
     public String toString() {
-        return tutorialGroupId + "\t" + numOfStudent + "\n";
+        return String.format("%-25s %-15d", tutorialGroupId, numOfStudent);
     }
     
 }

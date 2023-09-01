@@ -35,9 +35,11 @@ public class TutorialGroupUI {
         Helper.printLine('=', 50);
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 0, 7)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
+            System.out.println();
         }
 
         return choice;
@@ -54,9 +56,11 @@ public class TutorialGroupUI {
         Helper.printLine('=', 36);
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 1, 3)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
+            System.out.println();
         }
 
         return choice;
@@ -72,9 +76,11 @@ public class TutorialGroupUI {
         Helper.printLine('=', 30);
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 0, 3)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
+            System.out.println();
         }
 
         return choice;
@@ -91,9 +97,11 @@ public class TutorialGroupUI {
         Helper.printLine('=', 19);
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 1, 3)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
+            System.out.println();
         }
 
         return choice;
@@ -110,9 +118,11 @@ public class TutorialGroupUI {
         Helper.printLine('=', 22);
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 1, 3)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
+            System.out.println();
         }
 
         return choice;
@@ -220,11 +230,14 @@ public class TutorialGroupUI {
 
         System.out.println("The Tutorial Groups In The Programme");
         Helper.printLine('=', 36);
+        System.out.printf("%-8s %-25s %-15s\n", "No.", "Tutorial Group ID", "Num Of Students");
+        Helper.printLine('-', 50);
         for (TutorialGroup ttlGroup : tutorialGroupList) {
-            System.out.print(count + ". " + ttlGroup);
+            System.out.printf("%2d%-6s ", count, ".");
+            System.out.println(ttlGroup);
             count++;
         }
-        Helper.printLine('=', 36);
+        Helper.printLine('-', 50);
         
         System.out.println();
     }
@@ -234,7 +247,7 @@ public class TutorialGroupUI {
         System.out.println("The Programmes Available");
         Helper.printLine('=', 24);
         for (Programme programme : programmeList) {
-            System.out.println(count + ". " + programme.getProgrammeName() + "\t" + programme.getProgrammeCode() + "\t" + programme.getFaculty());
+            System.out.println(count + ". " + programme.getProgrammeCode() + "\t" + programme.getProgrammeName() + "\t" + programme.getFaculty());
             count++;
         }
         Helper.printLine('=', 24);
@@ -248,11 +261,14 @@ public class TutorialGroupUI {
         int count = 1;
         System.out.println("The Students In The Tutorial Group");
         Helper.printLine('=', 34);
+        System.out.printf("%-8s %-12s %-30s %-16s %-40s %-13s %-14s\n", "No.", "Student ID", "Student Name", "Student IC", "Student Email", "Phone No", "Tutorial Group");
+        Helper.printLine('-', 139);
         for (Student student : studentList) {
-            System.out.print(count + ". " + student);
+            System.out.printf("%2d%-6s ", count, ".");
+            System.out.println(student);
             count++;
         }
-        Helper.printLine('=', 34);
+        Helper.printLine('-', 139);
 
         if (sysPause) {
             displaySystemPauseMessage();
@@ -281,9 +297,11 @@ public class TutorialGroupUI {
 
     public int getStudentChoice(int size) {
         int choice = InputHandling.getInt("Please Choose Your Option : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 1, size)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
+            System.out.println();
         }
 
         return choice;
@@ -291,9 +309,11 @@ public class TutorialGroupUI {
 
     public int getProgrammeChoice(int size) {
         int choice = InputHandling.getInt("Please Choose Your Option : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 1, size)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
+            System.out.println();
         }
 
         return choice;
@@ -301,9 +321,11 @@ public class TutorialGroupUI {
 
     public int getTutorialGroupChoice(int size) {
         int choice = InputHandling.getInt("Please Enter The Tutorial Group Number (max = " + size + ") : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 1, size)) {
             choice = InputHandling.getInt("Please Enter The Tutorial Group Number (max = " + size + ") : ");
+            System.out.println();
         }
 
         return choice;
@@ -311,9 +333,11 @@ public class TutorialGroupUI {
 
     public int getCourseChoice(int size) {
         int choice = InputHandling.getInt("Please Choose Your Option : ");
+        System.out.println();
 
         while (!Helper.choiceValidation(choice, 1, size)) {
             choice = InputHandling.getInt("Please Choose Your Option : ");
+            System.out.println();
         }
 
         return choice;
