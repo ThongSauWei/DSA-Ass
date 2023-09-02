@@ -21,7 +21,7 @@ import adt.ListInterface;
 public class TutorialGroupUI {
 
     // Display Menu
-    public int displayMenu() {
+    public void displayMenu() {
         System.out.println("Welcome to Tutorial Group Management");
         Helper.printLine('=', 50);
         System.out.println("1. Add A Student To A Tutorial Group");
@@ -33,19 +33,9 @@ public class TutorialGroupUI {
         System.out.println("7. Generate Reports");
         System.out.println("0. Go Back to Home Page");
         Helper.printLine('=', 50);
-
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
-        System.out.println();
-
-        while (!Helper.choiceValidation(choice, 0, 7)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
-            System.out.println();
-        }
-
-        return choice;
     }
 
-    public int displayGetStudentMenu() {
+    public void displayGetStudentMenu() {
         System.out.println("You have to select a student from the tutorial group...");
         System.out.println();
         System.out.println("Choose the method for selecting");
@@ -54,19 +44,9 @@ public class TutorialGroupUI {
         System.out.println("2. Browsing (List)");
         System.out.println("3. Browsing (One)");
         Helper.printLine('=', 36);
-
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
-        System.out.println();
-
-        while (!Helper.choiceValidation(choice, 1, 3)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
-            System.out.println();
-        }
-
-        return choice;
     }
 
-    public int displayBrowseStudentMenu(Student student) {
+    public void displayBrowseStudentMenu(Student student) {
         System.out.println(student);
         Helper.printLine('=', 30);
         System.out.println("1. Previous Student");
@@ -74,19 +54,9 @@ public class TutorialGroupUI {
         System.out.println("3. Select Student");
         System.out.println("0. Exit");
         Helper.printLine('=', 30);
-
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
-        System.out.println();
-
-        while (!Helper.choiceValidation(choice, 0, 3)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
-            System.out.println();
-        }
-
-        return choice;
     }
 
-    public int displayCriteriaMenu() {
+    public void displayCriteriaMenu() {
         System.out.println("You have selected to filter the tutorial groups...");
         System.out.println();
         System.out.println("Choose The Criteria");
@@ -95,19 +65,9 @@ public class TutorialGroupUI {
         System.out.println("2. Course Taken");
         System.out.println("3. Number Of Students");
         Helper.printLine('=', 19);
-
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
-        System.out.println();
-
-        while (!Helper.choiceValidation(choice, 1, 3)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
-            System.out.println();
-        }
-
-        return choice;
     }
 
-    public int displayReportMenu() {
+    public void displayReportMenu() {
         System.out.println("You have selected to generate report");
         System.out.println();
         System.out.println("Generate Report For...");
@@ -116,16 +76,6 @@ public class TutorialGroupUI {
         System.out.println("2. All Tutorial Groups In A Programme");
         System.out.println("3. All Tutorial Groups");
         Helper.printLine('=', 22);
-
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
-        System.out.println();
-
-        while (!Helper.choiceValidation(choice, 1, 3)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
-            System.out.println();
-        }
-
-        return choice;
     }
 
     // Display Message/Entity
@@ -241,12 +191,8 @@ public class TutorialGroupUI {
         
         System.out.println();
     }
-
+    
     public void listStudents(ListInterface<Student> studentList) {
-        listStudents(studentList, true);
-    }
-
-    public void listStudents(ListInterface<Student> studentList, boolean sysPause) {
         int count = 1;
         System.out.println("The Students In The Tutorial Group");
         Helper.printLine('=', 34);
@@ -258,10 +204,6 @@ public class TutorialGroupUI {
             count++;
         }
         Helper.printLine('-', 139);
-
-        if (sysPause) {
-            displaySystemPauseMessage();
-        }
     }
 
     public void listCourses(ListInterface<Course> courseList) {
@@ -283,27 +225,24 @@ public class TutorialGroupUI {
     public int getNumOfStudents() {
         return InputHandling.getInt("Only Shows Tutorial Groups With Number Of Students More Than Or Equals To : ");
     }
-
-    public int getStudentChoice(int size) {
+    
+    public int getChoice() {
         int choice = InputHandling.getInt("Please Choose Your Option : ");
         System.out.println();
+        
+        return choice;
+    }
 
-        while (!Helper.choiceValidation(choice, 1, size)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
-            System.out.println();
-        }
+    public int getStudentChoice(int size) {
+        int choice = InputHandling.getInt("Please Choose The Student : ");
+        System.out.println();
 
         return choice;
     }
 
     public int getProgrammeChoice(int size) {
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("Please Choose The Programme : ");
         System.out.println();
-
-        while (!Helper.choiceValidation(choice, 1, size)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
-            System.out.println();
-        }
 
         return choice;
     }
@@ -312,22 +251,12 @@ public class TutorialGroupUI {
         int choice = InputHandling.getInt("Please Enter The Tutorial Group Number (max = " + size + ") : ");
         System.out.println();
 
-        while (!Helper.choiceValidation(choice, 1, size)) {
-            choice = InputHandling.getInt("Please Enter The Tutorial Group Number (max = " + size + ") : ");
-            System.out.println();
-        }
-
         return choice;
     }
 
     public int getCourseChoice(int size) {
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("Please Choose The Course : ");
         System.out.println();
-
-        while (!Helper.choiceValidation(choice, 1, size)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
-            System.out.println();
-        }
 
         return choice;
     }

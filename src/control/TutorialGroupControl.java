@@ -18,7 +18,7 @@ import boundary.TutorialGroupUI;
 
 import adt.*;
 
-
+import utility.Helper;
 
 /**
  *
@@ -45,7 +45,11 @@ public class TutorialGroupControl {
         int choice;
         
         do {
-            choice = tutorialGroupUI.displayMenu();
+            tutorialGroupUI.displayMenu();
+            
+            do {
+                choice = tutorialGroupUI.getChoice();
+            } while (!Helper.choiceValidation(choice, 0, 7));
 
             switch (choice) {
                 case 1:
@@ -190,14 +194,24 @@ public class TutorialGroupControl {
     
     public void listStudents(TutorialGroup tutorialGroup, boolean sysPause) {
         try {
-            tutorialGroupUI.listStudents(studentList.filter(student -> student.getTutorialGroupId().equals(tutorialGroup)), sysPause);
+            tutorialGroupUI.listStudents(studentList.filter(student -> student.getTutorialGroupId().equals(tutorialGroup)));
+            
+            if (sysPause) {
+                tutorialGroupUI.displaySystemPauseMessage();
+            }
         } catch (IndexOutOfBoundsException ex) {
             tutorialGroupUI.displayNoStudentMessage();
         }
     }
     
     public void filterTutorialGroups() { // completed & tested
-        int choice = tutorialGroupUI.displayCriteriaMenu();
+        int choice;
+        
+        tutorialGroupUI.displayCriteriaMenu();
+        
+        do {
+            choice = tutorialGroupUI.getChoice();
+        } while (!Helper.choiceValidation(choice, 1, 3));
         
         switch (choice) {
             case 1: // filter based on programme
@@ -233,7 +247,13 @@ public class TutorialGroupControl {
     }
     
     public void generateReports() { // completed & tested
-        int choice = tutorialGroupUI.displayReportMenu();
+        int choice;
+        
+        tutorialGroupUI.displayReportMenu();
+        
+        do {
+            choice = tutorialGroupUI.getChoice();
+        } while (!Helper.choiceValidation(choice, 1, 3));
         
         switch (choice) {
             case 1: // generate report for one tutorial group
@@ -351,7 +371,13 @@ public class TutorialGroupControl {
     }
     
     public Student getStudent() {       
-        int choice = tutorialGroupUI.displayGetStudentMenu(); 
+        int choice;
+        
+        tutorialGroupUI.displayGetStudentMenu(); 
+        
+        do {
+            choice = tutorialGroupUI.getChoice();
+        } while (!Helper.choiceValidation(choice, 1, 3));
         
         Student student = null;
         TutorialGroup oldTtlGroup;
@@ -379,7 +405,11 @@ public class TutorialGroupControl {
                 int option;
                 
                 do {                    
-                    option = tutorialGroupUI.displayBrowseStudentMenu(iterator.getCurrent()); // display current student
+                    tutorialGroupUI.displayBrowseStudentMenu(iterator.getCurrent()); // display current student
+                    
+                    do {
+                        option = tutorialGroupUI.getChoice();
+                    } while (!Helper.choiceValidation(choice, 0, 3));
                     
                     if (option == 1 && !iterator.isFirst()) { // go to previous student if there is one
                         iterator.previous();
