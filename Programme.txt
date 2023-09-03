@@ -1,5 +1,3 @@
-QQQ|Qtesting|Q detail|F|FOQQ|8
-FCP|Foundation in Computing Track A|Foundation Not To Say One. No Experience.|F|FOCS|1
+RSD|Bachelor in Software System Development|Year Two Sem One Sibeehhhh Busy.|R|FOCS|3
 DFT|Diploma in Information Technology|Diploma Is Used For Playing!!!|D|FOCS|2
-PPP|PPPP|PPP testing report new jiayou|P|PPPP|4
-RRR|testing testing|testing detail testing|D|FOCS|12
+FCP|Foundation in Computing Track A|Foundation Not To Say One. No Experience.|F|FOCS|1

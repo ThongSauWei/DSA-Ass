@@ -166,7 +166,7 @@ public class TutorialGroupUI {
     }
     
     public void displayNoCourseMessage() {
-        System.out.println("There is No Course In This Tutorial Group...");
+        System.out.println("There is No Course In This Programme...");
     }
 
     public void displaySystemPauseMessage() {

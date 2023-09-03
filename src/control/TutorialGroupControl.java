@@ -193,13 +193,16 @@ public class TutorialGroupControl {
     }
     
     public void listStudents(TutorialGroup tutorialGroup, boolean sysPause) {
-        try {
-            tutorialGroupUI.listStudents(studentList.filter(student -> student.getTutorialGroupId().equals(tutorialGroup)));
+        ListInterface<Student> filteredList = studentList.filter(student -> student.getTutorialGroupId().equals(tutorialGroup));
+        
+        if (!filteredList.isEmpty()) {
+            
+            tutorialGroupUI.listStudents(filteredList);
             
             if (sysPause) {
                 tutorialGroupUI.displaySystemPauseMessage();
             }
-        } catch (IndexOutOfBoundsException ex) {
+        } else {
             tutorialGroupUI.displayNoStudentMessage();
         }
     }
@@ -268,19 +271,22 @@ public class TutorialGroupControl {
                 ListInterface<CourseProgramme> courseProgrammeList = new LinkedList<>();
                 
                 // filter the course programme list so that only courses available in the programme is listed
-                try {
-                    courseProgrammeList = new da.CourseProgrammeDA().readFromFile().filter(courseProgramme -> courseProgramme.getProgrammeCode().equals(programme));
-                } catch (IndexOutOfBoundsException ex) {
-                    
-                }
+                courseProgrammeList = new da.CourseProgrammeDA().readFromFile().filter(courseProgramme -> courseProgramme.getProgrammeCode().equals(programme));
                 
                 ListInterface<Course> courseList = new LinkedList<>();
+                
                 for (CourseProgramme courseProgramme : courseProgrammeList) { // the courses are stored into the course list
                     courseList.add(courseProgramme.getCourseCode());
                 }
                 
                 tutorialGroupUI.displayProgramme(programme); // display the programme
-                tutorialGroupUI.listCourses(courseList); // display all the courses taken
+                
+                if (courseList.isEmpty()){
+                    tutorialGroupUI.displayNoCourseMessage();
+                } else {
+                    tutorialGroupUI.listCourses(courseList); // display all the courses taken
+                }
+                
                 tutorialGroupUI.displayTutorialGroup(tutorialGroup); // display the tutorial group
                 listStudents(tutorialGroup); // display all the students
                 break;
@@ -319,10 +325,10 @@ public class TutorialGroupControl {
     }
     
     public void listTutorialGroups(ListInterface<TutorialGroup> tutorialGroupList) {
-        try {
+        if (!tutorialGroupList.isEmpty()) {
             tutorialGroupUI.listTutorialGroups(tutorialGroupList);
             tutorialGroupUI.displaySystemPauseMessage();
-        } catch (IndexOutOfBoundsException ex) {
+        } else {
             tutorialGroupUI.displayNoTtlGroupMessage();
         }
     }

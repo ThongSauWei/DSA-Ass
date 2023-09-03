@@ -144,4 +144,9 @@ public class StartUp {
         
         new AssignmentStudentDA().writeToFile(assignmentStudentList);
     }
+    
+    public static void main(String[] args) {
+        StartUp.startUp();
+        StartUp.init();
+    }
 }
