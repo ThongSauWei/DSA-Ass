@@ -9,6 +9,7 @@ package utility;
  * @author User
  */
 public class Helper {
+  
     public static void clearScreen() {
         for (int i = 1; i <= 50; i++) {
             System.out.println();

@@ -29,7 +29,6 @@ public class InputHandling {
             try {
                 int input = scanner.nextInt();
                 scanner.nextLine();
-                System.out.println();
                 return input;
             } catch (InputMismatchException ex) {
                 System.out.print("Invalid Input! " + promptMsg);
@@ -49,7 +48,6 @@ public class InputHandling {
             try {
                 double input = scanner.nextDouble();
                 scanner.nextLine();
-                System.out.println();
                 return input;
             } catch (InputMismatchException ex) {
                 System.out.print("Invalid Input! " + promptMsg);
@@ -66,7 +64,6 @@ public class InputHandling {
         System.out.print(promptMsg);
         
         char ch = scanner.nextLine().charAt(0);
-        System.out.println();
         return ch;
     }
     
@@ -78,22 +75,19 @@ public class InputHandling {
         System.out.print(promptMsg);
         
         String str = scanner.nextLine();
-        System.out.println();
         return str;
     }
     
     public static Date getDate(String promptMsg) {
         System.out.print(promptMsg);
-
-        do {
             String input = scanner.nextLine();
             try {
                 Date date = dateFormat.parse(input);
                 return date;
             } catch (ParseException ex) {
-                System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+                System.out.println("!Invalid Date Format!");
             }
-        } while (true);
+        return null;
     }
     
     public static boolean getConfirmation() {

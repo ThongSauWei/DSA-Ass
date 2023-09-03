@@ -14,8 +14,10 @@ import entity.CourseProgramme;
 import entity.Programme;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import utility.InputHandling;
+import utility.StartUp;
 
 /**
  *
@@ -46,24 +48,27 @@ public class CourseControl {
             choice = courseManageUI.CourseMenu();
             switch (choice) {
                 case 1:
-                    //displayCourse();
+                    displayCourse();
                     break;
                 case 2:
-                    //filterCourse();
+                    sortCourse();
                     break;
                 case 3:
                     addCourse();
                     break;
                 case 4:
-                    //removeCourse();
+                    addCourseToProgramme();
                     break;
                 case 5:
-                    //updateCourse();
+                    //removeCourse();
                     break;
                 case 6:
-                    //searchCourse();
+                    //updateCourse();
                     break;
                 case 7:
+                    searchCourse();
+                    break;
+                case 8:
                     //report();
                     break;
                 case 0:
@@ -73,43 +78,189 @@ public class CourseControl {
             }
         } while (choice != 0);
     }
-    
-    /*
+
+//-------------Display function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //display course
+    public void displayCourse() {
+        try {
+            int ttlCourse = courseList.getSize();//get the total
+            courseManageUI.displayCourse(courseList, ttlCourse);//passing the total course to the UI
+        } catch (IndexOutOfBoundsException ex) {
+            courseManageUI.courseNotFound();
+        }
+    }
+
+//-------------Sort function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //sort course menu
+    public void sortCourse() {
+        int choice;
+        do {
+            choice = courseManageUI.sortCourse(courseList);
+
+            switch (choice) {
+                case 1:
+                    sortCourseCode();
+                    break;
+                case 2:
+                    sortCourseName();
+                    break;
+                case 3:
+                    sortStartDate();
+                    break;
+                case 4:
+                    sortEndDate();
+                    break;
+                case 0:
+                    break;
+                default:
+                    courseManageUI.invalidChoiceMessage();
+                    break;
+            }
+        } while (choice != 0);
+
+    }
+
+    //sort Course Code
+    public void sortCourseCode() {
+        int choice;
+
+        do {
+            choice = courseManageUI.sortCourseCode(courseList);
+            switch (choice) {
+                case 1:
+                    courseList.sort(Comparator.comparing(Course::getCourseCode));
+                    displayCourse();
+                    break;
+                case 2:
+                    courseList.sort(Comparator.comparing(Course::getCourseCode));
+                    courseList.reverse();
+                    displayCourse();
+                    break;
+                case 0:
+                    break;
+                default:
+                    courseManageUI.invalidChoiceMessage();
+                    break;
+            }
+        } while (choice != 0);
+    }
+
+    public void sortCourseName() {
+        int choice;
+
+        do {
+            choice = courseManageUI.sortCourseName(courseList);
+            switch (choice) {
+                case 1:
+                    courseList.sort(Comparator.comparing(Course::getCourseName));
+                    displayCourse();
+                    break;
+                case 2:
+                    courseList.sort(Comparator.comparing(Course::getCourseName));
+                    courseList.reverse();
+                    displayCourse();
+                    break;
+                case 0:
+                    break;
+                default:
+                    courseManageUI.invalidChoiceMessage();
+                    break;
+            }
+        } while (choice != 0);
+    }
+
+    public void sortStartDate() {
+        int choice;
+
+        do {
+            choice = courseManageUI.sortStartDate(courseList);
+            switch (choice) {
+                case 1:
+                    courseList.sort(Comparator.comparing(Course::getStartDate));
+                    displayCourse();
+                    break;
+                case 2:
+                    courseList.sort(Comparator.comparing(Course::getStartDate));
+                    courseList.reverse();
+                    displayCourse();
+                    break;
+                case 0:
+                    break;
+                default:
+                    courseManageUI.invalidChoiceMessage();
+                    break;
+            }
+        } while (choice != 0);
+    }
+
+    public void sortEndDate() {
+        int choice;
+
+        do {
+            choice = courseManageUI.sortEndDate(courseList);
+            switch (choice) {
+                case 1:
+                    courseList.sort(Comparator.comparing(Course::getEndDate));
+                    displayCourse();
+                    break;
+                case 2:
+                    courseList.sort(Comparator.comparing(Course::getEndDate));
+                    courseList.reverse();
+                    displayCourse();
+                    break;
+                case 0:
+                    break;
+                default:
+                    courseManageUI.invalidChoiceMessage();
+                    break;
+            }
+        } while (choice != 0);
+    }
+
+//-------------Add function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //add course
     public void addCourse() {
         String courseCode = courseManageUI.getCourseCode();
         Course course = courseManageUI.addCourse(courseCode);
 
         courseList.add(course);
         courseDA.writeToFile(courseList);
-    } 
-    */
-
-    public void addCourse() {
-        String courseCode = courseManageUI.getCourseCode();
-        String courseName = courseManageUI.getCourseName();
-        String courseDetail = courseManageUI.getCourseDetail();
-        Date startDate = getDate(courseManageUI.getStartDate());
-        Date endDate = getDate(courseManageUI.getEndDate());
-        
-        Course course = new Course(courseCode, courseName, courseDetail, startDate, endDate);
-
-        courseList.add(course);
-        courseDA.writeToFile(courseList);
     }
-    
-    // Ben make de, dont like can delete, no need give him face one
-    public Date getDate(String promptMsg) {
-        do {
-            String input = InputHandling.getString(promptMsg);
-            try {
-                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(input);
-                return date;
-            } catch (ParseException ex) {
-                courseManageUI.displayInvalidDateMessage();
+
+//-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------   
+    public void addCourseToProgramme() {
+        int choice;
+        displayCourse();
+        choice = courseManageUI.addCouserToProgramme(courseList);
+    }
+
+//-------------Remove function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //remove course
+//-------------Update function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //update course
+//-------------Search function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //search course
+//-------------Search function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public Course searchCourse() {
+        String courseCode = courseManageUI.getSearchCourseCode(); // get the course code
+        Course foundCourse = null;
+
+        // loop the list print out the the list are match with the search code
+        for (Course course : courseList) {
+            if (course.getCourseCode().equalsIgnoreCase(courseCode)) {
+                foundCourse = course;
+                break; // stop when the result are founded
             }
-        } while (true);
+        }
+        int ttlCourse = courseList.getSize();//get the total
+        courseManageUI.searchCourse(foundCourse, ttlCourse);
+        return foundCourse; // if no the course code return null
     }
 
+//-------------Report function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //report
     public void writeToFile(ListInterface<Course> courseList) {
         courseDA.writeToFile(courseList);
     }
@@ -117,5 +268,7 @@ public class CourseControl {
     public static void main(String[] args) {
         CourseControl courseControl = new CourseControl();
         courseControl.courseMenu();
+//        StartUp startUp = new StartUp();
+//        startUp.init();
     }
 }

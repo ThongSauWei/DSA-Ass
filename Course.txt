@@ -3,3 +3,7 @@ BAIT2203|Human Computer Interaction|It's All About Laws.|2023-07-02|2023-10-10
 AACS3253|Cloud Computing for Business|Lapsap Course.|2023-07-02|2023-10-10
 AMIT1234|Calculus?|Maths IS THE BEST!!!!|2023-07-23|2023-10-10
 AMIT9876|Calculus Again!!!|It's Me Again!!! Math Is The BEST!!!!!!!|2023-07-03|2023-10-10
+AMIT1029|Calculus|math not the best|2002-12-25|2003-02-25
+BACS1024|Fundamental Computer and Network|About the networking|2023-02-24|2023-04-24
+AACS1010|Testing|Nothing|2022-06-22|2022-09-14
+AACS1111|Testing1|Nothing2|2023-08-22|2023-12-08
