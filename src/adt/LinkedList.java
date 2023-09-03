@@ -57,7 +57,7 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
         }
         
         public CustomIterator(int position) {
-            currentNode = getNode(position);
+            currentNode = (isEmpty()) ? null : getNode(position);
         }
         
         @Override
@@ -96,17 +96,17 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
         
         @Override
         public T getCurrent() {
-            return currentNode.entry;
+            return currentNode == null ? null : currentNode.entry;
         }
         
         @Override
         public boolean isFirst() {
-            return currentNode.equals(firstNode);
+            return currentNode != null && currentNode.equals(firstNode);
         }
         
         @Override
         public boolean isLast() {
-            return currentNode.equals(lastNode);
+            return currentNode != null && currentNode.equals(lastNode);
         }
     }
     
@@ -352,6 +352,14 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
         // after swapping we knew that the pivot node is sorted as all the node on its left are "less than" it while all the node on its right are "more than" it
         // return the node that is sorted
         return i;
+    }
+    
+    public static void main(String[] args) {
+        ListInterface<String> list = new LinkedList<>();
+        
+        for (String data : list) {
+            System.out.println(data);
+        }
     }
 }
 
