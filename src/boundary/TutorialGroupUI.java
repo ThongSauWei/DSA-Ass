@@ -233,14 +233,14 @@ public class TutorialGroupUI {
         return choice;
     }
 
-    public int getStudentChoice(int size) {
+    public int getStudentChoice() {
         int choice = InputHandling.getInt("Please Choose The Student : ");
         System.out.println();
 
         return choice;
     }
 
-    public int getProgrammeChoice(int size) {
+    public int getProgrammeChoice() {
         int choice = InputHandling.getInt("Please Choose The Programme : ");
         System.out.println();
 
@@ -254,7 +254,7 @@ public class TutorialGroupUI {
         return choice;
     }
 
-    public int getCourseChoice(int size) {
+    public int getCourseChoice() {
         int choice = InputHandling.getInt("Please Choose The Course : ");
         System.out.println();
 

@@ -224,7 +224,12 @@ public class TutorialGroupControl {
                 ListInterface<Course> allCourseList = new da.CourseDA().readFromFile(); // get the course list
                 
                 tutorialGroupUI.listCourses(allCourseList); // list out the course list for user to choose
-                int courseNo = tutorialGroupUI.getCourseChoice(allCourseList.getSize());
+                int courseNo;
+                
+                do {
+                    courseNo = tutorialGroupUI.getCourseChoice();
+                } while (!Helper.choiceValidation(courseNo, 1, allCourseList.getSize()));
+                
                 Course course = allCourseList.get(courseNo);
                 
                 // filter the course programme list so that only programmes which has the course is listed
@@ -325,7 +330,11 @@ public class TutorialGroupControl {
     public Programme chooseProgramme() {
         new ProgrammeControl().listProgramme(programmeList); // list all the programmes
         
-        int choice = tutorialGroupUI.getProgrammeChoice(programmeList.getSize());
+        int choice;
+        
+        do {
+            choice = tutorialGroupUI.getProgrammeChoice();
+        } while (!Helper.choiceValidation(choice, 1, programmeList.getSize()));
         
         return programmeList.get(choice);
     }
@@ -392,7 +401,13 @@ public class TutorialGroupControl {
                 oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
                 ttlGroupStudents = studentList.filter(stud -> stud.getTutorialGroupId().equals(oldTtlGroup));
                 listStudents(oldTtlGroup, false);
-                int studentNo = tutorialGroupUI.getStudentChoice(ttlGroupStudents.getSize());
+                
+                int studentNo;
+                
+                do {
+                    studentNo = tutorialGroupUI.getStudentChoice();
+                } while (!Helper.choiceValidation(studentNo, 1, ttlGroupStudents.getSize()));
+                
                 student = ttlGroupStudents.get(studentNo);
                 break;
             case 3: // maybe will be remove
