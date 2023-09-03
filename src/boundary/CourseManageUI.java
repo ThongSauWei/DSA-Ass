@@ -19,12 +19,6 @@ import utility.InputHandling;
  * @author erika
  */
 public class CourseManageUI {
-    // ANSI color codes
-
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_GREEN = "\u001B[32m";
 
     public int CourseMenu() {
         Helper.clearScreen();
@@ -39,12 +33,13 @@ public class CourseManageUI {
         System.out.println("6. Update Course");
         System.out.println("7. Search Course");
         System.out.println("8. Generate Report");
+        System.out.println("9. Filter Course By Progamme");
         System.out.println("0. Exit");
         Helper.printLine('-', 30);
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
 
-        while (!Helper.choiceValidation(choice, 0, 8)) {
+        while (!Helper.choiceValidation(choice, 0, 9)) {
             choice = InputHandling.getInt("\nPlease Choose Your Option Again : ");
         }
 
@@ -67,6 +62,22 @@ public class CourseManageUI {
             System.out.printf("%-5s %-15s %-38s %-65s %-20s %-20s%n", num, course.getCourseCode(), course.getCourseName(), course.getCourseDetail(), dateFormat.format(course.getStartDate()), dateFormat.format(course.getEndDate()));
             num++;
         }
+        Helper.printLine('-', 160);
+        System.out.println("Total Course: \u001B[32m" + ttlCourse + "\u001B[0m");
+        System.out.println("----------------");
+        InputHandling.systemPause();
+    }
+
+    public void displayCourseNotFound(ListInterface<Course> courseList, int ttlCourse) {
+        Helper.clearScreen();
+        Helper.clearScreen();
+        Helper.printLine('-', 160);
+        System.out.println("-\u001B[36m Display Cousre List\u001B[0m -");
+        Helper.printLine('-', 160);
+        System.out.printf("%-5s %-15s %-38s %-65s %-20s %-20s%n", "No", "Course Code", "Course Name", "Course Details", "Start Date", "End Date");
+        System.out.printf("%-5s %-15s %-38s %-65s %-20s %-20s%n", "--", "-----------", "-----------", "--------------", "----------", "--------");
+        courseNotFound();
+        
         Helper.printLine('-', 160);
         System.out.println("Total Course: \u001B[32m" + ttlCourse + "\u001B[0m");
         System.out.println("----------------");
@@ -227,14 +238,23 @@ public class CourseManageUI {
     }
 
     //-------------Sort course list function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public int getProgrammeChoice(ListInterface<Programme> programmeList){
+        int choice = InputHandling.getInt("Please Choose The Number Of Programme: ");
+        
+        while (!Helper.choiceValidation(choice, 1, programmeList.getSize())) {
+            choice = InputHandling.getInt("\nPlease Choose Your Option Again : ");
+        }
+        
+        return choice;
+    }
+    
     public int addCouserToProgramme(ListInterface<Course> courseList) {
         int choice = InputHandling.getInt("Please Enter The Number Of Course To Add To Programme: ");
 
-        
         while (!Helper.choiceValidation(choice, 1, courseList.getSize())) {
             choice = InputHandling.getInt("\nPlease Choose Your Option Again : ");
         }
-            
+
         return choice;
     }
 
@@ -292,6 +312,13 @@ public class CourseManageUI {
         if (courseNum >= 1 && courseNum <= courseList.getSize()) {
         }
     }
+    
+    //-------------Filter course function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public void filterCourse(){
+        Helper.printLine('-', 30);
+        System.out.println("-\u001B[36m Filter Course By Program\u001B[0m -");
+        Helper.printLine('-', 30);
+    }
 
     //-------------Display successful the message----------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void updateSuccess() {
@@ -306,8 +333,8 @@ public class CourseManageUI {
     public void invalidChoiceMessage() {
         System.out.println("\u001B[31mInvalid \u001B[34mInput. Please \u001B[0menter again.");
     }
-    
-    public void invalidCourseCode(){
+
+    public void invalidCourseCode() {
         System.out.println("\u001B[31mInvalid\u001B[0m course code. Please enter an \u001B[33m4\u001B[0m-character code with \u001B[33m4\u001B[0m digits.");
 
     }
@@ -321,6 +348,6 @@ public class CourseManageUI {
     }
 
     public void courseNotFound() {
-        System.out.println("\u001B[34mCourse \u001B[31mNot Found\u001B[0m!");
+        System.out.println("Course \u001B[31mNot Found\u001B[0m!");
     }
 }

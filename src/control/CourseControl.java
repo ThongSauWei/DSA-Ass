@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import utility.Helper;
 import utility.InputHandling;
 import utility.StartUp;
 
@@ -82,11 +83,11 @@ public class CourseControl {
 //-------------Display function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     //display course
     public void displayCourse() {
-        try {
-            int ttlCourse = courseList.getSize();//get the total
+        int ttlCourse = courseList.getSize();//get the total
+        if (!courseList.isEmpty()) {
             courseManageUI.displayCourse(courseList, ttlCourse);//passing the total course to the UI
-        } catch (IndexOutOfBoundsException ex) {
-            courseManageUI.courseNotFound();
+        } else {
+            courseManageUI.displayCourseNotFound(courseList, ttlCourse);
         }
     }
 
@@ -227,13 +228,25 @@ public class CourseControl {
         courseDA.writeToFile(courseList);
     }
 
-//-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-//-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------   
-    public void addCourseToProgramme() {
+//-------------Programme list function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public Programme chooseProgramme() {
+        new ProgrammeControl().listProgramme(programmeList);
         int choice;
+
+        choice = courseManageUI.getProgrammeChoice(programmeList);
+
+        return programmeList.get(choice);
+    }
+//-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------   
+
+    public Course addCourseToProgramme() {
+        int choice;
+        Programme prorgamme = chooseProgramme();
+
         displayCourse();
         choice = courseManageUI.addCouserToProgramme(courseList);
+
+        return courseList.get(choice);
     }
 
 //-------------Remove function----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -261,6 +274,14 @@ public class CourseControl {
 
 //-------------Report function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     //report
+    public void filterCourse() {
+        new ProgrammeControl().listProgramme(programmeList);
+        int choice;
+        choice = courseManageUI.getProgrammeChoice(programmeList);
+
+        
+    }
+
     public void writeToFile(ListInterface<Course> courseList) {
         courseDA.writeToFile(courseList);
     }
