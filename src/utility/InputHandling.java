@@ -9,11 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 /**
  *
- * @author User
+ * @author Benjamin, Erika, Thong, Valerie
  */
 public class InputHandling {
     private static final Scanner scanner = new Scanner(System.in);

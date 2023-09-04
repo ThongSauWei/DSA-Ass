@@ -11,7 +11,7 @@ import utility.FileHandling;
 
 /**
  *
- * @author User
+ * @author Benjamin
  */
 public class TutorialGroupDA {
     public ListInterface<TutorialGroup> readFromFile() {

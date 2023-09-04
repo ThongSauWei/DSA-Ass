@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author User
+ * @author Benjamin, Erika, Thong, Valerie
  */
 public class ExceptionHandling {
     public static void numberFormatExceptionMessage() {

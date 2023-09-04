@@ -6,7 +6,7 @@ package adt;
 
 /**
  *
- * @author User
+ * @author Benjamin, Erika, Thong, Valerie
  */
 public interface IteratorInterface<T> {
     

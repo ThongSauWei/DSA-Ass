@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author User
+ * @author Benjamin
  */
 public class Student implements Serializable, Comparable<Student> {
     private String studentId;
