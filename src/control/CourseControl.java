@@ -4,6 +4,7 @@
  */
 package control;
 
+import adt.LinkedList;
 import entity.Course;
 import adt.ListInterface;
 import boundary.CourseManageUI;
@@ -12,17 +13,12 @@ import da.CourseProgrammeDA;
 import da.ProgrammeDA;
 import entity.CourseProgramme;
 import entity.Programme;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Comparator;
-import java.util.Date;
-import utility.Helper;
 import utility.InputHandling;
-import utility.StartUp;
 
 /**
  *
- * @author User
+ * @author Erika Fung Chyau Kang
  */
 public class CourseControl {
 
@@ -61,16 +57,16 @@ public class CourseControl {
                     addCourseToProgramme();
                     break;
                 case 5:
-                    //removeCourse();
+                    removeCourse();
                     break;
                 case 6:
-                    //updateCourse();
+                    updateCourse();
                     break;
                 case 7:
                     searchCourse();
                     break;
                 case 8:
-                    //report();
+                    filterCourse();
                     break;
                 case 0:
                     break;
@@ -222,40 +218,200 @@ public class CourseControl {
     //add course
     public void addCourse() {
         String courseCode = courseManageUI.getCourseCode();
-        Course course = courseManageUI.addCourse(courseCode);
+        boolean courseExists = false;
+        for (Course courseCheck : courseList) {
+            if (courseCheck.getCourseCode().equals(courseCode)) {
+                courseExists = true;
+                break; // Found the course, exit the loop
+            }
+        }
+        
+        if (!courseExists) {
+            Course course = courseManageUI.addCourse(courseCode);
+            courseList.add(course);
+            courseDA.writeToFile(courseList);
+        } else {
+            courseManageUI.duplicateCourse();
+        }
 
-        courseList.add(course);
-        courseDA.writeToFile(courseList);
     }
 
 //-------------Programme list function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     public Programme chooseProgramme() {
         new ProgrammeControl().listProgramme(programmeList);
-        int choice;
+        int choice = courseManageUI.getProgrammeChoice(programmeList);
 
-        choice = courseManageUI.getProgrammeChoice(programmeList);
-
-        return programmeList.get(choice);
+        return programmeList.get(choice);//get the user choice
     }
-//-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------   
 
-    public Course addCourseToProgramme() {
-        int choice;
-        Programme prorgamme = chooseProgramme();
-
+//-------------Course list function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public Course chooseCourse() {
         displayCourse();
-        choice = courseManageUI.addCouserToProgramme(courseList);
+        int choice = courseManageUI.getCourseChoice(courseList);
 
         return courseList.get(choice);
     }
 
+//-------------Filter Course choose function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public ListInterface<Course> filterChooseCourse(Programme programme) {//have a programme
+        //if return list then it can return many course list
+        ListInterface<Course> filterCourse = new LinkedList();//new empty linkedList to store the filter course
+
+        for (CourseProgramme courseProgramme : courseProgrammeList) {
+            if (courseProgramme.getProgrammeCode().equals(programme)) {
+                filterCourse.add(courseProgramme.getCourseCode());
+            }
+        }
+
+        return filterCourse;
+    }
+
+    public Course filterChooseDisplay(ListInterface<Course> courseFilterList) {
+
+        int ttlCourse = courseFilterList.getSize();//get the total
+        if (!courseFilterList.isEmpty()) {
+            courseManageUI.displayCourse(courseFilterList, ttlCourse);//passing the total course to the UI
+            int choice = courseManageUI.getCourseChoice(courseFilterList);
+            return courseFilterList.get(choice);
+        } else {
+            courseManageUI.displayCourseNotFound(courseFilterList, ttlCourse);
+            return null;
+        }
+
+    }
+//-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public void addCourseToProgramme() {
+        Programme programme = chooseProgramme();
+        Course course = chooseCourse();
+
+        boolean courseExist = false;
+        for (CourseProgramme courseProgramme : courseProgrammeList) {
+            if (courseProgramme.getProgrammeCode().equals(programme) && courseProgramme.getCourseCode().equals(course)) {
+                courseExist = true;
+                break;//when found it then stop
+            }
+        }
+
+        if (!courseExist) {
+            CourseProgramme courseProgramme = new CourseProgramme(programme, course);
+            courseProgrammeList.add(courseProgramme);
+            courseProgrammeDA.writeToFile(courseProgrammeList);
+            courseManageUI.courseAddSuccess(course.getCourseCode(), programme.getProgrammeCode());
+        } else {
+            courseManageUI.courseExist();
+        }
+        InputHandling.systemPause();
+    }
+
 //-------------Remove function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     //remove course
+    public void removeCourse() {
+        int choice;
+        do {
+            choice = courseManageUI.removeCourse(courseList);
+
+            switch (choice) {
+                case 1:
+                    removeCourseList();
+                    break;
+                case 2:
+                    removeCourseInProgramme();
+                    break;
+                case 0:
+                    break;
+                default:
+                    courseManageUI.invalidChoiceMessage();
+                    break;
+            }
+        } while (choice != 0);
+
+    }
+
+    //remove course list
+    public void removeCourseList() {
+        Course course = chooseCourse();
+        Programme programme = new Programme();
+
+        courseList = new CourseDA().readFromFile();
+        boolean removeList = courseList.remove(course);
+        boolean remove = false;
+        if (removeList) {
+            if (courseManageUI.confirmRemove()) {
+                new CourseDA().writeToFile(courseList);
+                courseManageUI.courseRemoveSuccess(course.getCourseCode());
+                for (CourseProgramme courseProgramme : courseProgrammeList) {
+                    if (courseProgramme.getProgrammeCode().equals(programme) && courseProgramme.getCourseCode().equals(course)) {
+                        if (courseManageUI.confirmRemove()) {
+                            courseProgrammeList.remove(courseProgramme);
+                            remove = true;
+                            break;//when found it then stop
+                        }
+                    }
+                }
+            } else {
+                courseManageUI.courseRemoveUnsuccess(course.getCourseCode());
+            }
+            InputHandling.systemPause();
+        }
+    }
+
+    //remove course in programme
+    public void removeCourseInProgramme() {
+        Programme programme = chooseProgramme();
+        ListInterface<Course> filterCourse = filterChooseCourse(programme);// call interface
+        Course course = filterChooseDisplay(filterCourse);
+
+        if (course == null) {// when the record are empty it will return null if null the function will exit
+            return;
+        }
+
+        courseProgrammeList = new CourseProgrammeDA().readFromFile();
+        boolean remove = false;
+
+        for (CourseProgramme courseProgramme : courseProgrammeList) {
+            if (courseProgramme.getProgrammeCode().equals(programme) && courseProgramme.getCourseCode().equals(course)) {
+                if (courseManageUI.confirmRemove()) {
+                    courseProgrammeList.remove(courseProgramme);
+                    remove = true;
+                    break;//when found it then stop
+                }
+            }
+        }
+
+        if (remove) {
+            courseProgrammeDA.writeToFile(courseProgrammeList);
+            courseManageUI.CPRemoveSuccess(course.getCourseCode(), programme.getProgrammeCode());
+        } else {
+            courseManageUI.CPRemoveUnsuccess(course.getCourseCode(), programme.getProgrammeCode());
+        }
+        InputHandling.systemPause();
+    }
 //-------------Update function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     //update course
+
+    public void updateCourse() {
+        Course course = chooseCourse();
+        Course updatedCourse = courseManageUI.updateCourse(course);
+        boolean confirm = courseManageUI.confirmUpdate();
+        int count = 1;
+        if (confirm && updatedCourse != null) {
+            for (Course upCourse : courseList) {
+                if (upCourse.getCourseCode().equals(updatedCourse.getCourseCode())) {//String have to compare back with the String
+                    courseList.replace(updatedCourse, count);
+                    courseDA.writeToFile(courseList);
+                    courseManageUI.updateSuccess();
+                    break;
+                }
+                count++;
+            }
+        } else {
+            courseManageUI.unsuccess();
+        }
+    }
+
 //-------------Search function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     //search course
-//-------------Search function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     public Course searchCourse() {
         String courseCode = courseManageUI.getSearchCourseCode(); // get the course code
         Course foundCourse = null;
@@ -272,14 +428,28 @@ public class CourseControl {
         return foundCourse; // if no the course code return null
     }
 
-//-------------Report function----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //report
+//-------------Filter function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void filterCourse() {
-        new ProgrammeControl().listProgramme(programmeList);
-        int choice;
-        choice = courseManageUI.getProgrammeChoice(programmeList);
 
-        
+        Programme programme = chooseProgramme();
+        ListInterface<CourseProgramme> courseProgrammeList = new LinkedList<>();
+
+        // filter the course programme list so that only courses available in the programme is listed
+        courseProgrammeList = new da.CourseProgrammeDA().readFromFile().filter(courseProgramme -> courseProgramme.getProgrammeCode().equals(programme));
+
+        ListInterface<Course> courseList = new LinkedList<>();
+
+        for (CourseProgramme courseProgramme : courseProgrammeList) { // the courses are stored into the course list
+            courseList.add(courseProgramme.getCourseCode());
+        }
+
+        courseManageUI.displayProgramme(programme); // display the programme
+
+        if (courseList.isEmpty()) {
+            courseManageUI.displayCourseNotFound(courseList, courseList.getSize());
+        } else {
+            courseManageUI.displayCourse(courseList, courseList.getSize()); // display all the courses taken
+        }
     }
 
     public void writeToFile(ListInterface<Course> courseList) {

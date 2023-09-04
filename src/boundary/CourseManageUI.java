@@ -6,22 +6,20 @@ package boundary;
 
 import adt.ListInterface;
 import entity.Course;
-import entity.CourseProgramme;
 import entity.Programme;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import utility.Helper;
 import utility.InputHandling;
 
 /**
  *
- * @author erika
+ * @author Erika Fung Chyau Kang
  */
 public class CourseManageUI {
 
     public int CourseMenu() {
-        Helper.clearScreen();
+        System.out.println();
         Helper.printLine('-', 30);
         System.out.println("-\u001B[36m Course Menu\u001B[0m -");
         Helper.printLine('-', 30);
@@ -32,14 +30,13 @@ public class CourseManageUI {
         System.out.println("5. Delete Course");
         System.out.println("6. Update Course");
         System.out.println("7. Search Course");
-        System.out.println("8. Generate Report");
-        System.out.println("9. Filter Course By Progamme");
+        System.out.println("8. Filter Course By Progamme");
         System.out.println("0. Exit");
         Helper.printLine('-', 30);
 
         int choice = InputHandling.getInt("Please Choose Your Option : ");
 
-        while (!Helper.choiceValidation(choice, 0, 9)) {
+        while (!Helper.choiceValidation(choice, 0, 8)) {
             choice = InputHandling.getInt("\nPlease Choose Your Option Again : ");
         }
 
@@ -48,10 +45,9 @@ public class CourseManageUI {
 
     //-------------Display course list function----------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void displayCourse(ListInterface<Course> courseList, int ttlCourse) {
-        Helper.clearScreen();
         int num = 1;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Helper.clearScreen();
+        System.out.println("");
         Helper.printLine('-', 160);
         System.out.println("-\u001B[36m Display Cousre List\u001B[0m -");
         Helper.printLine('-', 160);
@@ -65,7 +61,7 @@ public class CourseManageUI {
         Helper.printLine('-', 160);
         System.out.println("Total Course: \u001B[32m" + ttlCourse + "\u001B[0m");
         System.out.println("----------------");
-        InputHandling.systemPause();
+        System.out.println("");
     }
 
     public void displayCourseNotFound(ListInterface<Course> courseList, int ttlCourse) {
@@ -77,7 +73,7 @@ public class CourseManageUI {
         System.out.printf("%-5s %-15s %-38s %-65s %-20s %-20s%n", "No", "Course Code", "Course Name", "Course Details", "Start Date", "End Date");
         System.out.printf("%-5s %-15s %-38s %-65s %-20s %-20s%n", "--", "-----------", "-----------", "--------------", "----------", "--------");
         courseNotFound();
-        
+
         Helper.printLine('-', 160);
         System.out.println("Total Course: \u001B[32m" + ttlCourse + "\u001B[0m");
         System.out.println("----------------");
@@ -108,7 +104,6 @@ public class CourseManageUI {
 
     //Sort by Code
     public int sortCourseCode(ListInterface<Course> courseList) {
-        Helper.clearScreen();
         int choice;
 
         Helper.printLine('-', 30);
@@ -128,7 +123,6 @@ public class CourseManageUI {
 
     // sort by Name
     public int sortCourseName(ListInterface<Course> courseList) {
-        Helper.clearScreen();
         int choice;
 
         Helper.printLine('-', 30);
@@ -147,7 +141,6 @@ public class CourseManageUI {
     }
 
     public int sortStartDate(ListInterface<Course> courseList) {
-        Helper.clearScreen();
         int choice;
 
         Helper.printLine('-', 30);
@@ -166,7 +159,6 @@ public class CourseManageUI {
     }
 
     public int sortEndDate(ListInterface<Course> courseList) {
-        Helper.clearScreen();
         int choice;
 
         Helper.printLine('-', 30);
@@ -188,9 +180,8 @@ public class CourseManageUI {
     //get course code
     public String getCourseCode() {//BACS2063 add design
         String courseCode;
-
+        boolean codeCheck;
         Helper.clearScreen();
-
         Helper.printLine('-', 30);
         System.out.println("-\u001B[36m Add A New Course\u001B[0m -");
         Helper.printLine('-', 30);
@@ -237,25 +228,49 @@ public class CourseManageUI {
         return new Course(courseCode.toUpperCase(), courseName, courseDetail, startDate, endDate);
     }
 
-    //-------------Sort course list function----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public int getProgrammeChoice(ListInterface<Programme> programmeList){
+    //-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public int getProgrammeChoice(ListInterface<Programme> programmeList) {
         int choice = InputHandling.getInt("Please Choose The Number Of Programme: ");
-        
+
         while (!Helper.choiceValidation(choice, 1, programmeList.getSize())) {
             choice = InputHandling.getInt("\nPlease Choose Your Option Again : ");
         }
-        
+
         return choice;
     }
-    
-    public int addCouserToProgramme(ListInterface<Course> courseList) {
-        int choice = InputHandling.getInt("Please Enter The Number Of Course To Add To Programme: ");
+
+    public int getCourseChoice(ListInterface<Course> courseList) {
+        int choice = InputHandling.getInt("Please Enter The Number Of Course: ");
 
         while (!Helper.choiceValidation(choice, 1, courseList.getSize())) {
             choice = InputHandling.getInt("\nPlease Choose Your Option Again : ");
         }
 
         return choice;
+    }
+
+    //-------------Remove course function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public int removeCourse(ListInterface<Course> courseList) {
+        Helper.clearScreen();
+        int choice;
+
+        Helper.printLine('-', 30);
+        System.out.println("-\u001B[36m Remove Course\u001B[0m -");
+        Helper.printLine('-', 30);
+        System.out.println("1. Remove From Course List");
+        System.out.println("2. Remove From Programe");
+        System.out.println("0. Exit");
+
+        choice = InputHandling.getInt("Please Choose Your Option : ");
+        while (!Helper.choiceValidation(choice, 0, 2)) {
+            choice = InputHandling.getInt("\nPlease Choose Your Option Again : ");
+        }
+
+        return choice;
+    }
+
+    public boolean confirmRemove() {
+        return InputHandling.getConfirmation("Confirm to Delete? (Y=Yes/N=No): ");
     }
 
     //-------------Search course function----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -299,6 +314,48 @@ public class CourseManageUI {
         InputHandling.systemPause();
     }
 
+    //-------------Update course function----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public Course updateCourse(Course updatedCourse) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = null;
+        Date endDate = null;
+
+        Helper.printLine('-', 17);
+        System.out.println("- \u001B[36mUpdate Course\u001B[0m -");
+        Helper.printLine('-', 17);
+        String courseName = InputHandling.getString("Updated Course Name: ");
+        String courseDetail = InputHandling.getString("Updated Course Details: ");
+        do {//do while for start date
+            startDate = InputHandling.getDate("Updated Start Date (yyyy-MM-dd): ");
+            if (startDate == null) {
+                System.out.println("Please Enter Start Date again!");
+            } else {
+                do {//do while for end date
+                    endDate = InputHandling.getDate("Updated End Date (yyyy-MM-dd): ");
+                    if (endDate == null) {
+                        System.out.println("Please Enter End Date again!");
+                    } else {//both successful then will come out the message
+                        System.out.println();
+                        Helper.printLine('-', 30);
+                        System.out.println("- \u001B[36mUpdated Course Information\u001B[0m -");
+                        Helper.printLine('-', 30);
+                        System.out.println("Course Name: \u001B[32m" + courseName + "\u001B[0m"); // Set to green and reset
+                        System.out.println("Course Details: \u001B[32m" + courseDetail + "\u001B[0m"); // Set to green and reset
+                        System.out.println("Start Date: \u001B[32m" + dateFormat.format(startDate) + "\u001B[0m"); // Set to green and reset
+                        System.out.println("End Date: \u001B[32m" + dateFormat.format(endDate) + "\u001B[0m"); // Set to green and reset
+                    }
+                } while (endDate == null);
+            }
+        } while (startDate == null);
+
+        // Display the updated course information for confirmation
+        return new Course(updatedCourse.getCourseCode(), courseName, courseDetail, startDate, endDate);
+    }
+
+    public boolean confirmUpdate() {
+        return InputHandling.getConfirmation("Confirm to Update? (Y=Yes/N=No): ");
+    }
+
 //    Black: \u001B[30m
 //    Red: \u001B[31m
 //    Green: \u001B[32m
@@ -307,26 +364,40 @@ public class CourseManageUI {
 //    Magenta: \u001B[35m
 //    Cyan: \u001B[36m
 //    White: \u001B[37m
-    //-------------Remove course list------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public void removeCourse(ListInterface<Course> courseList, int courseNum) {
-        if (courseNum >= 1 && courseNum <= courseList.getSize()) {
-        }
-    }
-    
     //-------------Filter course function----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public void filterCourse(){
+    public void filterCourse() {
         Helper.printLine('-', 30);
         System.out.println("-\u001B[36m Filter Course By Program\u001B[0m -");
         Helper.printLine('-', 30);
     }
 
+    public void displayProgramme(Programme programme) {
+        Helper.printLine('-', 50);
+        System.out.println("Programme Code : " + programme.getProgrammeCode());
+        System.out.println("Programme Name : " + programme.getProgrammeName());
+        System.out.println("Faculty : " + programme.getFaculty());
+        Helper.printLine('-', 50);
+    }
+
     //-------------Display successful the message----------------------------------------------------------------------------------------------------------------------------------------------------------------
     public void updateSuccess() {
-        System.out.println("\u001B[34mUpdate \u001B[32msuccessful\u001B[0m!");
+        System.out.println("\u001B[32mUpdate successful\u001B[0m!");
     }
 
     public void addSuccess() {
-        System.out.println("\u001B[34mCourse \u001B[32madded \u001B[32msuccessful\u001B[0m!");
+        System.out.println("\u001B[33mCourse \u001B[32madded \u001B[32msuccessful\u001B[0m!");
+    }
+
+    public void courseAddSuccess(String courseCode, String programmeCode) {
+        System.out.println("\nCourse " + courseCode + " \u001B[32mhas added successfully\u001B[0m to " + programmeCode + ".\n");
+    }
+
+    public void CPRemoveSuccess(String courseCode, String programmeCode) {
+        System.out.println("\nCourse " + courseCode + " \u001B[32mhas been removed successfully\u001B[0m from " + programmeCode + ".\n");
+    }
+
+    public void courseRemoveSuccess(String courseCode) {
+        System.out.println("\nCourse " + courseCode + " \u001B[32mremoved successfully\u001B[0m.\n");
     }
 
     //--------------Display invalid message----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -347,7 +418,27 @@ public class CourseManageUI {
         System.out.println("\u001B[34mUpdated \u001B[31mUnsuccessful\u001B[0m!");
     }
 
+    public void CPRemoveUnsuccess(String courseCode, String programmeCode) {
+        System.out.println("\nCourse " + courseCode + " \u001B[31mremove unsuccessfully\u001B[0m from " + programmeCode + ".\n");
+    }
+
+    public void courseRemoveUnsuccess(String courseCode) {
+        System.out.println("\nCourse " + courseCode + " \u001B[31mremove unsuccessfully\u001B[0m.\n");
+    }
+
     public void courseNotFound() {
         System.out.println("Course \u001B[31mNot Found\u001B[0m!");
+    }
+
+    public void courseExist() {
+        System.out.println("\nThe Course Is Already \u001B[31mIn The Program\u001B[0m!\n");
+    }
+    
+    public void duplicateCourse() {
+        System.out.println("\nThe Course Code Is Already \u001B[31mExist\u001B[0m!\n");
+    }
+
+    public void generateReport(String addedCourses, String removedCourses, String updatedCourses) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
