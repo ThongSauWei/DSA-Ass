@@ -39,6 +39,8 @@ public class TutorialGroupControl {
         tutorialGroupList = tutorialGroupDA.readFromFile();
         studentList = studentDA.readFromFile();
         programmeList = programmeDA.readFromFile();
+        
+        runMain();
     }
     
     public void runMain() {
