@@ -12,7 +12,7 @@ import utility.ExceptionHandling;
 
 /**
  *
- * @author User
+ * @author Benjamin, Erika, Thong, Valerie
  */
 public class LinkedList<T extends Comparable<T>> implements Serializable, ListInterface<T> {
     private Node firstNode;

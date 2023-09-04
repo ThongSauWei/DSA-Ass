@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 /**
  *
- * @author User
+ * @author Benjamin, Erika, Thong, Valerie
  */
 public class StartUp {
     public static void startUp() { // In case the related file is not open yet

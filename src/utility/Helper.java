@@ -6,7 +6,7 @@ package utility;
 
 /**
  *
- * @author User
+ * @author Benjamin, Erika, Thong, Valerie
  */
 public class Helper {
   

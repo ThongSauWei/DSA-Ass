@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 
 /**
  *
- * @author Benjamin
+ * @author Benjamin, Erika, Thong, Valerie
  */
 public interface ListInterface<T extends Comparable<T>> extends Iterable<T> {
     

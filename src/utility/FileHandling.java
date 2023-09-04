@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 
 /**
  *
- * @author User
+ * @author Benjamin, Erika, Thong, Valerie
  */
 public class FileHandling {
     public static void createOrOpenFile(String filePath) {

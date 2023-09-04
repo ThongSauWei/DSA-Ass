@@ -206,7 +206,7 @@ public class TutorialGroupUI {
         Helper.printLine('-', 139);
     }
 
-    public void listCourses(ListInterface<Course> courseList) {
+    public void listCourses(ListInterface<Course> courseList) { // delete
         int count = 1;
         System.out.println("The Courses Available");
         Helper.printLine('=', 21);
