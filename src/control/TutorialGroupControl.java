@@ -227,6 +227,8 @@ public class TutorialGroupControl {
                 ListInterface<Course> allCourseList = new da.CourseDA().readFromFile(); // get the course list
                 
                 tutorialGroupUI.listCourses(allCourseList); // list out the course list for user to choose
+                new CourseControl().displayCourse();
+                
                 int courseNo;
                 
                 do {
@@ -285,6 +287,7 @@ public class TutorialGroupControl {
                     tutorialGroupUI.displayNoCourseMessage();
                 } else {
                     tutorialGroupUI.listCourses(courseList); // display all the courses taken
+                    new CourseControl().displayCourse();
                 }
                 
                 tutorialGroupUI.displayTutorialGroup(tutorialGroup); // display the tutorial group
