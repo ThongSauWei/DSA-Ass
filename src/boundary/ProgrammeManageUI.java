@@ -140,7 +140,13 @@ public class ProgrammeManageUI {
             }
         } while (!faculty.matches("[A-Za-z]{4}"));
 
-        duration = InputHandling.getInt("Duration (in months): ");
+//        duration = InputHandling.getInt("Duration (in months): ");
+        do {
+            duration = InputHandling.getInt("Duration (in months): ");
+            if (duration < 1 || duration > 12) {
+                System.out.println(ANSI_RED + "Please enter a duration between 1 and 12 months." + ANSI_RESET);
+            }
+        } while (duration < 1 || duration > 12);
 
         return new Programme(programmeCode.getProgrammeCode().toUpperCase(), programmeName, programmeDetail, Character.toUpperCase(programmeLevel), faculty.toUpperCase(), duration);
     }
