@@ -18,7 +18,7 @@ import utility.*;
 
 /**
  *
- * @author User
+ * @author Thong Sau Wei
  */
 public class ProgrammeControl {
 
@@ -541,6 +541,7 @@ public class ProgrammeControl {
         }
     }
 
+    //faculty report
     public void generateFacultyReport(ListInterface<Programme> programmeList) {
         ListInterface<String> faculties = new LinkedList<>();
         ListInterface<Integer> facultyCounts = new LinkedList<>();
@@ -618,6 +619,7 @@ public class ProgrammeControl {
         return count;
     }
 
+    //level report
     public void generateLevelReport(ListInterface<Programme> programmeList) {
         ListInterface<Character> levels = new LinkedList<>();
         ListInterface<Integer> levelCounts = new LinkedList<>();
@@ -686,6 +688,7 @@ public class ProgrammeControl {
         }
     }
 
+    //get ttlgroup - programme
     private void displayTutorialGroups(Programme programme) {
         LinkedList<TutorialGroup> tutorialGroupsInProgramme = new LinkedList<>();
         for (TutorialGroup tutorialGroup : ttlList) {
@@ -701,6 +704,8 @@ public class ProgrammeControl {
         }
     }
 
+    //index
+    //get ttl index
     private int getIndexByTutorialGroup(TutorialGroup tutorialGroup) {
         for (int i = 1; i <= ttlList.getSize(); i++) {
             TutorialGroup existingTutorialGroup = ttlList.get(i);
@@ -711,7 +716,7 @@ public class ProgrammeControl {
         return -1;
     }
 
-    //course Programme
+    //get courseProgramme index
     private int getIndexByCourseProgramme(CourseProgramme courseProgramme) {
         for (int i = 1; i <= courseProgList.getSize(); i++) {
             CourseProgramme existingCourseProgramme = courseProgList.get(i);
@@ -722,6 +727,7 @@ public class ProgrammeControl {
         return -1;
     }
 
+    //get student index
     private int getIndexByStudent(Student student) {
         for (int i = 1; i <= studentList.getSize(); i++) {
             Student existingstudent = studentList.get(i);
@@ -732,6 +738,8 @@ public class ProgrammeControl {
         return -1;
     }
 
+    //ID
+    //get ttl id
     private TutorialGroup getTutorialGroupById(String tutorialGroupId, Programme programme) {
         for (TutorialGroup tutorialGroup : ttlList) {
             if (tutorialGroup.getTutorialGroupId().equals(tutorialGroupId) && tutorialGroup.getProgrammeCode().equals(programme)) {
@@ -741,7 +749,7 @@ public class ProgrammeControl {
         return null;
     }
 
-    //course programme
+    //course programme id
     private CourseProgramme getCourseProgById(String courseProgId, Programme programme) {
         for (CourseProgramme courseProgramme : courseProgList) {
             if (courseProgramme.getId().equals(courseProgId) && courseProgramme.getProgrammeCode().equals(programme)) {
@@ -751,6 +759,7 @@ public class ProgrammeControl {
         return null;
     }
 
+    //get student id
     private Student getStudentById(String studentId, TutorialGroup tutorialGroup) {
         for (Student student : studentList) {
             if (student.getStudentId().equals(studentId) && student.getTutorialGroupId().equals(tutorialGroup)) {
@@ -760,6 +769,7 @@ public class ProgrammeControl {
         return null;
     }
 
+    //get
     //get the specific programme
     private Programme getProgrammeByCode(String programmeCode) {
         for (Programme programme : programmeList) {
@@ -770,6 +780,7 @@ public class ProgrammeControl {
         return null;
     }
 
+    //get faculty - faculty report used one~
     private ListInterface<Programme> filterProgrammesByFaculty(ListInterface<Programme> programmeList, String faculty) {
         Predicate<Programme> facultyFilter = programme -> programme.getFaculty().equalsIgnoreCase(faculty);
         return programmeList.filter(facultyFilter);
@@ -790,12 +801,4 @@ public class ProgrammeControl {
         ProgrammeControl progControl = new ProgrammeControl();
         progControl.runProgramme();
     }
-
-//    public ListInterface<Programme> readFromFile() {
-//        return programmeDA.readFromFile();
-//    }
-//
-//    public void writeToFile(ListInterface<Programme> programmeList) {
-//        programmeDA.writeToFile(programmeList);
-//    }
 }
