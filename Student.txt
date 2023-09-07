@@ -6,3 +6,4 @@
 23WMR00006|Fali|010203-03-0201|fali@student.tarc.edu.my|0178923456|2|1|RSD2S1G3
 23WMR00007|Gali|030203-02-0302|gali@student.tarc.edu.my|0189234567|2|1|RSD2S1G3
 23WMR00008|Hali|020302-03-0203|hali@student.tarc.edu.my|0192345678|2|1|RSD2S1G4
+23WMR09297|Benjamin Ng|030810-12-0723|benjaminncw-wm21@student.tarc.edu.my|011-25383368|2|1|RSD2S1G4
