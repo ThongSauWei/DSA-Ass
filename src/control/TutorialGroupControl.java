@@ -421,7 +421,7 @@ public class TutorialGroupControl {
                 student = findStudent();
                 break;
             case 2:
-                tutorialGroupUI.displayChooseOldTtlGroup();
+                tutorialGroupUI.displayChooseTtlGroup();
                 oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
                 ttlGroupStudents = studentList.filter(stud -> stud.getTutorialGroupId().equals(oldTtlGroup));
                 listStudents(oldTtlGroup, false);
@@ -434,8 +434,8 @@ public class TutorialGroupControl {
                 
                 student = ttlGroupStudents.get(studentNo);
                 break;
-            case 3: // maybe will be remove
-                tutorialGroupUI.displayChooseOldTtlGroup();
+            case 3:
+                tutorialGroupUI.displayChooseTtlGroup();
                 oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
                 ttlGroupStudents = studentList.filter(stud -> stud.getTutorialGroupId().equals(oldTtlGroup));
                 

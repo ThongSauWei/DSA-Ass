@@ -95,8 +95,8 @@ public class TutorialGroupUI {
         System.out.println("Faculty : " + programme.getFaculty());
     }
     
-    public void displayChooseOldTtlGroup() {
-        System.out.println("Please Choose The Old Tutorial Group");
+    public void displayChooseTtlGroup() {
+        System.out.println("Please Choose The Tutorial Group");
     }
     
     public void displayChooseNewTtlGroup() {
