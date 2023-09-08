@@ -18,6 +18,7 @@ public class ProgrammeManageUI {
     public static final String ANSI_RED = "\u001B[31m"; //red
     public static final String ANSI_YELLOW = "\u001B[33m"; //yellow
     public static final String ANSI_GREEN = "\u001B[32m"; //green
+    public static final String ANSI_BLUE = "\u001B[34m"; //blue
 
     //programme menu
     public int programmeMenu() {
@@ -35,10 +36,10 @@ public class ProgrammeManageUI {
         System.out.println("0. Exit");
         Helper.printLine('-', 30);
 
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 0, 9)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36m\nPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
@@ -215,7 +216,7 @@ public class ProgrammeManageUI {
                 updatedProgramme.setDuration(newDuration);
                 break;
             default:
-                System.out.println("Invalid choice.");
+                invalidInput();
                 return null;
         }
         return updatedProgramme;
@@ -233,10 +234,10 @@ public class ProgrammeManageUI {
         System.out.println("0. EXIT");
         Helper.printLine('-', 30);
 
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 0, 6)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
@@ -250,17 +251,17 @@ public class ProgrammeManageUI {
         System.out.println("2. Descending Order");
         Helper.printLine('-', 20);
 
-        int choice = InputHandling.getInt("Please Choose Sorting Option: ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Sorting Option: " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 1, 2)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
     }
 
     public int sortOptions() {
-        System.out.println("\nChoose what type of the programme list :");
+        System.out.println("Choose what type of the programme list :");
         Helper.printLine('-', 20);
         System.out.println("1. By Programme Code");
         System.out.println("2. By Faculty");
@@ -269,10 +270,10 @@ public class ProgrammeManageUI {
         System.out.println("0. EXIT");
         Helper.printLine('-', 20);
 
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 0, 4)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
@@ -297,10 +298,10 @@ public class ProgrammeManageUI {
         System.out.println("0. EXIT");
         Helper.printLine('-', 20);
 
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 0, 2)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
@@ -354,20 +355,20 @@ public class ProgrammeManageUI {
 
     //sort
     public boolean ttlComfirm(Programme programme) {
-        boolean yesNo = InputHandling.getConfirmation("Confirm to made changes to the tutorial group of " + programme.getProgrammeCode().toUpperCase() + " ? (Y or N): ");
+        boolean yesNo = InputHandling.getConfirmation("\u001B[36m Confirm to made changes to the tutorial group of " + programme.getProgrammeCode().toUpperCase() + " ? (Y or N): " + ANSI_RESET);
         return yesNo;
     }
 
     //continue
     public boolean continueInput() {
-        boolean yesNo = InputHandling.getConfirmation("\nDo you want to continue ? (Y or N): ");
+        boolean yesNo = InputHandling.getConfirmation("\u001B[36m \nDo you want to continue ? (Y or N): " + ANSI_RESET);
         InputHandling.systemPause();
         return yesNo;
     }
 
     //comfirm
     public boolean comfirmInput() {
-        boolean yesNo = InputHandling.getConfirmation("Confirm ? (Y or N): ");
+        boolean yesNo = InputHandling.getConfirmation("\u001B[36m Confirm ? (Y or N): " + ANSI_RESET);
         return yesNo;
     }
 
@@ -381,7 +382,7 @@ public class ProgrammeManageUI {
 
     //sort
     public boolean sortComfirm() {
-        boolean yesNo = InputHandling.getConfirmation("\nDo you want to sort the programme list? (Y or N): ");
+        boolean yesNo = InputHandling.getConfirmation("\u001B[36m\nDo you want to sort the programme list? (Y or N): " + ANSI_RESET);
         return yesNo;
     }
 
@@ -392,7 +393,7 @@ public class ProgrammeManageUI {
 
     //thank you
     public void thankYou() {
-        System.out.println("\u001B[36m	\nThank You ~ Have a nice day ^_^" + ANSI_RESET);
+        System.out.println("\u001B[36m	\n\nThank You ~ Have a nice day ^_^" + ANSI_RESET);
     }
 
 }

@@ -282,7 +282,7 @@ public class ProgrammeControl {
                         tutorialGroupsToDelete.add(tutorialGroup);
                     }
                 }
-                
+
                 //course prog del
                 LinkedList<CourseProgramme> courseProgToDelete = new LinkedList<>();
                 for (CourseProgramme courseProg : courseProgList) {
@@ -306,6 +306,34 @@ public class ProgrammeControl {
                             TutorialGroup tutorialGroupToRemove = getTutorialGroupById(tutorialGroupId, existingProgramme);
                             int indexToRemove = getIndexByTutorialGroup(tutorialGroupToRemove);
                             if (indexToRemove != -1) {
+                                LinkedList<Student> studentToDelete = new LinkedList<>();
+                                for (Student student : studentList) {
+                                    if (student.getTutorialGroupId().equals(tutorialGroupToRemove)) {
+                                        studentToDelete.add(student);
+                                    }
+                                }
+
+                                if (!studentToDelete.isEmpty()) {
+                                    // displayTutorialGroups(existingProgramme);
+
+                                    // Get tutorial group IDs
+                                    ListInterface<String> studentIdsToDelete = new LinkedList<>();
+                                    for (Student students : studentToDelete) {
+                                        studentIdsToDelete.add(students.getStudentId());
+                                    }
+
+                                    // Remove tutorial groups
+                                    for (String studentId : studentIdsToDelete) {
+                                        Student studentToRemove = getStudentById(studentId, tutorialGroupToRemove);
+                                        int indexToRemoveS = getIndexByStudent(studentToRemove);
+                                        if (indexToRemoveS != -1) {
+                                            studentList.remove(indexToRemoveS);
+                                        }
+                                    }
+
+                                    studentDA.writeToFile(studentList);
+                                }
+
                                 ttlList.remove(indexToRemove);
                             }
                         }
