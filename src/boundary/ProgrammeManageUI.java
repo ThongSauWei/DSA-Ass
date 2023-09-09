@@ -58,7 +58,6 @@ public class ProgrammeManageUI {
 
         StringBuilder formattedOutput = new StringBuilder();
 
-//        formattedOutput.append("\nProgramme List :\n");
         formattedOutput.append("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         formattedOutput.append(String.format("%-8s | %-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n", "No.", "Programme Code", "Programme Name", "Programme Details",
                 "Level", "Faculty", "Duration(Months)"));
@@ -135,32 +134,11 @@ public class ProgrammeManageUI {
 
         tutorialGroupId = InputHandling.getString("Tutorial ID: ");
         groupNo = InputHandling.getInt("Group No : ");
-//        numOfStudent = InputHandling.getInt("Number of Student : ");
 
         return new TutorialGroup(tutorialGroupId, groupNo, 0, programmeCode);
     }
 
     //update
-//    public String getNewProgrammeName() {
-//        return InputHandling.getString("Enter new Programme Name: ");
-//    }
-//
-//    public String getNewProgrammeDetail() {
-//        return InputHandling.getString("Enter new Programme Detail: ");
-//    }
-//
-//    public char getNewProgrammeLevel() {
-//        return InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
-//    }
-//
-//    public String getNewFaculty() {
-//        return InputHandling.getString("Enter new Faculty: ");
-//    }
-//
-//    public int getNewDuration() {
-//        return InputHandling.getInt("Enter new Duration (in months): ");
-//    }
-
     public int updateProgrammeMenu() {
         System.out.println("\nUpdate Programme Menu:");
         Helper.printLine('-', 30);

@@ -197,8 +197,6 @@ public class ProgrammeControl {
         );
     }
 
-    
-
     //update
     public void updateProgramme() {
         boolean yesNo;
