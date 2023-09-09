@@ -155,14 +155,14 @@ public class ProgrammeControl {
         do {
             Programme newProgrammeCode;
             do {
-                newProgrammeCode = programmeUI.checkProgrammeCode();
+                newProgrammeCode = checkProgrammeCode();
 
                 if (programmeExists(newProgrammeCode.getProgrammeCode())) {
                     System.out.println(programmeUI.checkExists(newProgrammeCode));
                 }
             } while (programmeExists(newProgrammeCode.getProgrammeCode()));
 
-            Programme newProgramme = programmeUI.addProgrammeInput(newProgrammeCode);
+            Programme newProgramme = addProgrammeInput(newProgrammeCode);
 
             if (newProgramme != null) {
                 if (programmeUI.comfirmInput()) {
@@ -180,13 +180,32 @@ public class ProgrammeControl {
         } while (yesNo == true);
     }
 
+    public Programme addProgrammeInput(Programme programmeCode) {
+        String programmeName = getValidProgrammeName();
+        String programmeDetail = getValidProgrammeDetail();
+        char programmeLevel = getValidProgrammeLevel();
+        String faculty = getValidFaculty();
+        int duration = getValidDuration();
+
+        return new Programme(
+                programmeCode.getProgrammeCode().toUpperCase(),
+                programmeName,
+                programmeDetail,
+                Character.toUpperCase(programmeLevel),
+                faculty.toUpperCase(),
+                duration
+        );
+    }
+
+    
+
     //update
     public void updateProgramme() {
         boolean yesNo;
         do {
             Programme existingProgramme;
 
-            Programme programmeCode = programmeUI.checkProgrammeCode();
+            Programme programmeCode = checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode())) {
                 programmeUI.notExists();
@@ -215,7 +234,7 @@ public class ProgrammeControl {
     }
 
     private void updateProgrammeData(Programme programme, int updateOption) {
-        Programme updatedProgramme = programmeUI.updateProgrammeInput(programme, updateOption);
+        Programme updatedProgramme = updateProgrammeInput(programme, updateOption);
 
         if (updatedProgramme != null) {
             //list
@@ -244,6 +263,47 @@ public class ProgrammeControl {
         }
     }
 
+    public Programme updateProgrammeInput(Programme existingProgramme, int updateOption) {
+        Programme updatedProgramme = new Programme(); // Create a new instance for updating
+
+        // Copy existing data to the new instance
+        updatedProgramme.setProgrammeCode(existingProgramme.getProgrammeCode());
+        updatedProgramme.setProgrammeName(existingProgramme.getProgrammeName());
+        updatedProgramme.setProgrammeDetail(existingProgramme.getProgrammeDetail());
+        updatedProgramme.setProgrammeLevel(existingProgramme.getProgrammeLevel());
+        updatedProgramme.setFaculty(existingProgramme.getFaculty());
+        updatedProgramme.setDuration(existingProgramme.getDuration());
+
+        switch (updateOption) {
+            case 1:
+                updatedProgramme.setProgrammeName(getValidProgrammeName());
+                break;
+            case 2:
+                updatedProgramme.setProgrammeDetail(getValidProgrammeDetail());
+                break;
+            case 3:
+                updatedProgramme.setProgrammeLevel(getValidProgrammeLevel());
+                break;
+            case 4:
+                updatedProgramme.setFaculty(getValidFaculty());
+                break;
+            case 5:
+                updatedProgramme.setDuration(getValidDuration());
+                break;
+            case 6:
+                updatedProgramme.setProgrammeName(getValidProgrammeName());
+                updatedProgramme.setProgrammeDetail(getValidProgrammeDetail());
+                updatedProgramme.setProgrammeLevel(getValidProgrammeLevel());
+                updatedProgramme.setFaculty(getValidFaculty());
+                updatedProgramme.setDuration(getValidDuration());
+                break;
+            default:
+                programmeUI.invalidInput();
+                return null;
+        }
+        return updatedProgramme;
+    }
+
     private void updateProgrammeProperties(Programme existingProgramme, Programme updatedProgramme) {
         existingProgramme.setProgrammeName(updatedProgramme.getProgrammeName());
         existingProgramme.setProgrammeDetail(updatedProgramme.getProgrammeDetail());
@@ -266,7 +326,7 @@ public class ProgrammeControl {
     public void deleteProgramme() {
         boolean continueDeletion;
         do {
-            Programme programmeCode = programmeUI.checkProgrammeCode();
+            Programme programmeCode = checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
                 programmeUI.notExists();
@@ -441,7 +501,7 @@ public class ProgrammeControl {
         do {
             Programme newProgrammeCode;
             do {
-                newProgrammeCode = programmeUI.checkProgrammeCode(); // Get programme code
+                newProgrammeCode = checkProgrammeCode(); // Get programme code
 
                 if (!programmeExists(newProgrammeCode.getProgrammeCode())) {
                     programmeUI.notExists();
@@ -470,7 +530,7 @@ public class ProgrammeControl {
     public void removeTutorialGroup() {
         boolean continueRemoval;
         do {
-            Programme programmeCode = programmeUI.checkProgrammeCode();
+            Programme programmeCode = checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
                 programmeUI.notExists();
@@ -539,7 +599,7 @@ public class ProgrammeControl {
         if (ttlList.isEmpty()) {
             programmeUI.ttlNotFound();
         } else {
-            Programme programmeCode = programmeUI.checkProgrammeCode();
+            Programme programmeCode = checkProgrammeCode();
 
             if (!programmeExists(programmeCode.getProgrammeCode().toUpperCase())) {
                 programmeUI.notExists();
@@ -714,6 +774,65 @@ public class ProgrammeControl {
             levelNumber++;
         }
     }
+    
+    //validation input
+    private String getValidProgrammeName() {
+        String programmeName;
+        do {
+            programmeName = programmeUI.getProgrammeName();
+            if (programmeName.trim().isEmpty()) {
+                programmeUI.invalidInput();
+            }
+        } while (programmeName.trim().isEmpty());
+        return programmeName;
+    }
+
+    private String getValidProgrammeDetail() {
+        String programmeDetail;
+        do {
+            programmeDetail = programmeUI.getProgrammeDetail();
+            if (programmeDetail.trim().isEmpty()) {
+                programmeUI.invalidInput();
+            }
+        } while (programmeDetail.trim().isEmpty());
+        return programmeDetail;
+    }
+
+    private char getValidProgrammeLevel() {
+        char programmeLevel;
+        do {
+            String input = programmeUI.getProgrammeLevel();
+            if (input.length() == 1 && Character.isLetter(input.charAt(0)) && !Character.isWhitespace(input.charAt(0))) {
+                programmeLevel = Character.toUpperCase(input.charAt(0));
+            } else {
+                programmeUI.invalidInput();
+                programmeLevel = '\0'; // Set a sentinel value for invalid input
+            }
+        } while (programmeLevel == '\0');
+        return programmeLevel;
+    }
+
+    private String getValidFaculty() {
+        String faculty;
+        do {
+            faculty = programmeUI.getFaculty();
+            if (!faculty.matches("[A-Za-z]{4}")) {
+                programmeUI.invalidInput();
+            }
+        } while (!faculty.matches("[A-Za-z]{4}"));
+        return faculty;
+    }
+
+    private int getValidDuration() {
+        int duration;
+        do {
+            duration = programmeUI.getDuration();
+            if (duration < 1 || duration > 12) {
+                programmeUI.invalidDuration();
+            }
+        } while (duration < 1 || duration > 12);
+        return duration;
+    }
 
     //get ttlgroup - programme
     private void displayTutorialGroups(Programme programme) {
@@ -822,6 +941,21 @@ public class ProgrammeControl {
         ListInterface<Programme> filteredProgrammes = programmeList.filter(criteria);
 
         return !filteredProgrammes.isEmpty();
+    }
+
+    public Programme checkProgrammeCode() {
+        String programmeCode;
+        do {
+            programmeCode = programmeUI.getProgrammeCode();
+            if (!isValidProgrammeCode(programmeCode)) {
+                programmeUI.invalidInput();
+            }
+        } while (!isValidProgrammeCode(programmeCode));
+        return new Programme(programmeCode);
+    }
+
+    private boolean isValidProgrammeCode(String programmeCode) {
+        return programmeCode.matches("[A-Za-z]{3}");
     }
 
     public static void main(String[] args) {
