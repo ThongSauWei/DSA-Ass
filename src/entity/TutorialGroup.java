@@ -96,10 +96,6 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
             return -1;
         }
     }
-    
-    public String saveToFile() {
-        return tutorialGroupId + "|" + groupNo + "|" + numOfStudent + "|" + programmeCode.getProgrammeCode();
-    }
 
     @Override
     public String toString() {

@@ -108,11 +108,6 @@ public class Course implements Serializable, Comparable<Course> {
             return -1;
         }
     }
-    
-    public String saveToFile() {
-        return courseCode + "|" + courseName + "|" + courseDetail + "|" + new SimpleDateFormat("yyyy-MM-dd").format(startDate) + "|" + 
-                new SimpleDateFormat("yyyy-MM-dd").format(endDate);
-    }
 
     @Override
     public String toString() {

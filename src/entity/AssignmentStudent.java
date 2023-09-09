@@ -91,10 +91,6 @@ public class AssignmentStudent implements Serializable, Comparable<AssignmentStu
         }
     }
     
-    public String saveToFile() {
-        return id + "|" + assignmentTeamId.getAssignmentTeamId() + "|" + studentId.getStudentId();
-    }
-    
     @Override
     public String toString() {
         return studentId.getTutorialGroupId().getProgrammeCode().getProgrammeCode() + "\t" + assignmentTeamId.getCourseCode().getCourseCode() + "\t" + studentId.getTutorialGroupId().getTutorialGroupId() + "\t" + studentId.getStudentId();

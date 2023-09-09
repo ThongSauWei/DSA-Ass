@@ -6,32 +6,34 @@ package da;
 
 import adt.LinkedList;
 import adt.ListInterface;
-import entity.TutorialGroup;
-import utility.FileHandling;
 
+import entity.TutorialGroup;
+
+import utility.ExceptionHandling;
+
+import java.io.*;
 /**
  *
  * @author Benjamin
  */
 public class TutorialGroupDA {
     public ListInterface<TutorialGroup> readFromFile() {
-        ListInterface<TutorialGroup> tutorialGroupList = new LinkedList<>();
-        ListInterface<String> dataList = FileHandling.readFile("TutorialGroup");
-        for(String data : dataList) {
-            String[] attr = data.split("\\|");
-            
-            tutorialGroupList.add(FileHandling.getTutorialGroup(attr[0]));
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("TutorialGroup.bin"))) {
+            return (ListInterface<TutorialGroup>) inputStream.readObject();
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.READ);
+            return new LinkedList<>();
+        } catch (ClassNotFoundException ex) {
+            ExceptionHandling.classNotFoundExceptionMessage();
+            return new LinkedList<>();
         }
-        
-        return tutorialGroupList;
     }
     
     public void writeToFile(ListInterface<TutorialGroup> tutorialGroupList) {
-        ListInterface<String> dataList = new LinkedList<>();
-        for (TutorialGroup tutorialGroup : tutorialGroupList) {
-            dataList.add(tutorialGroup.saveToFile());
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("TutorialGroup.bin"))) {
+            outputStream.writeObject(tutorialGroupList);
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.WRITE);
         }
-        
-        FileHandling.writeFile("TutorialGroup", dataList);
     }
 }

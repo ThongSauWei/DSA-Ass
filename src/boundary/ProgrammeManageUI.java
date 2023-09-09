@@ -10,7 +10,7 @@ import utility.*;
 
 /**
  *
- * @author Acer
+ * @author Thong Sau Wei
  */
 public class ProgrammeManageUI {
 

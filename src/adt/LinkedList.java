@@ -14,7 +14,7 @@ import utility.ExceptionHandling;
  *
  * @author Benjamin, Erika, Thong, Valerie
  */
-public class LinkedList<T extends Comparable<T>> implements Serializable, ListInterface<T> {
+public class LinkedList<T extends Comparable<T>> implements ListInterface<T> {
     private Node firstNode;
     private Node lastNode;
     private int num; // Number of entries (nodes)
@@ -24,7 +24,7 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     }
     
     // Node class implementation
-    private class Node {
+    private class Node implements Serializable {
         private T entry;
         private Node nextNode;
         private Node previousNode;
@@ -49,7 +49,7 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
     }
     
     // Custom iterator class implementation
-    public class CustomIterator implements IteratorInterface<T>, Iterator<T> {
+    public class CustomIterator implements IteratorInterface<T>, Iterator<T>, Serializable {
         private Node currentNode;
         
         public CustomIterator() {
@@ -352,14 +352,6 @@ public class LinkedList<T extends Comparable<T>> implements Serializable, ListIn
         // after swapping we knew that the pivot node is sorted as all the node on its left are "less than" it while all the node on its right are "more than" it
         // return the node that is sorted
         return i;
-    }
-    
-    public static void main(String[] args) {
-        ListInterface<String> list = new LinkedList<>();
-        
-        for (String data : list) {
-            System.out.println(data);
-        }
     }
 }
 

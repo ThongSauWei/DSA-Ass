@@ -116,10 +116,6 @@ public class Programme implements Serializable, Comparable<Programme> {
             return -1;
         }
     }
-    
-    public String saveToFile() {
-        return programmeCode + "|" + programmeName + "|" + programmeDetail + "|" + programmeLevel + "|" + faculty + "|" + duration;
-    }
 
     @Override
     public String toString() {

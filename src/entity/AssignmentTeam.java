@@ -83,10 +83,6 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
         }
     }
     
-    public String saveToFile() {
-        return assignmentTeamId + "|" + courseCode.getCourseCode() + "|" + tutorialGroupId.getTutorialGroupId();
-    }
-
     @Override
     public String toString() {
         return courseCode.getCourseCode() + "" + tutorialGroupId.getTutorialGroupId() + "\n";

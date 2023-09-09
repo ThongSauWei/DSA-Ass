@@ -49,4 +49,8 @@ public class ExceptionHandling {
     public static void dateParseException() {
         JOptionPane.showMessageDialog(null, "Error parsing date.", "Error!", JOptionPane.ERROR_MESSAGE);
     }
+    
+    public static void classNotFoundExceptionMessage() {
+        JOptionPane.showMessageDialog(null, "The Class of the Object cannot be found.", "Error!", JOptionPane.ERROR_MESSAGE);
+    }
 }

@@ -9,7 +9,7 @@ import control.*;
 import utility.Helper;
 /**
  *
- * @author User
+ * @author Benjamin
  */
 public class MainControl {
     private MainUI mainUI = new MainUI();

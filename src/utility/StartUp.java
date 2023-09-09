@@ -1,5 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.bin to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package utility;
@@ -15,13 +15,13 @@ import java.text.SimpleDateFormat;
  */
 public class StartUp {
     public static void startUp() { // In case the related file is not open yet
-        FileHandling.createOrOpenFile("AssignmentTeam.txt");
-        FileHandling.createOrOpenFile("Course.txt");
-        FileHandling.createOrOpenFile("CourseProgramme.txt");
-        FileHandling.createOrOpenFile("Programme.txt");
-        FileHandling.createOrOpenFile("Student.txt");
-        FileHandling.createOrOpenFile("TutorialGroup.txt");
-        FileHandling.createOrOpenFile("AssignmentStudent.txt");
+        FileHandling.createOrOpenFile("AssignmentTeam.bin");
+        FileHandling.createOrOpenFile("Course.bin");
+        FileHandling.createOrOpenFile("CourseProgramme.bin");
+        FileHandling.createOrOpenFile("Programme.bin");
+        FileHandling.createOrOpenFile("Student.bin");
+        FileHandling.createOrOpenFile("TutorialGroup.bin");
+        FileHandling.createOrOpenFile("AssignmentStudent.bin");
     }
     
     public static void init() { // Used to create data if the file does not have data

@@ -8,7 +8,7 @@ import utility.Helper;
 import utility.InputHandling;
 /**
  *
- * @author User
+ * @author Benjamin
  */
 public class MainUI {
     

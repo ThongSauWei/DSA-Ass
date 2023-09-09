@@ -6,32 +6,34 @@ package da;
 
 import adt.LinkedList;
 import adt.ListInterface;
-import entity.Student;
-import utility.FileHandling;
 
+import entity.Student;
+
+import utility.ExceptionHandling;
+
+import java.io.*;
 /**
  *
  * @author Benjamin
  */
 public class StudentDA {
     public ListInterface<Student> readFromFile() {
-        ListInterface<Student> studentList = new LinkedList<>();
-        ListInterface<String> dataList = FileHandling.readFile("Student");
-        for(String data : dataList) {
-            String[] attr = data.split("\\|");
-            
-            studentList.add(FileHandling.getStudent(attr[0]));
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Student.bin"))) {
+            return (ListInterface<Student>) inputStream.readObject();
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.READ);
+            return new LinkedList<>();
+        } catch (ClassNotFoundException ex) {
+            ExceptionHandling.classNotFoundExceptionMessage();
+            return new LinkedList<>();
         }
-        
-        return studentList;
     }
     
     public void writeToFile(ListInterface<Student> studentList) {
-        ListInterface<String> dataList = new LinkedList<>();
-        for (Student student : studentList) {
-            dataList.add(student.saveToFile());
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("Student.bin"))) {
+            outputStream.writeObject(studentList);
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.WRITE);
         }
-        
-        FileHandling.writeFile("Student", dataList);
     }
 }

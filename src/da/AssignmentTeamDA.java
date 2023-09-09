@@ -6,31 +6,34 @@ package da;
 
 import adt.LinkedList;
 import adt.ListInterface;
+
 import entity.AssignmentTeam;
-import utility.FileHandling;
+
+import utility.ExceptionHandling;
+
+import java.io.*;
 /**
  *
  * @author User
  */
 public class AssignmentTeamDA {
     public ListInterface<AssignmentTeam> readFromFile() {
-        ListInterface<AssignmentTeam> assignmentTeamList = new LinkedList<>();
-        ListInterface<String> dataList = FileHandling.readFile("AssignmentTeam");
-        for(String data : dataList) {
-            String[] attr = data.split("\\|");
-            
-            assignmentTeamList.add(FileHandling.getAssignmentTeam(attr[0]));
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("AssignmentTeam.bin"))) {
+            return (ListInterface<AssignmentTeam>) inputStream.readObject();
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.READ);
+            return new LinkedList<>();
+        } catch (ClassNotFoundException ex) {
+            ExceptionHandling.classNotFoundExceptionMessage();
+            return new LinkedList<>();
         }
-        
-        return assignmentTeamList;
     }
     
     public void writeToFile(ListInterface<AssignmentTeam> assignmentTeamList) {
-        ListInterface<String> dataList = new LinkedList<>();
-        for (AssignmentTeam assignmentTeam : assignmentTeamList) {
-            dataList.add(assignmentTeam.saveToFile());
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("AssignmentTeam.bin"))) {
+            outputStream.writeObject(assignmentTeamList);
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.WRITE);
         }
-        
-        FileHandling.writeFile("AssignmentTeam", dataList);
     }
 }

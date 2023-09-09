@@ -6,32 +6,34 @@ package da;
 
 import adt.LinkedList;
 import adt.ListInterface;
-import entity.CourseProgramme;
-import utility.FileHandling;
 
+import entity.CourseProgramme;
+
+import utility.ExceptionHandling;
+
+import java.io.*;
 /**
  *
  * @author User
  */
 public class CourseProgrammeDA {
     public ListInterface<CourseProgramme> readFromFile() {
-        ListInterface<CourseProgramme> courseProgrammeList = new LinkedList<>();
-        ListInterface<String> dataList = FileHandling.readFile("CourseProgramme");
-        for(String data : dataList) {
-            String[] attr = data.split("\\|");
-            
-            courseProgrammeList.add(FileHandling.getCourseProgramme(attr[0]));
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("CourseProgramme.bin"))) {
+            return (ListInterface<CourseProgramme>) inputStream.readObject();
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.READ);
+            return new LinkedList<>();
+        } catch (ClassNotFoundException ex) {
+            ExceptionHandling.classNotFoundExceptionMessage();
+            return new LinkedList<>();
         }
-        
-        return courseProgrammeList;
     }
     
     public void writeToFile(ListInterface<CourseProgramme> courseProgrammeList) {
-        ListInterface<String> dataList = new LinkedList<>();
-        for (CourseProgramme courseProgramme : courseProgrammeList) {
-            dataList.add(courseProgramme.saveToFile());
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("CourseProgramme.bin"))) {
+            outputStream.writeObject(courseProgrammeList);
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.WRITE);
         }
-        
-        FileHandling.writeFile("CourseProgramme", dataList);
     }
 }

@@ -6,8 +6,12 @@ package da;
 
 import adt.LinkedList;
 import adt.ListInterface;
+
 import entity.Programme;
-import utility.FileHandling;
+
+import utility.ExceptionHandling;
+
+import java.io.*;
 
 /**
  *
@@ -15,23 +19,22 @@ import utility.FileHandling;
  */
 public class ProgrammeDA {
     public ListInterface<Programme> readFromFile() {
-        ListInterface<Programme> programmeList = new LinkedList<>();
-        ListInterface<String> dataList = FileHandling.readFile("Programme");
-        for(String data : dataList) {
-            String[] attr = data.split("\\|");
-            
-            programmeList.add(FileHandling.getProgramme(attr[0]));
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Programme.bin"))) {
+            return (ListInterface<Programme>) inputStream.readObject();
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.READ);
+            return new LinkedList<>();
+        } catch (ClassNotFoundException ex) {
+            ExceptionHandling.classNotFoundExceptionMessage();
+            return new LinkedList<>();
         }
-        
-        return programmeList;
     }
     
     public void writeToFile(ListInterface<Programme> programmeList) {
-        ListInterface<String> dataList = new LinkedList<>();
-        for (Programme programme : programmeList) {
-            dataList.add(programme.saveToFile());
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("Programme.bin"))) {
+            outputStream.writeObject(programmeList);
+        } catch (IOException ex) {
+            ExceptionHandling.fileException(ExceptionHandling.FileAction.WRITE);
         }
-        
-        FileHandling.writeFile("Programme", dataList);
     }
 }
