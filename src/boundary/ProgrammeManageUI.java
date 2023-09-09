@@ -13,10 +13,16 @@ import utility.*;
  * @author Thong Sau Wei
  */
 public class ProgrammeManageUI {
+    
+    public static final String ANSI_RESET = "\u001B[0m"; //reset
+    public static final String ANSI_RED = "\u001B[31m"; //red
+    public static final String ANSI_YELLOW = "\u001B[33m"; //yellow
+    public static final String ANSI_GREEN = "\u001B[32m"; //green
+    public static final String ANSI_BLUE = "\u001B[34m"; //blue
 
     //programme menu
     public int programmeMenu() {
-        System.out.println("\n~PROGRAMME MENU~");
+        System.out.println("\n~ PROGRAMME MENU ~");
         Helper.printLine('-', 30);
         System.out.println("1. Display Programme List"); //sort
         System.out.println("2. Add Programme");
@@ -30,10 +36,10 @@ public class ProgrammeManageUI {
         System.out.println("0. Exit");
         Helper.printLine('-', 30);
 
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 0, 9)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36m\nPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
@@ -135,7 +141,13 @@ public class ProgrammeManageUI {
             }
         } while (!faculty.matches("[A-Za-z]{4}"));
 
-        duration = InputHandling.getInt("Duration (in months): ");
+//        duration = InputHandling.getInt("Duration (in months): ");
+        do {
+            duration = InputHandling.getInt("Duration (in months): ");
+            if (duration < 1 || duration > 12) {
+                System.out.println(ANSI_RED + "Please enter a duration between 1 and 12 months." + ANSI_RESET);
+            }
+        } while (duration < 1 || duration > 12);
 
         return new Programme(programmeCode.getProgrammeCode().toUpperCase(), programmeName, programmeDetail, Character.toUpperCase(programmeLevel), faculty.toUpperCase(), duration);
     }
@@ -204,7 +216,7 @@ public class ProgrammeManageUI {
                 updatedProgramme.setDuration(newDuration);
                 break;
             default:
-                System.out.println("Invalid choice.");
+                invalidInput();
                 return null;
         }
         return updatedProgramme;
@@ -222,10 +234,10 @@ public class ProgrammeManageUI {
         System.out.println("0. EXIT");
         Helper.printLine('-', 30);
 
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 0, 6)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
@@ -239,17 +251,17 @@ public class ProgrammeManageUI {
         System.out.println("2. Descending Order");
         Helper.printLine('-', 20);
 
-        int choice = InputHandling.getInt("Please Choose Sorting Option: ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Sorting Option: " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 1, 2)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
     }
 
     public int sortOptions() {
-        System.out.println("\nChoose what type of the programme list :");
+        System.out.println("Choose what type of the programme list :");
         Helper.printLine('-', 20);
         System.out.println("1. By Programme Code");
         System.out.println("2. By Faculty");
@@ -258,10 +270,10 @@ public class ProgrammeManageUI {
         System.out.println("0. EXIT");
         Helper.printLine('-', 20);
 
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 0, 4)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
@@ -286,10 +298,10 @@ public class ProgrammeManageUI {
         System.out.println("0. EXIT");
         Helper.printLine('-', 20);
 
-        int choice = InputHandling.getInt("Please Choose Your Option : ");
+        int choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
 
         while (!Helper.choiceValidation(choice, 0, 2)) {
-            choice = InputHandling.getInt("Please Choose Your Option : ");
+            choice = InputHandling.getInt("\u001B[36mPlease Choose Your Option : " + ANSI_RESET);
         }
 
         return choice;
@@ -297,21 +309,21 @@ public class ProgrammeManageUI {
     
     //report Faculty header
     public void reportHeader(ListInterface<String> input){
-        System.out.println("- Faculty Report -");
+        System.out.println(ANSI_YELLOW + "\n- Faculty Report -\n" + ANSI_RESET);
         System.out.println("Total Faculty Available - " + input.getSize());
     }
     
     public void reportHeaderLevel(ListInterface<Character> input){
-        System.out.println("- Level Report -");
+        System.out.println(ANSI_YELLOW + "\n- Level Report -\n"+ ANSI_RESET);
         System.out.println("Total Programme Level Available - " + input.getSize());
     }
     
     //report highest
     public void reportHighest(String highestInput, double highestPercentage){
-        System.out.println("The highest percentage of Faculty is " + highestInput + " which have (" + String.format("%.2f", highestPercentage) + "%).\n\n");
+        System.out.println("The highest percentage of Faculty is \u001B[36m" + highestInput + ANSI_RESET + " which have (" + String.format("%.2f", highestPercentage) + "%).\n\n");
     }
     public void reportHighestLevel(char highestInput, double highestPercentage){
-        System.out.println("The highest percentage of Programme Level is " + highestInput + " which have (" + String.format("%.2f", highestPercentage) + "%).\n\n");
+        System.out.println("The highest percentage of Programme Level is \u001B[36m" + highestInput + ANSI_RESET + " which have (" + String.format("%.2f", highestPercentage) + "%).\n\n");
     }
     
     //report percentage
@@ -324,64 +336,64 @@ public class ProgrammeManageUI {
 
     //code does not exists
     public void notExists() {
-        System.out.println("Error: Programme with the given code does not exist.");
+        System.out.println(ANSI_RED + "Error: Programme with the given code does not exist." + ANSI_RESET);
     }
 
     public String checkExists(Programme programme) {
-        return "Error: the Programme Code - " + programme.getProgrammeCode().toUpperCase() + " already exists.\n";
+        return ANSI_RED + "Error: the Programme Code - " + programme.getProgrammeCode().toUpperCase() + " already exists.\n" + ANSI_RESET;
     }
 
     //not found
     public void notFound() {
-        System.out.println("Error: Programme not Found!");
+        System.out.println(ANSI_RED + "Error: Programme not Found!" + ANSI_RESET);
     }
 
     //ttl not found
     public void ttlNotFound() {
-        System.out.println("Error: Tutorial Group not Found!");
+        System.out.println(ANSI_RED + "Error: Tutorial Group not Found!" + ANSI_RESET);
     }
 
     //sort
     public boolean ttlComfirm(Programme programme) {
-        boolean yesNo = InputHandling.getConfirmation("Confirm to made changes to the tutorial group of " + programme.getProgrammeCode().toUpperCase() + " ? (Y or N): ");
+        boolean yesNo = InputHandling.getConfirmation("\u001B[36m Confirm to made changes to the tutorial group of " + programme.getProgrammeCode().toUpperCase() + " ? (Y or N): " + ANSI_RESET);
         return yesNo;
     }
 
     //continue
     public boolean continueInput() {
-        boolean yesNo = InputHandling.getConfirmation("\nDo you want to continue ? (Y or N): ");
+        boolean yesNo = InputHandling.getConfirmation("\u001B[36m \nDo you want to continue ? (Y or N): " + ANSI_RESET);
         InputHandling.systemPause();
         return yesNo;
     }
 
     //comfirm
     public boolean comfirmInput() {
-        boolean yesNo = InputHandling.getConfirmation("Confirm ? (Y or N): ");
+        boolean yesNo = InputHandling.getConfirmation("\u001B[36m Confirm ? (Y or N): " + ANSI_RESET);
         return yesNo;
     }
 
     public void success() {
-        System.out.println("\nUpdated Successfully!");
+        System.out.println(ANSI_GREEN + "\nUpdated Successfully!" + ANSI_RESET);
     }
 
     public void unsuccess() {
-        System.out.println("\nUpdated Unsuccessfully! Data Remain Same!");
+        System.out.println(ANSI_YELLOW + "\nUpdated Unsuccessfully! Data Remain Same!" + ANSI_RESET);
     }
 
     //sort
     public boolean sortComfirm() {
-        boolean yesNo = InputHandling.getConfirmation("\nDo you want to sort the programme list? (Y or N): ");
+        boolean yesNo = InputHandling.getConfirmation("\u001B[36m\nDo you want to sort the programme list? (Y or N): " + ANSI_RESET);
         return yesNo;
     }
 
     //invalid message
     public void invalidInput() {
-        System.out.println("Invalid input, please enter again...");
+        System.out.println(ANSI_RED + "Invalid input, please enter again..." + ANSI_RESET);
     }
 
     //thank you
     public void thankYou() {
-        System.out.println("\nThank You ~ Have a nice day ^_^");
+        System.out.println("\u001B[36m	\n\nThank You ~ Have a nice day ^_^" + ANSI_RESET);
     }
 
 }

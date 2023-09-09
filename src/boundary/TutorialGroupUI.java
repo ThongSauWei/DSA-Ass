@@ -95,8 +95,8 @@ public class TutorialGroupUI {
         System.out.println("Faculty : " + programme.getFaculty());
     }
     
-    public void displayChooseOldTtlGroup() {
-        System.out.println("Please Choose The Old Tutorial Group");
+    public void displayChooseTtlGroup() {
+        System.out.println("Please Choose The Tutorial Group");
     }
     
     public void displayChooseNewTtlGroup() {
@@ -206,17 +206,6 @@ public class TutorialGroupUI {
         Helper.printLine('-', 139);
     }
 
-    public void listCourses(ListInterface<Course> courseList) { // delete
-        int count = 1;
-        System.out.println("The Courses Available");
-        Helper.printLine('=', 21);
-        for (Course course : courseList) {
-            System.out.print(count + ". " + course);
-            count++;
-        }
-        Helper.printLine('=', 21);
-    }
-
     // Get Input
     public String getIdInput() {
         return InputHandling.getString("ID : ");
@@ -247,8 +236,8 @@ public class TutorialGroupUI {
         return choice;
     }
 
-    public int getTutorialGroupChoice(int size) {
-        int choice = InputHandling.getInt("Please Enter The Tutorial Group Number (max = " + size + ") : ");
+    public int getTutorialGroupChoice() {
+        int choice = InputHandling.getInt("Please Choose The Tutorial Group : ");
         System.out.println();
 
         return choice;

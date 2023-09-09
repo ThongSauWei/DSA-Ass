@@ -117,6 +117,11 @@ public class TutorialGroupControl {
     public void removeStudent() { // completed
         // filter the list so that the students in the tutorial group only will be listed
         Student studentRemove = getStudent();
+        
+        if (studentRemove == null) {
+            return;
+        }
+        
         TutorialGroup ttlGroup = studentRemove.getTutorialGroupId();
         
         if (tutorialGroupUI.getConfirmationForRemoving(studentRemove)) { // ask for confirmation of removing
@@ -138,6 +143,11 @@ public class TutorialGroupControl {
     public void changeTutorialGroup() { // completed        
         // filter the list so that the students in the tutorial group only will be listed
         Student studentChange = getStudent();
+        
+        if (studentChange == null) {
+            return;
+        }
+        
         TutorialGroup oldTtlGroup = studentChange.getTutorialGroupId();
         
         // choose the new tutorial group (cannot same with the old tutorial group)
@@ -227,8 +237,7 @@ public class TutorialGroupControl {
                 break;
             case 2: // maybe will be remove (filter based on courses taken)
                 ListInterface<Course> allCourseList = new da.CourseDA().readFromFile(); // get the course list
-                
-                tutorialGroupUI.listCourses(allCourseList); // list out the course list for user to choose
+
                 new CourseControl().displayCourse();
                 
                 int courseNo;
@@ -288,8 +297,7 @@ public class TutorialGroupControl {
                 if (courseList.isEmpty()){
                     tutorialGroupUI.displayNoCourseMessage();
                 } else {
-                    tutorialGroupUI.listCourses(courseList); // display all the courses taken
-                    new CourseControl().displayCourse();
+                    new CourseControl().filterChooseDisplay(courseList);
                 }
                 
                 tutorialGroupUI.displayTutorialGroup(tutorialGroup); // display the tutorial group
@@ -370,9 +378,14 @@ public class TutorialGroupControl {
         } while (programmeTtlGroups.isEmpty());
 
         TutorialGroup ttlGroupChosen = null;
-
+        int choice;
+        
         do {
-            int choice = tutorialGroupUI.getTutorialGroupChoice(programmeTtlGroups.getSize());
+            tutorialGroupUI.listTutorialGroups(programmeTtlGroups);
+            
+            do {
+                choice = tutorialGroupUI.getTutorialGroupChoice();
+            } while (!Helper.choiceValidation(choice, 1, programmeTtlGroups.getSize()));
 
             ttlGroupChosen = programmeTtlGroups.get(choice);
 
@@ -408,7 +421,7 @@ public class TutorialGroupControl {
                 student = findStudent();
                 break;
             case 2:
-                tutorialGroupUI.displayChooseOldTtlGroup();
+                tutorialGroupUI.displayChooseTtlGroup();
                 oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
                 ttlGroupStudents = studentList.filter(stud -> stud.getTutorialGroupId().equals(oldTtlGroup));
                 listStudents(oldTtlGroup, false);
@@ -421,8 +434,8 @@ public class TutorialGroupControl {
                 
                 student = ttlGroupStudents.get(studentNo);
                 break;
-            case 3: // maybe will be remove
-                tutorialGroupUI.displayChooseOldTtlGroup();
+            case 3:
+                tutorialGroupUI.displayChooseTtlGroup();
                 oldTtlGroup = chooseTutorialGroup(); // choose the old tutorial group
                 ttlGroupStudents = studentList.filter(stud -> stud.getTutorialGroupId().equals(oldTtlGroup));
                 
