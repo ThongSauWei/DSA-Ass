@@ -122,8 +122,15 @@ public class TutorialGroupControl {
             return;
         }
         
-        TutorialGroup ttlGroup = studentRemove.getTutorialGroupId();
+        TutorialGroup ttlGroup = null; 
         
+        for (TutorialGroup tutorialGroup : tutorialGroupList) { // ensure that both of the tutorial group is pointing to the same object, so that can update
+            if (tutorialGroup.getTutorialGroupId().equals(studentRemove.getTutorialGroupId().getTutorialGroupId())) {
+                ttlGroup = tutorialGroup;
+                break;
+            }
+        }
+
         if (tutorialGroupUI.getConfirmationForRemoving(studentRemove)) { // ask for confirmation of removing
             tutorialGroupUI.displayRemoveSuccessMessage();
             
@@ -148,7 +155,14 @@ public class TutorialGroupControl {
             return;
         }
         
-        TutorialGroup oldTtlGroup = studentChange.getTutorialGroupId();
+        TutorialGroup oldTtlGroup = null; 
+        
+        for (TutorialGroup tutorialGroup : tutorialGroupList) { // ensure that both of the tutorial group is pointing to the same object, so that can update
+            if (tutorialGroup.getTutorialGroupId().equals(studentChange.getTutorialGroupId().getTutorialGroupId())) {
+                oldTtlGroup = tutorialGroup;
+                break;
+            }
+        }
         
         // choose the new tutorial group (cannot same with the old tutorial group)
         tutorialGroupUI.displayChooseNewTtlGroup();
