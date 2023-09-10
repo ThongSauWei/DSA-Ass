@@ -764,7 +764,7 @@ public class ProgrammeControl {
         levelNumber = 1;
         for (int i = 1; i <= levels.getSize(); i++) {
             Character level = levels.get(i);
-            Predicate<Programme> levelFilter = programme -> programme.getProgrammeLevel() == level;
+            Predicate<Programme> levelFilter = programme -> programme.getProgrammeLevel().equals(level);
             ListInterface<Programme> programmesInLevel = programmeList.filter(levelFilter);
             System.out.println(levelNumber + ". " + level);
             String formattedOutput = programmeUI.formatProgrammeList(programmesInLevel);
@@ -772,7 +772,7 @@ public class ProgrammeControl {
             levelNumber++;
         }
     }
-    
+
     //validation input
     private String getValidProgrammeName() {
         String programmeName;
