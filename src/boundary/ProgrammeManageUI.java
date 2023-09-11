@@ -135,8 +135,9 @@ public class ProgrammeManageUI {
         tutorialGroupId = InputHandling.getString("Tutorial ID: ");
         groupNo = InputHandling.getInt("Group No : ");
 
-        return new TutorialGroup(tutorialGroupId, groupNo, 0, programmeCode);
+        return new TutorialGroup(tutorialGroupId.toUpperCase(), groupNo, 0, programmeCode);
     }
+    
 
     //update
     public int updateProgrammeMenu() {
@@ -265,6 +266,10 @@ public class ProgrammeManageUI {
     //not found
     public void notFound() {
         System.out.println(ANSI_RED + "Error: Programme not Found!" + ANSI_RESET);
+    }
+    
+    public void sameTtl() {
+        System.out.println(ANSI_RED + "Error: Tutorial Group already exists!" + ANSI_RESET);
     }
 
     //ttl not found
