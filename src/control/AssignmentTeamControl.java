@@ -52,8 +52,7 @@ public class AssignmentTeamControl {
         assignmentList = assignmentDA.readFromFile();
         courseList = courseDA.readFromFile();
         tutorialGList = tutorialGDA.readFromFile();
-        
-        runMain();
+        assignmentStudList = assignmentStudDA.readFromFile();
     }
 
     public void runMain() {
@@ -64,31 +63,25 @@ public class AssignmentTeamControl {
 
             switch (choice) {
                 case 1:
-                    createTeam();
+                    createTeam(); // work
                     break;
                 case 2:
-                    removeTeam();
+                    removeTeam(); // work
                     break;
                 case 3:
-                    updateTeam();
+                    updateTeam(); // work
                     break;
                 case 4:
-                    addStudToTeam();
+                    addStudToTeam(); // work
                     break;
                 case 5:
-                    removeStudFromTeam();
+                    filterTeam(); // work
                     break;
                 case 6:
-                    filterTeam();
+                    listTeam(); // work
                     break;
                 case 7:
-                    listTeam();
-                    break;
-                case 8:
                     listStudTeam();
-                    break;
-                case 9:
-                    generateReport();
                     break;
                 case 0:
                     break;
@@ -174,11 +167,11 @@ public class AssignmentTeamControl {
             }
         }
         
-        /*if(!studentExist){
-            AssignmentStudent assignmentStud = new AssignmentStudent(choiceStudent, choiceAssignmentT);
-            //tutorial groupde wen ti bu neng work
-            
-        }*/
+        if(!studentExist){
+            AssignmentStudent assignmentStud = new AssignmentStudent(choiceAssignmentT, choiceStudent);
+            assignmentStudList.add(assignmentStud);
+            assignmentStudDA.writeToFile(assignmentStudList);
+        }
     }
     
     public void removeStudFromTeam() {
@@ -195,6 +188,7 @@ public class AssignmentTeamControl {
                 for(AssignmentStudent assignmentStud : assignmentStudList){
                     if(assignmentStud.getAssignmentTeamId().equals(choiceAssignmentT) && assignmentStud.getStudentId().equals(choiceStud)){
                         if(assignmentStudList.remove(assignmentStud));
+                        assignmentStudDA.writeToFile(assignmentStudList);
                         removeTeam = true;
                         break;
                     }
@@ -206,12 +200,7 @@ public class AssignmentTeamControl {
     }
     
     public void filterTeam() {
-        int choice;
-        assignmentTeamUI.displayCriteriaMenu();
-        
-        do{
-            choice = assignmentTeamUI.getChoice();
-        }while (!Helper.choiceValidation(choice, 0, 2));
+        int choice = assignmentTeamUI.displayCriteriaMenu();
         
         
         switch(choice){
@@ -369,52 +358,6 @@ public class AssignmentTeamControl {
         courseDA.writeToFile(courseList);
         assignmentDA.writeToFile(assignmentList);
     }
-    
-    public static void main(String args[]){
-        AssignmentTeamControl assignmentTeamControl = new AssignmentTeamControl();
-        assignmentTeamControl.runMain();
-    }
-    /*   public class AssignmentTeamControl {
-        private AssignmentTeamDA assignmentDA = new AssignmentTeamDA();
-        public ListInterface<AssignmentTeam> readFromFile() {
-            return assignmentDA.readFromFile();
-    }
-    
-    public void writeToFile(ListInterface<AssignmentTeam> assignmentTeamList) {
-        assignmentDA.writeToFile(assignmentTeamList);
-    }
-}
-    */
- 
-    /*public AssignmentTeam chooseAssignmentTeam(AssignmentTeam oldAssignmentTeam) {
-        ListInterface<AssignmentTeam> courseAssignmentTeam = new LinkedList<>();
-        
-        do {
-            Course course = chooseCourse();
-
-            // filter the list so that the tutorial group in the programme only will be listed
-            courseAssignmentTeam = assignmentList.filter(assignmentTeam -> assignmentTeam.getCourseCode().equals(course));
-
-            if (courseAssignmentTeam.isEmpty()) {
-                assignmentTeamUI.displayNoTtlGroupMessage(); //*** UI displayNoTtlGroupMessage
-            }
-
-        } while (courseAssignmentTeam.isEmpty());
-
-        AssignmentTeam assignmentTeamChosen = null;
-
-        do {
-            int choice = assignmentTeamUI.getAssignmentTeamChoice(courseAssignmentTeam.getSize()); //*** UI getAssignmentTeamChoice
-
-            assignmentTeamChosen = courseAssignmentTeam.get(choice);
-
-        } while (oldAssignmentTeam != null && !compareAssignmentTeam(oldAssignmentTeam, assignmentTeamChosen)); // if there is old tutorial group, the selected tutorial group cannot be same with the old tutorial group
-
-        return assignmentTeamChosen;
-    }
-*/
-    
-    
 }
 
 

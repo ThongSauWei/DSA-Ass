@@ -266,18 +266,23 @@ public class CourseControl {
         return filterCourse;
     }
 
-    public Course filterChooseDisplay(ListInterface<Course> courseFilterList) {
+    public void filterChooseDisplay(ListInterface<Course> courseFilterList) {
 
         int ttlCourse = courseFilterList.getSize();//get the total
         if (!courseFilterList.isEmpty()) {
             courseManageUI.displayCourse(courseFilterList, ttlCourse);//passing the total course to the UI
-            int choice = courseManageUI.getCourseChoice(courseFilterList);
-            return courseFilterList.get(choice);
         } else {
             courseManageUI.displayCourseNotFound(courseFilterList, ttlCourse);
-            return null;
         }
 
+    }
+    
+    public Course chooseFromFilter(ListInterface<Course> courseFilterList) {
+        filterChooseDisplay(courseFilterList);
+        
+        int choice = courseManageUI.getCourseChoice(courseFilterList);
+        
+        return courseFilterList.get(choice);
     }
 //-------------Add course to programme function----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -360,7 +365,7 @@ public class CourseControl {
     public void removeCourseInProgramme() {
         Programme programme = chooseProgramme();
         ListInterface<Course> filterCourse = filterChooseCourse(programme);// call interface
-        Course course = filterChooseDisplay(filterCourse);
+        Course course = chooseFromFilter(filterCourse);
 
         if (course == null) {// when the record are empty it will return null if null the function will exit
             return;
@@ -460,16 +465,5 @@ public class CourseControl {
         } else {
             courseManageUI.displayCourse(courseList, courseList.getSize()); // display all the courses taken
         }
-    }
-
-    public void writeToFile(ListInterface<Course> courseList) {
-        courseDA.writeToFile(courseList);
-    }
-
-    public static void main(String[] args) {
-        CourseControl courseControl = new CourseControl();
-        courseControl.courseMenu();
-//        StartUp startUp = new StartUp();
-//        startUp.init();
     }
 }

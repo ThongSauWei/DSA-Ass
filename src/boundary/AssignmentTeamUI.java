@@ -32,11 +32,9 @@ public class AssignmentTeamUI {
         System.out.println("2. Remove Assignment Team");
         System.out.println("3. Update Assignment Team Detail");
         System.out.println("4. Add A Student To An Assignment Team");
-        System.out.println("5. Remove A Student From Assignment Team");
-        System.out.println("6. Filter Assignment Team Based On Criteria");
-        System.out.println("7. List All Assignment Team");
-        System.out.println("8. List All Students In An Assignment Team");
-        System.out.println("9. Generate Reports");
+        System.out.println("5. Filter Assignment Team Based On Criteria");
+        System.out.println("6. List All Assignment Team");
+        System.out.println("7. List All Students In An Assignment Team");
         System.out.println("0. Back to Home Page");
         Helper.printLine('*', 50);
         
@@ -91,7 +89,7 @@ public class AssignmentTeamUI {
         Helper.printLine('*', 144);
         for(AssignmentTeam assignmentTeam : assignmentList){
             System.out.printf("%2d%-6s", num, ".");
-            System.out.println(assignmentTeam);//??
+            System.out.printf("%-1s %-15s %-1s %-40s %-1s %-10d %-1s %-10d %-1s %-15s %-1s %-14s %-1s\n", "*", assignmentTeam.getAssignmentTeamId(), "*", assignmentTeam.getAssignmentTitle(), "*", assignmentTeam.getNumOfMembers(), "*", assignmentTeam.getSubmissionWeek(), "*", assignmentTeam.getCourseCode().getCourseCode(), "*", assignmentTeam.getTutorialGroupId().getTutorialGroupId(), "*");//??
             num++;
         }
         Helper.printLine('*', 144);
@@ -120,7 +118,7 @@ public class AssignmentTeamUI {
         Helper.printLine('*', 139);
         for(AssignmentStudent assignmentStudent : assignmentStudList){
             System.out.printf("%2d%-6s", num, ".");
-            System.out.println(assignmentStudent);
+            System.out.printf("%-14s %-12s %-30s %-16s %-40s %-13s %-14s\n", assignmentStudent.getAssignmentTeamId().getAssignmentTeamId(), assignmentStudent.getStudentId().getStudentId(), assignmentStudent.getStudentId().getStudentName(), assignmentStudent.getStudentId().getStudentIc(), assignmentStudent.getStudentId().getStudentEmail(), assignmentStudent.getStudentId().getPhoneNo(), assignmentStudent.getStudentId().getTutorialGroupId().getTutorialGroupId());
             num++;
         }
         Helper.printLine('*', 144);
@@ -134,7 +132,7 @@ public class AssignmentTeamUI {
         Helper.printLine('*', 100);
         for(AssignmentTeam assignmentTeam : assignmentList){
             System.out.printf("%2d%-6s ", num, ".");
-            System.out.println(assignmentTeam);
+            System.out.printf("%-15s %-40s %-10s %-10s\n", assignmentTeam.getAssignmentTeamId(), assignmentTeam.getAssignmentTitle(), assignmentTeam.getNumOfMembers(), assignmentTeam.getSubmissionWeek());
             num++;
         }
         Helper.printLine('*', 100);
@@ -155,10 +153,6 @@ public class AssignmentTeamUI {
     public void displayStudent(Student student) {
             System.out.println(student);
             displayStopMessage();
-    }
-    public void displayAssignmentTeam(AssignmentTeam assignmentTeam) {
-        System.out.println(assignmentTeam);
-        displayStopMessage();
     }
     
     public AssignmentTeam addAssignmentTeam(Course choiceCourse, TutorialGroup choiceTtlgroup){
@@ -236,7 +230,13 @@ public class AssignmentTeamUI {
         InputHandling.systemPause();
         Helper.clearScreen();
     }
-    public void displayAssignmentTAddSuccessful(){
+
+    public void displayAssignmentTeam(AssignmentTeam assignmentTeam) {
+        System.out.printf("%-15s %-1s %-40s %-1s %-10d %-1s %-10d %-1s %-15s %-1s %-14s %-1s\n", assignmentTeam.getAssignmentTeamId(), "*", assignmentTeam.getAssignmentTitle(), "*", assignmentTeam.getNumOfMembers(), "*", assignmentTeam.getSubmissionWeek(), "*", assignmentTeam.getCourseCode().getCourseCode(), "*", assignmentTeam.getTutorialGroupId().getTutorialGroupId(), "*");//??
+        displayStopMessage();
+    }
+
+    public void displayAssignmentTAddSuccessful() {
         System.out.println("Assignment Team Added Successfully");
     }
     public void displayAssignmentTAddUnsuccessful(){
