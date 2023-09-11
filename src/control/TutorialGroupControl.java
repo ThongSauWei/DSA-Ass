@@ -485,9 +485,4 @@ public class TutorialGroupControl {
         studentDA.writeToFile(studentList);
         programmeDA.writeToFile(programmeList);
     }
-    
-    public static void main(String[] args) {
-        TutorialGroupControl tutorialGroupControl = new TutorialGroupControl();
-        tutorialGroupControl.runMain();
-    }
 }
