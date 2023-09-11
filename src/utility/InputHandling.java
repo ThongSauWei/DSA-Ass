@@ -84,7 +84,7 @@ public class InputHandling {
                 Date date = dateFormat.parse(input);
                 return date;
             } catch (ParseException ex) {
-                System.out.println("!Invalid Date Format!");
+                System.out.println("\u001B[31m!Invalid Date Format!\u001B[0m");
             }
         return null;
     }
