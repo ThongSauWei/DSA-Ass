@@ -225,7 +225,7 @@ public class CourseControl {
                 break; // Found the course, exit the loop
             }
         }
-        
+
         if (!courseExists) {
             Course course = courseManageUI.addCourse(courseCode);
             courseList.add(course);
@@ -400,6 +400,16 @@ public class CourseControl {
                 if (upCourse.getCourseCode().equals(updatedCourse.getCourseCode())) {//String have to compare back with the String
                     courseList.replace(updatedCourse, count);
                     courseDA.writeToFile(courseList);
+                    int countCP = 1;
+                    for (CourseProgramme courseProgramme : courseProgrammeList) {
+                        if(courseProgramme.getCourseCode().equals(course)){
+                            CourseProgramme updatedCourseProgramme = new CourseProgramme(courseProgramme.getProgrammeCode(), updatedCourse);//replace a new to the coursePorgramme
+                            courseProgrammeList.replace(updatedCourseProgramme, countCP);
+                            courseProgrammeDA.writeToFile(courseProgrammeList);
+                            break;
+                        }
+                        countCP++;
+                    }
                     courseManageUI.updateSuccess();
                     break;
                 }

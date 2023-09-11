@@ -15,15 +15,17 @@ import java.util.Scanner;
  * @author Benjamin, Erika, Thong, Valerie
  */
 public class InputHandling {
+
     private static final Scanner scanner = new Scanner(System.in);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public static int getInt() {
         return getInt("Please Enter A Digit : ");
     }
-    
-    public static int getInt(String promptMsg) {       
+
+    public static int getInt(String promptMsg) {
         System.out.print(promptMsg);
-                  
+
         do {
             try {
                 int input = scanner.nextInt();
@@ -35,14 +37,14 @@ public class InputHandling {
             }
         } while (true);
     }
-    
+
     public static double getDouble() {
         return getDouble("Please Enter A Value : ");
     }
-    
-    public static double getDouble(String promptMsg) {       
+
+    public static double getDouble(String promptMsg) {
         System.out.print(promptMsg);
-        
+
         do {
             try {
                 double input = scanner.nextDouble();
@@ -51,65 +53,69 @@ public class InputHandling {
             } catch (InputMismatchException ex) {
                 System.out.print("Invalid Input! " + promptMsg);
                 scanner.nextLine();
-            }                   
+            }
         } while (true);
     }
-    
+
     public static char getChar() {
         return getChar("Please Enter A Character : ");
     }
-    
+
     public static char getChar(String promptMsg) {
         System.out.print(promptMsg);
-        
+
         char ch = scanner.nextLine().charAt(0);
         return ch;
     }
-    
+
     public static String getString() {
         return getString("Please Enter A String : ");
     }
-    
+
     public static String getString(String promptMsg) {
         System.out.print(promptMsg);
-        
+
         String str = scanner.nextLine();
         return str;
     }
-    
+
     public static Date getDate(String promptMsg) {
         System.out.print(promptMsg);
-            String input = scanner.nextLine();
-            try {
-                Date date = dateFormat.parse(input);
-                return date;
-            } catch (ParseException ex) {
-                System.out.println("\u001B[31m!Invalid Date Format!\u001B[0m");
+        String input = scanner.nextLine();
+        try {
+            Date date = dateFormat.parse(input);
+            if (input.equals(dateFormat.format(date))) {
+                return date;//return 31
+            } else {
+                System.out.println("\u001B[31m!Invalid Date!\u001B[0m");
             }
-        return null;
+        } catch (ParseException ex) {
+            System.out.println("\u001B[31m!Invalid Date Format!\u001B[0m");
+        }
+        return null; 
     }
-    
+
     public static boolean getConfirmation() {
         return getConfirmation("Are You Sure? (Y or N) : ");
     }
-    
+
     public static boolean getConfirmation(String promptMsg) {
         System.out.print(promptMsg);
 
-        char ch = Character.toUpperCase(scanner.next().charAt(0)); 
+        char ch = Character.toUpperCase(scanner.next().charAt(0));
         scanner.nextLine();
-        
+
         while (ch != 'Y' && ch != 'N') {
             System.out.print("Invalid Input! Please Enter Only Y or N : ");
             ch = Character.toUpperCase(scanner.next().charAt(0));
             scanner.nextLine();
         }
-        
+
         System.out.println();
-        
+
         return ch == 'Y';
     }
-    
+
     public static void systemPause() {
         System.out.print("Press Enter To Proceed...");
         scanner.nextLine();
