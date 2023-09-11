@@ -12,6 +12,9 @@ import java.io.Serializable;
  */
 public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> {
     private String assignmentTeamId;
+    private String assignmentTitle;
+    private int NumOfMembers;
+    private int submissionWeek;
     private Course courseCode;
     private TutorialGroup tutorialGroupId;
 
@@ -19,11 +22,14 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
     }
 
     public AssignmentTeam(String assignmentTeamId) {
-        this(assignmentTeamId, null, null);
+        this(assignmentTeamId, "", 0, 0, null, null);
     }
     
-    public AssignmentTeam(String assignmentTeamId, Course courseCode, TutorialGroup tutorialGroupId) {
+    public AssignmentTeam(String assignmentTeamId, String assignmentTitle, int NumOfMembers, int submissionWeek, Course courseCode, TutorialGroup tutorialGroupId) {
         this.assignmentTeamId = assignmentTeamId;
+        this.assignmentTitle = assignmentTitle;
+        this.NumOfMembers = NumOfMembers;
+        this.submissionWeek = submissionWeek;
         this.courseCode = courseCode;
         this.tutorialGroupId = tutorialGroupId;
     }
@@ -35,7 +41,31 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
     public void setAssignmentTeamId(String assignmentTeamId) {
         this.assignmentTeamId = assignmentTeamId;
     }
+    
+    public String getAssignmentTitle() {
+        return assignmentTitle;
+    }
 
+    public void setAssignmentTitle(String assignmentTitle) {
+        this.assignmentTitle = assignmentTitle;
+    }
+
+    public int getNumOfMembers() {
+        return NumOfMembers;
+    }
+
+    public void setNumOfMembers(int NumOfMembers) {
+        this.NumOfMembers = NumOfMembers;
+    }
+
+    public int getSubmissionWeek() {
+        return submissionWeek;
+    }
+
+    public void setSubmissionWeek(int submissionWeek) {
+        this.submissionWeek = submissionWeek;
+    }
+    
     public Course getCourseCode() {
         return courseCode;
     }
@@ -83,9 +113,13 @@ public class AssignmentTeam implements Serializable, Comparable<AssignmentTeam> 
         }
     }
     
+    public String saveToFile() {
+        return assignmentTeamId + "|" + assignmentTitle + "|" + NumOfMembers + "|" + submissionWeek + "|" + courseCode.getCourseCode() + "|" + tutorialGroupId.getTutorialGroupId();
+    }
+
     @Override
     public String toString() {
         return courseCode.getCourseCode() + "" + tutorialGroupId.getTutorialGroupId() + "\n";
-    }
+    }//??
     
 }
