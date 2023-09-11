@@ -32,11 +32,9 @@ public class AssignmentTeamUI {
         System.out.println("2. Remove Assignment Team");
         System.out.println("3. Update Assignment Team Detail");
         System.out.println("4. Add A Student To An Assignment Team");
-        System.out.println("5. Remove A Student From Assignment Team");
-        System.out.println("6. Filter Assignment Team Based On Criteria");
-        System.out.println("7. List All Assignment Team");
-        System.out.println("8. List All Students In An Assignment Team");
-        System.out.println("9. Generate Reports");
+        System.out.println("5. Filter Assignment Team Based On Criteria");
+        System.out.println("6. List All Assignment Team");
+        System.out.println("7. List All Students In An Assignment Team");
         System.out.println("0. Back to Home Page");
         Helper.printLine('*', 50);
         
@@ -80,24 +78,7 @@ public class AssignmentTeamUI {
         Helper.printLine('*', 20);
         
     }
-    
-    
-    
-    public AssignmentTeam addAssignmentTeam(Course choiceCourse, TutorialGroup choiceTtlgroup){
-        
-        System.out.println("Create a New Assignment Team");
-        System.out.println();
-        System.out.println("Enter Assignment Team Detail");
-        String assignmentTeamId = InputHandling.getString("Assignment Team ID (eg:BAIT2203-1004) > ");
-        String assignmentTitle = InputHandling.getString("Assignment Title > ");
-        int maxMembers = InputHandling.getInt("Maximum of Assignment Members > ");
-        int submissionWeek = InputHandling.getInt("Submission Week (eg:10) > ");
-        System.out.println();
-        Course choiceCode = new Course(choiceCourse.getCourseCode());
-        TutorialGroup choiceTtlId = new TutorialGroup(choiceTtlgroup.getTutorialGroupId());
-        return new AssignmentTeam(assignmentTeamId, assignmentTitle, maxMembers, submissionWeek, choiceCode, choiceTtlId);
-    }
-    
+   
     public void displayAssignmentT(ListInterface<AssignmentTeam> assignmentList, int numOfAssignmentT){
         Helper.clearScreen();
         int num = 1;
@@ -137,7 +118,7 @@ public class AssignmentTeamUI {
         Helper.printLine('*', 139);
         for(AssignmentStudent assignmentStudent : assignmentStudList){
             System.out.printf("%2d%-6s", num, ".");
-            System.out.println(assignmentStudent);
+            System.out.printf("%-14s %-12s %-30s %-16s %-40s %-13s %-14s\n", assignmentStudent.getAssignmentTeamId().getAssignmentTeamId(), assignmentStudent.getStudentId().getStudentId(), assignmentStudent.getStudentId().getStudentName(), assignmentStudent.getStudentId().getStudentIc(), assignmentStudent.getStudentId().getStudentEmail(), assignmentStudent.getStudentId().getPhoneNo(), assignmentStudent.getStudentId().getTutorialGroupId().getTutorialGroupId());
             num++;
         }
         Helper.printLine('*', 144);
@@ -151,13 +132,44 @@ public class AssignmentTeamUI {
         Helper.printLine('*', 100);
         for(AssignmentTeam assignmentTeam : assignmentList){
             System.out.printf("%2d%-6s ", num, ".");
-            System.out.println(assignmentTeam);
+            System.out.printf("%-15s %-40s %-10s %-10s\n", assignmentTeam.getAssignmentTeamId(), assignmentTeam.getAssignmentTitle(), assignmentTeam.getNumOfMembers(), assignmentTeam.getSubmissionWeek());
             num++;
         }
         Helper.printLine('*', 100);
         
         System.out.println();
+    }    
+    
+    public void displayCourse(Course course){
+        System.out.println("Course Code > " + course.getCourseCode());
+        System.out.println("Course Name > " + course.getCourseName());
+        System.out.println("Course Detail > " + course.getCourseDetail());
     }
+    public void displayTutorialG(TutorialGroup ttlGroup){
+        System.out.println("Tutorial Group Id > " + ttlGroup.getTutorialGroupId());
+        System.out.println("Total of members in Tutorial Group > " + ttlGroup.getNumOfStudent());
+        System.out.println("Programme > " + ttlGroup.getProgrammeCode());
+    }
+    public void displayStudent(Student student) {
+            System.out.println(student);
+            displayStopMessage();
+    }
+    
+    public AssignmentTeam addAssignmentTeam(Course choiceCourse, TutorialGroup choiceTtlgroup){
+        
+        System.out.println("Create a New Assignment Team");
+        System.out.println();
+        System.out.println("Enter Assignment Team Detail");
+        String assignmentTeamId = InputHandling.getString("Assignment Team ID (eg:BAIT2203-1004) > ");
+        String assignmentTitle = InputHandling.getString("Assignment Title > ");
+        int maxMembers = InputHandling.getInt("Maximum of Assignment Members > ");
+        int submissionWeek = InputHandling.getInt("Submission Week (eg:10) > ");
+        System.out.println();
+        Course choiceCode = new Course(choiceCourse.getCourseCode());
+        TutorialGroup choiceTtlId = new TutorialGroup(choiceTtlgroup.getTutorialGroupId());
+        return new AssignmentTeam(assignmentTeamId, assignmentTitle, maxMembers, submissionWeek, choiceCode, choiceTtlId);
+    }
+    
     public AssignmentTeam updateAssignmentT(AssignmentTeam updatedAssignmentT){
         Helper.clearScreen();
         System.out.println("Update Assignment Team");
@@ -209,117 +221,98 @@ public class AssignmentTeamUI {
         System.out.println();
         systemPause();
     }
-    public void displaySearchError(AssignmentTeam assignmentTeam){
-        System.out.println("There is No " + assignmentTeam.getAssignmentTeamId() + " ...");
-        System.out.println();
-        systemPause();
-    }
-    
-        public void displayInvalidChoiceMessage() {
+
+    public void displayInvalidChoiceMessage() {
         System.out.println("Invalid Option! Please Enter Again.");
     }
 
-        public void displayStudent(Student student) {
-            System.out.println(student);
-            displayStopMessage();
+    public void displayStopMessage(){
+        InputHandling.systemPause();
+        Helper.clearScreen();
     }
-        public void displayCourse(Course course){
-            System.out.println("");
-        }
-        public void displayAssignmentTeam(AssignmentTeam assignmentTeam) {
+
+    public void displayAssignmentTeam(AssignmentTeam assignmentTeam) {
         System.out.printf("%-15s %-1s %-40s %-1s %-10d %-1s %-10d %-1s %-15s %-1s %-14s %-1s\n", assignmentTeam.getAssignmentTeamId(), "*", assignmentTeam.getAssignmentTitle(), "*", assignmentTeam.getNumOfMembers(), "*", assignmentTeam.getSubmissionWeek(), "*", assignmentTeam.getCourseCode().getCourseCode(), "*", assignmentTeam.getTutorialGroupId().getTutorialGroupId(), "*");//??
         displayStopMessage();
     }
-        public int getNumOfStudent(){
-            return InputHandling.getInt("Only displays assignment team with a student count greater than or equal to:");
-        }
-        public void displayStopMessage(){
-            InputHandling.systemPause();
-            Helper.clearScreen();
-        }
-        public void displayAssignmentTAddSuccessful(){
-            System.out.println("Assignment Team Added Successfully");
-        }
-        public void displayAssignmentTAddUnsuccessful(){
-            System.out.println("Assignment Team Added Unsuccessfully");
-            System.out.println("");
-            systemPause();
-        }
-        public void displayAssignmentTUpdatedSuccessful(){
-            System.out.println("Assignment Team Updated Successfully");
-        }
-        public void displayAssignmentTUpdatedUnsuccessful(){
-            System.out.println("Assignment Team Updated Unsuccessfully");
-            System.out.println("");
-            systemPause();
-        }
-        public void displaySameAssignmentTeamMessage() {
-            System.out.println("You Cannot Choose The Same Tutorial Group! Please Choose Again.");
-        }
-        public void displayAssignmentTRemoveSuccessful(){
-            System.out.println("Assignment Team Removed Successfully");
-        }
-        public void displayAssignmentTRemoveUnsuccessful(){
-            System.out.println("Assignment Team Removed Unsuccessfully");
-            System.out.println("");
-            systemPause();
-        }
-        
-        public void systemPause(){
-            InputHandling.systemPause();
-            Helper.clearScreen();
-        }
-        
-        public int getCourseChoice(){
-            int choice = InputHandling.getInt("Please Choice a Course > ");
-            System.out.println();
+
+    public void displayAssignmentTAddSuccessful() {
+        System.out.println("Assignment Team Added Successfully");
+    }
+    public void displayAssignmentTAddUnsuccessful(){
+        System.out.println("Assignment Team Added Unsuccessfully");
+        System.out.println("");
+        systemPause();
+    }
+    public void displayAssignmentTUpdatedSuccessful(){
+        System.out.println("Assignment Team Updated Successfully");
+    }
+    public void displayAssignmentTUpdatedUnsuccessful(){
+        System.out.println("Assignment Team Updated Unsuccessfully");
+        System.out.println("");
+        systemPause();
+    }
+    public void displaySameAssignmentTeamMessage() {
+        System.out.println("You Cannot Choose The Same Tutorial Group! Please Choose Again.");
+    }
+    public void displayAssignmentTRemoveSuccessful(){
+        System.out.println("Assignment Team Removed Successfully");
+    }
+    public void displayAssignmentTRemoveUnsuccessful(){
+        System.out.println("Assignment Team Removed Unsuccessfully");
+        System.out.println("");
+        systemPause();
+    }
+    public int getCourseChoice(){
+        int choice = InputHandling.getInt("Please Choice a Course > ");
+        System.out.println();
+        return choice;
+    }
+    public int getTutorialGroup(ListInterface<TutorialGroup> tutorialGroupsList){
+        int choice = InputHandling.getInt("Please Choice a Tutorial Group > ");
+        System.out.println();
             
-            return choice;
-        }
-        
-        public int getTutorialGroup(ListInterface<TutorialGroup> tutorialGroupsList){
-            int choice = InputHandling.getInt("Please Choice a Tutorial Group > ");
-            System.out.println();
+        return choice;
+    }
+    public int getStudent(ListInterface<Student> studentList){
+        int choice = InputHandling.getInt("Please Choice a Student > ");
+        System.out.println();
             
-            return choice;
-        }
-        
-        public int getStudent(ListInterface<Student> studentList){
-            int choice = InputHandling.getInt("Please Choice a Student > ");
-            System.out.println();
+        return choice;
+    }
+    public int getAssStudent(ListInterface<AssignmentStudent> assignmentStudList){
+        int choice = InputHandling.getInt("Please Choice a Student > ");
+        System.out.println();
             
-            return choice;
-        }
-        
-        public int getAssStudent(ListInterface<AssignmentStudent> assignmentStudList){
-            int choice = InputHandling.getInt("Please Choice a Student > ");
-            System.out.println();
+        return choice;
+    }
+    public int getAssignmentTeamChoice(){
+        int choice = InputHandling.getInt("Please Choice the Assignment Team > ");
+        System.out.println();
             
-            return choice;
-        }
-        
-        public int getAssignmentTeamChoice(){
-            int choice = InputHandling.getInt("Please Choice the Assignment Team > ");
-            System.out.println();
+        return choice;
+    }
+    public int getChoice(){
+        int choice = InputHandling.getInt("Please Choice Your Option > ");
+        System.out.println();
             
-            return choice;
-        }
+        return choice;
+    }
         
-        public int getChoice(){
-            int choice = InputHandling.getInt("Please Choice Your Option > ");
-            System.out.println();
-            
-            return choice;
-        }
+    public boolean getConfirmForRemoveAssignment(AssignmentTeam assignmentTeam){
+        return InputHandling.getConfirmation("Are u sure to remove " + assignmentTeam.getAssignmentTeamId() + "? (Y or N) > ");
+    }
+    public boolean getConfirmRemoveStud(AssignmentStudent assignmentStudent, AssignmentTeam assignmentTeam){
+        return InputHandling.getConfirmation("Are u confirm to remove " + assignmentStudent.getStudentId() + "from " + assignmentTeam.getAssignmentTeamId() + "? (Y or N) > ");
+    }
+    public boolean getConfirmUpdateStud(AssignmentTeam assignmentTeam){
+        return InputHandling.getConfirmation("Are u confirm to update " + assignmentTeam.getAssignmentTeamId() + "? (Y or N) > ");
+    }
         
-        public boolean getConfirmForRemoveAssignment(AssignmentTeam assignmentTeam){
-            return InputHandling.getConfirmation("Are u sure to remove " + assignmentTeam.getAssignmentTeamId() + "? (Y or N) > ");
-        }
-        public boolean getConfirmRemoveStud(AssignmentStudent assignmentStudent, AssignmentTeam assignmentTeam){
-            return InputHandling.getConfirmation("Are u confirm to remove " + assignmentStudent.getStudentId() + "from " + assignmentTeam.getAssignmentTeamId() + "? (Y or N) > ");
-        }
-        public boolean getConfirmUpdateStud(AssignmentTeam assignmentTeam){
-            return InputHandling.getConfirmation("Are u confirm to update " + assignmentTeam.getAssignmentTeamId() + "? (Y or N) > ");
-        }
+    public void systemPause(){
+        InputHandling.systemPause();
+        Helper.clearScreen();
+    }
+    
         
 }

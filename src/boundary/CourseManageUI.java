@@ -196,6 +196,7 @@ public class CourseManageUI {
     }
 
     public boolean isValidCourseCode(String courseCode) {
+        courseCode = courseCode.toUpperCase();// covert to the upper first
         return courseCode.matches("[A-Z]{4}\\d{4}");// \\d{4}is a digit
     }
 
@@ -258,7 +259,7 @@ public class CourseManageUI {
         System.out.println("-\u001B[36m Remove Course\u001B[0m -");
         Helper.printLine('-', 30);
         System.out.println("1. Remove From Course List");
-        System.out.println("2. Remove From Programe");
+        System.out.println("2. Remove From Programme");
         System.out.println("0. Exit");
 
         choice = InputHandling.getInt("Please Choose Your Option : ");
