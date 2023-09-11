@@ -28,7 +28,7 @@ public class MainUI {
     }
     
     public int getChoice() {
-        int choice = InputHandling.getInt("Please Select the Subysstem To Proceed : ");
+        int choice = InputHandling.getInt("Please Select the Subsystem To Proceed : ");
         System.out.println();
         
         return choice;
