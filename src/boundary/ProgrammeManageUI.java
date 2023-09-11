@@ -60,7 +60,7 @@ public class ProgrammeManageUI {
 
         formattedOutput.append("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         formattedOutput.append(String.format("%-8s | %-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n", "No.", "Programme Code", "Programme Name", "Programme Details",
-                "Level", "Faculty", "Duration(Months)"));
+                "Level", "Faculty", "Duration(Year)"));
         formattedOutput.append("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
         int count = 1;
@@ -119,11 +119,11 @@ public class ProgrammeManageUI {
     }
 
     public int getDuration() {
-        return InputHandling.getInt("Duration (in months): ");
+        return InputHandling.getInt("Duration (in year): ");
     }
     
     public void invalidDuration() {
-        System.out.println(ANSI_RED + "Please enter a duration between 1 and 12 months." + ANSI_RESET);
+        System.out.println(ANSI_RED + "Please enter a valid duration (year) such as 1 year or more." + ANSI_RESET);
     }
 
     //add tutorial group
@@ -292,11 +292,11 @@ public class ProgrammeManageUI {
     }
 
     public void success() {
-        System.out.println(ANSI_GREEN + "\nUpdated Successfully!" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "\nUpdated Data Successfully!" + ANSI_RESET);
     }
 
     public void unsuccess() {
-        System.out.println(ANSI_YELLOW + "\nUpdated Unsuccessfully! Data Remain Same!" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "\nUpdated Data Unsuccessfully! Data Remain Same!" + ANSI_RESET);
     }
 
     //sort
