@@ -507,19 +507,30 @@ public class ProgrammeControl {
             } while (!programmeExists(newProgrammeCode.getProgrammeCode()));
 
             Programme existingProgramme = getProgrammeByCode(newProgrammeCode.getProgrammeCode().toUpperCase());
-            TutorialGroup newTutorial = programmeUI.addTutorialInput(existingProgramme);
+            TutorialGroup newTutorial;
 
-            if (newTutorial != null) {
-                if (programmeUI.ttlComfirm(newProgrammeCode)) {
-                    ttlList.add(newTutorial);
-                    ttlDA.writeToFile(ttlList);
-                    programmeUI.success();
-                    displayTutorialGroups(existingProgramme);
-                } else {
-                    programmeUI.unsuccess();
-                    programmeUI.displayTtl(ttlList);
+            boolean isUniqueTutorialID = false;
+
+            do {
+                newTutorial = programmeUI.addTutorialInput(existingProgramme);
+
+                if (!tutorialGroupExists(newTutorial.getTutorialGroupId())) {
+                    if (programmeUI.ttlComfirm(newProgrammeCode)) {
+                        ttlList.add(newTutorial);
+                        ttlDA.writeToFile(ttlList);
+                        programmeUI.success();
+                        displayTutorialGroups(existingProgramme);
+                        isUniqueTutorialID = true;
+                    } else {
+                        programmeUI.unsuccess();
+                        programmeUI.displayTtl(ttlList);
+                    }
+                }else{
+                    programmeUI.sameTtl(); //already exits
                 }
-            }
+
+            } while (!isUniqueTutorialID); 
+
             yesNo = programmeUI.continueInput();
         } while (yesNo);
     }
@@ -825,10 +836,10 @@ public class ProgrammeControl {
         int duration;
         do {
             duration = programmeUI.getDuration();
-            if (duration < 1 || duration > 12) {
+            if (duration < 1) {
                 programmeUI.invalidDuration();
             }
-        } while (duration < 1 || duration > 12);
+        } while (duration < 1);
         return duration;
     }
 
@@ -858,6 +869,16 @@ public class ProgrammeControl {
             }
         }
         return -1;
+    }
+
+    // Add a method to check if a TutorialGroup with the given ID exists
+    private boolean tutorialGroupExists(String tutorialGroupId) {
+        for (TutorialGroup tutorialGroup : ttlList) {
+            if (tutorialGroup.getTutorialGroupId().equalsIgnoreCase(tutorialGroupId)) {
+                return true; // TutorialGroup with the same ID already exists
+            }
+        }
+        return false; // TutorialGroup with the given ID doesn't exist
     }
 
     //get courseProgramme index
