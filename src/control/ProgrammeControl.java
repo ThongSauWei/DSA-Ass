@@ -825,10 +825,10 @@ public class ProgrammeControl {
         int duration;
         do {
             duration = programmeUI.getDuration();
-            if (duration < 1 || duration > 12) {
+            if (duration < 1) {
                 programmeUI.invalidDuration();
             }
-        } while (duration < 1 || duration > 12);
+        } while (duration < 1);
         return duration;
     }
 
