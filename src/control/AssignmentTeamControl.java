@@ -5,6 +5,7 @@
 
 package control;
 
+import adt.LinkedList;
 import boundary.AssignmentTeamUI;
 import adt.ListInterface;
 
@@ -161,8 +162,8 @@ public class AssignmentTeamControl {
         }
     }
 
-    public void addStudToTeam() {
-        /*Student choiceStudent = chooseStudent();
+    public void addStudToTeam() { // student cannot convern to assignment team
+        Student choiceStudent = chooseStudent();
         AssignmentTeam choiceAssignmentT = chooseAssignmentTeam();
         
         boolean studentExist = false;
@@ -173,7 +174,7 @@ public class AssignmentTeamControl {
             }
         }
         
-        if(!studentExist){
+        /*if(!studentExist){
             AssignmentStudent assignmentStud = new AssignmentStudent(choiceStudent, choiceAssignmentT);
             //tutorial groupde wen ti bu neng work
             
@@ -238,14 +239,7 @@ public class AssignmentTeamControl {
         }else
             assignmentTeamUI.displayNoAssignmentTMes();
     }
-    
-    public void listStudTeam() {
-        if(!assignmentStudList.isEmpty()){
-            assignmentTeamUI.displayAssignmentTStud(assignmentStudList);
-        }else
-            assignmentTeamUI.displayNoAssignmentTStudMes();
-    }
-    
+
     public void generateReport() {
         int choice;
         
@@ -258,30 +252,69 @@ public class AssignmentTeamControl {
         switch (choice) {
             case 1: // generate report for all assignment team
                 for(AssignmentTeam assTeam : assignmentList){
-                    assignmentTeamUI
+                    assignmentTeamUI.displayCourse(assTeam.getCourseCode());
+                    assignmentTeamUI.displayAssignmentTeam(assTeam);
+                    listStudTeam();
                 }
+                break;
             case 2: // generate report for all the assignment team in a tutorial group
+                TutorialGroup ttlGroupList = null;
                 
-            case 3: // generate report for all the assignment team in a course
+                ListInterface<AssignmentTeam> ttlAssignmentTeam = new LinkedList<>();
                 
+                do{
+                    TutorialGroup ttlChoice = chooseTutorialG();
+                    ttlGroupList = ttlChoice;
+                    
+                    ttlAssignmentTeam = assignmentList.filter(assignmentTeam -> assignmentTeam.getTutorialGroupId().equals(ttlChoice));
+                    
+                    if(ttlAssignmentTeam.isEmpty()){
+                        assignmentTeamUI.displayNoAssignmentTMes();
+                    }
+                }while(ttlAssignmentTeam.isEmpty());
+                
+                assignmentTeamUI.displayTutorialG(ttlGroupList);
+                
+                for(AssignmentTeam assTeam : ttlAssignmentTeam){
+                    assignmentTeamUI.displayAssignmentTeam(assTeam);
+                    listStudTeam();
+                }
+                
+            /*case 3: // generate report for all the assignment team in a course
+                Course courseList = null;
+                
+                ListInterface<Course> courseAssignmentTeam = new LinkedList<>();
+                
+                do{
+                    Course courseChoice = chooseCourse();
+                    courseList = courseChoice;
+                    
+                    courseAssignmentTeam = assignmentList.filter(assignmentTeam -> assignmentTeam.getCourseCode().equals(courseChoice));
+                    //assignment team cannot convern to course
+                    if(courseAssignmentTeam.isEmpty()){
+                        assignmentTeamUI.displayNoAssignmentTMes();
+                    }
+                }while(courseAssignmentTeam.isEmpty());
+                
+                assignmentTeamUI.displayCourse(courseList);
+                
+                for(AssignmentTeam assTeam : courseAssignmentTeam){
+                    assignmentTeamUI.displayAssignmentTeam(assTeam);
+                    listStudTeam();
+                }*/
             default:
+                assignmentTeamUI.displayInvalidChoiceMessage();
                 
-        }while(choice != 0);
+        }
     }
     
-
-/*   public class AssignmentTeamControl {
-        private AssignmentTeamDA assignmentDA = new AssignmentTeamDA();
-        public ListInterface<AssignmentTeam> readFromFile() {
-            return assignmentDA.readFromFile();
-    }
     
-    public void writeToFile(ListInterface<AssignmentTeam> assignmentTeamList) {
-        assignmentDA.writeToFile(assignmentTeamList);
+    public void listStudTeam() {
+        if(!assignmentStudList.isEmpty()){
+            assignmentTeamUI.displayAssignmentTStud(assignmentStudList);
+        }else
+            assignmentTeamUI.displayNoAssignmentTStudMes();
     }
-}
-    */
-    
     public void listAssignmentTeam(ListInterface<AssignmentTeam> assignmentList) {
         if (!assignmentList.isEmpty()) {
             assignmentTeamUI.displayAssignmentFilter(assignmentList);
@@ -289,27 +322,25 @@ public class AssignmentTeamControl {
             assignmentTeamUI.displayNoAssignmentTMes();
         }
     }
+    
     public Course chooseCourse() { 
         new CourseControl().displayCourse(); // list all the programmes ***UI listCourse 
         int choice = assignmentTeamUI.getCourseChoice(); //***UI getCourseChoice
         
         return courseList.get(choice);
     }
-
     public TutorialGroup chooseTutorialG(){
         new TutorialGroupControl().listTutorialGroups(tutorialGList);
         int choice = assignmentTeamUI.getTutorialGroup(tutorialGList);
      
         return tutorialGList.get(choice);
     }
-    
     public Student chooseStudent(){
         assignmentTeamUI.displayStudent(studentList);
         int choice = assignmentTeamUI.getStudent(studentList);
         return studentList.get(choice);
      
     }
-
     public AssignmentStudent chooseAssStudent(){
         assignmentTeamUI.displayAssignmentTStud(assignmentStudList);
         int choice = assignmentTeamUI.getAssStudent(assignmentStudList);
@@ -323,12 +354,38 @@ public class AssignmentTeamControl {
         return assignmentList.get(choice);
     }
     
+    public boolean compareAssignmentTeam(AssignmentTeam oldAssignmentTeam, AssignmentTeam newAssignmentTeam) {
+        if (oldAssignmentTeam.equals(newAssignmentTeam)) {
+            assignmentTeamUI.displaySameAssignmentTeamMessage(); // if both tutorial group are the same, display message and return false ***UI displaySameAssignmentTeamMessage
+            return false;
+        }
+        
+        return true;
+    }
     
+    public void closeMain() {
+        tutorialGDA.writeToFile(tutorialGList);
+        studentDA.writeToFile(studentList);
+        courseDA.writeToFile(courseList);
+        assignmentDA.writeToFile(assignmentList);
+    }
+    
+    public static void main(String args[]){
+        AssignmentTeamControl assignmentTeamControl = new AssignmentTeamControl();
+        assignmentTeamControl.runMain();
+    }
+    /*   public class AssignmentTeamControl {
+        private AssignmentTeamDA assignmentDA = new AssignmentTeamDA();
+        public ListInterface<AssignmentTeam> readFromFile() {
+            return assignmentDA.readFromFile();
+    }
+    
+    public void writeToFile(ListInterface<AssignmentTeam> assignmentTeamList) {
+        assignmentDA.writeToFile(assignmentTeamList);
+    }
+}
+    */
  
-
-    
-
-    
     /*public AssignmentTeam chooseAssignmentTeam(AssignmentTeam oldAssignmentTeam) {
         ListInterface<AssignmentTeam> courseAssignmentTeam = new LinkedList<>();
         
@@ -357,26 +414,7 @@ public class AssignmentTeamControl {
     }
 */
     
-    public boolean compareAssignmentTeam(AssignmentTeam oldAssignmentTeam, AssignmentTeam newAssignmentTeam) {
-        if (oldAssignmentTeam.equals(newAssignmentTeam)) {
-            assignmentTeamUI.displaySameAssignmentTeamMessage(); // if both tutorial group are the same, display message and return false ***UI displaySameAssignmentTeamMessage
-            return false;
-        }
-        
-        return true;
-    }
     
-    public void closeMain() {
-        tutorialGDA.writeToFile(tutorialGList);
-        studentDA.writeToFile(studentList);
-        courseDA.writeToFile(courseList);
-        assignmentDA.writeToFile(assignmentList);
-    }
-    
-    public static void main(String args[]){
-        AssignmentTeamControl assignmentTeamControl = new AssignmentTeamControl();
-        assignmentTeamControl.runMain();
-    }
 }
 
 
