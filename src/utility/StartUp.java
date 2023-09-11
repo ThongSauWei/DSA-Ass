@@ -106,13 +106,13 @@ public class StartUp {
         
         new StudentDA().writeToFile(studentList);
         
-        // initialise tutorial group file
+        // initialise assignment team file
         ListInterface<AssignmentTeam> assignmentTeamList = new LinkedList<>();
-        AssignmentTeam assignmentTeam1 = new AssignmentTeam("BACS2063-1001", course1, tutorialGroup1);
-        AssignmentTeam assignmentTeam2 = new AssignmentTeam("BACS2063-1002", course1, tutorialGroup1);
-        AssignmentTeam assignmentTeam3 = new AssignmentTeam("BACS2063-1003", course1, tutorialGroup2);
-        AssignmentTeam assignmentTeam4 = new AssignmentTeam("BACS2063-1004", course1, tutorialGroup3);
-        AssignmentTeam assignmentTeam5 = new AssignmentTeam("BACS2063-1005", course1, tutorialGroup4);
+        AssignmentTeam assignmentTeam1 = new AssignmentTeam("BACS2053-1001", "IKEA E-commerce Website", 5, 10, course1, tutorialGroup1);
+        AssignmentTeam assignmentTeam2 = new AssignmentTeam("BACS2163-1002", "Go Noodle House Website", 4, 11, course1, tutorialGroup1);
+        AssignmentTeam assignmentTeam3 = new AssignmentTeam("BACS2063-1003", "Online Grocery Store Management System", 4, 12, course1, tutorialGroup2);
+        AssignmentTeam assignmentTeam4 = new AssignmentTeam("BAIT2203-1004", "Golden Screen Cinema Mobile App", 4, 12, course1, tutorialGroup3);
+        AssignmentTeam assignmentTeam5 = new AssignmentTeam("MPU3322-1005", "Digital Education", 6, 10, course1, tutorialGroup4);
         
         assignmentTeamList.add(assignmentTeam1);
         assignmentTeamList.add(assignmentTeam2);
@@ -122,7 +122,7 @@ public class StartUp {
         
         new AssignmentTeamDA().writeToFile(assignmentTeamList);
         
-        // initialise tutorial group file
+        // initialise assignment team student file
         ListInterface<AssignmentStudent> assignmentStudentList = new LinkedList<>();
         AssignmentStudent assignmentStudent1 = new AssignmentStudent(assignmentTeam1, student1);
         AssignmentStudent assignmentStudent2 = new AssignmentStudent(assignmentTeam1, student2);

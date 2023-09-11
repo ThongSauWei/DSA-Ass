@@ -13,7 +13,7 @@ import utility.*;
  * @author Thong Sau Wei
  */
 public class ProgrammeManageUI {
-    
+
     public static final String ANSI_RESET = "\u001B[0m"; //reset
     public static final String ANSI_RED = "\u001B[31m"; //red
     public static final String ANSI_YELLOW = "\u001B[33m"; //yellow
@@ -58,7 +58,6 @@ public class ProgrammeManageUI {
 
         StringBuilder formattedOutput = new StringBuilder();
 
-//        formattedOutput.append("\nProgramme List :\n");
         formattedOutput.append("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         formattedOutput.append(String.format("%-8s | %-14s | %-50s | %-58s | %-6s | %-8s | %-15s\n", "No.", "Programme Code", "Programme Name", "Programme Details",
                 "Level", "Faculty", "Duration(Months)"));
@@ -98,58 +97,33 @@ public class ProgrammeManageUI {
     }
 
     //check programme code
-    public Programme checkProgrammeCode() {
-        String programmeCode;
-        do {
-
-            programmeCode = InputHandling.getString("Programme Code (exp. RSD): ");
-            if (!programmeCode.matches("[A-Za-z]{3}")) {
-                invalidInput();
-            }
-        } while (!programmeCode.matches("[A-Za-z]{3}"));
-        return new Programme(programmeCode);
+    public String getProgrammeCode() {
+        return InputHandling.getString("Programme Code (exp. RSD): ");
     }
 
     //add
-    public Programme addProgrammeInput(Programme programmeCode) {
-        String programmeName;
-        String programmeDetail;
-        char programmeLevel;
-        String faculty;
-        int duration;
+    public String getProgrammeName() {
+        return InputHandling.getString("Programme Name: ");
+    }
 
-        programmeName = InputHandling.getString("Programme Name: ");
+    public String getProgrammeDetail() {
+        return InputHandling.getString("Programme Detail: ");
+    }
 
-        do {
-            programmeDetail = InputHandling.getString("Programme Detail: ");
-            if (programmeDetail.trim().isEmpty()) {
-                invalidInput();
-            }
-        } while (programmeDetail.trim().isEmpty());
+    public String getProgrammeLevel() {
+        return InputHandling.getString("Programme Level (exp. D - Diploma, R - Bachelor Degree): ");
+    }
 
-        do {
-            programmeLevel = InputHandling.getChar("Programme Level (exp. D - Diploma, R - Bachelor Degree): ");
-            if (!Character.isLetter(programmeLevel) || Character.isWhitespace(programmeLevel)) {
-                invalidInput();
-            }
-        } while (!Character.isLetter(programmeLevel) || Character.isWhitespace(programmeLevel));
+    public String getFaculty() {
+        return InputHandling.getString("Faculty (exp. FOCS): ");
+    }
 
-        do {
-            faculty = InputHandling.getString("Faculty (exp.FOCS): ");
-            if (!faculty.matches("[A-Za-z]{4}")) {
-                invalidInput();
-            }
-        } while (!faculty.matches("[A-Za-z]{4}"));
-
-//        duration = InputHandling.getInt("Duration (in months): ");
-        do {
-            duration = InputHandling.getInt("Duration (in months): ");
-            if (duration < 1 || duration > 12) {
-                System.out.println(ANSI_RED + "Please enter a duration between 1 and 12 months." + ANSI_RESET);
-            }
-        } while (duration < 1 || duration > 12);
-
-        return new Programme(programmeCode.getProgrammeCode().toUpperCase(), programmeName, programmeDetail, Character.toUpperCase(programmeLevel), faculty.toUpperCase(), duration);
+    public int getDuration() {
+        return InputHandling.getInt("Duration (in months): ");
+    }
+    
+    public void invalidDuration() {
+        System.out.println(ANSI_RED + "Please enter a duration between 1 and 12 months." + ANSI_RESET);
     }
 
     //add tutorial group
@@ -160,68 +134,11 @@ public class ProgrammeManageUI {
 
         tutorialGroupId = InputHandling.getString("Tutorial ID: ");
         groupNo = InputHandling.getInt("Group No : ");
-//        numOfStudent = InputHandling.getInt("Number of Student : ");
 
         return new TutorialGroup(tutorialGroupId, groupNo, 0, programmeCode);
     }
 
     //update
-    public Programme updateProgrammeInput(Programme existingProgramme, int updateOption) {
-        Programme updatedProgramme = new Programme(); // Create a new instance for updating
-
-        // Copy existing data to the new instance
-        updatedProgramme.setProgrammeCode(existingProgramme.getProgrammeCode());
-        updatedProgramme.setProgrammeName(existingProgramme.getProgrammeName());
-        updatedProgramme.setProgrammeDetail(existingProgramme.getProgrammeDetail());
-        updatedProgramme.setProgrammeLevel(existingProgramme.getProgrammeLevel());
-        updatedProgramme.setFaculty(existingProgramme.getFaculty());
-        updatedProgramme.setDuration(existingProgramme.getDuration());
-
-        String newName, newDetail, newFaculty;
-        int newDuration;
-        char newLevel;
-
-        switch (updateOption) {
-            case 1:
-                newName = InputHandling.getString("Enter new Programme Name: ");
-                updatedProgramme.setProgrammeName(newName);
-                break;
-            case 2:
-                newDetail = InputHandling.getString("Enter new Programme Detail: ");
-                updatedProgramme.setProgrammeDetail(newDetail);
-                break;
-            case 3:
-                newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
-                updatedProgramme.setProgrammeLevel(newLevel);
-                break;
-            case 4:
-                newFaculty = InputHandling.getString("Enter new Faculty: ");
-                updatedProgramme.setFaculty(newFaculty);
-                break;
-            case 5:
-                newDuration = InputHandling.getInt("Enter new Duration (in months): ");
-                updatedProgramme.setDuration(newDuration);
-                break;
-            case 6:
-                newName = InputHandling.getString("Enter new Programme Name: ");
-                newDetail = InputHandling.getString("Enter new Programme Detail: ");
-                newLevel = InputHandling.getChar("Enter new Programme Level (D - Diploma, R - Bachelor Degree): ");
-                newFaculty = InputHandling.getString("Enter new Faculty: ");
-                newDuration = InputHandling.getInt("Enter new Duration (in months): ");
-
-                updatedProgramme.setProgrammeName(newName);
-                updatedProgramme.setProgrammeDetail(newDetail);
-                updatedProgramme.setProgrammeLevel(newLevel);
-                updatedProgramme.setFaculty(newFaculty);
-                updatedProgramme.setDuration(newDuration);
-                break;
-            default:
-                invalidInput();
-                return null;
-        }
-        return updatedProgramme;
-    }
-
     public int updateProgrammeMenu() {
         System.out.println("\nUpdate Programme Menu:");
         Helper.printLine('-', 30);
@@ -306,31 +223,33 @@ public class ProgrammeManageUI {
 
         return choice;
     }
-    
+
     //report Faculty header
-    public void reportHeader(ListInterface<String> input){
+    public void reportHeader(ListInterface<String> input) {
         System.out.println(ANSI_YELLOW + "\n- Faculty Report -\n" + ANSI_RESET);
         System.out.println("Total Faculty Available - " + input.getSize());
     }
-    
-    public void reportHeaderLevel(ListInterface<Character> input){
-        System.out.println(ANSI_YELLOW + "\n- Level Report -\n"+ ANSI_RESET);
+
+    public void reportHeaderLevel(ListInterface<Character> input) {
+        System.out.println(ANSI_YELLOW + "\n- Level Report -\n" + ANSI_RESET);
         System.out.println("Total Programme Level Available - " + input.getSize());
     }
-    
+
     //report highest
-    public void reportHighest(String highestInput, double highestPercentage){
+    public void reportHighest(String highestInput, double highestPercentage) {
         System.out.println("The highest percentage of Faculty is \u001B[36m" + highestInput + ANSI_RESET + " which have (" + String.format("%.2f", highestPercentage) + "%).\n\n");
     }
-    public void reportHighestLevel(char highestInput, double highestPercentage){
+
+    public void reportHighestLevel(char highestInput, double highestPercentage) {
         System.out.println("The highest percentage of Programme Level is \u001B[36m" + highestInput + ANSI_RESET + " which have (" + String.format("%.2f", highestPercentage) + "%).\n\n");
     }
-    
+
     //report percentage
-    public void reportPercentageFaculty(int facultyNumber, String faculty, double percentage){
+    public void reportPercentageFaculty(int facultyNumber, String faculty, double percentage) {
         System.out.println(facultyNumber + ". " + faculty + " -> (" + String.format("%.2f", percentage) + "%)");
     }
-    public void reportPercentageLevel(int levelNumber, char level, double percentage){
+
+    public void reportPercentageLevel(int levelNumber, char level, double percentage) {
         System.out.println(levelNumber + ". " + level + " -> (" + String.format("%.2f", percentage) + "%)");
     }
 
