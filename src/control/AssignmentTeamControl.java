@@ -63,13 +63,13 @@ public class AssignmentTeamControl {
 
             switch (choice) {
                 case 1:
-                    createTeam();
+                    createTeam(); // work
                     break;
                 case 2:
-                    removeTeam();
+                    removeTeam(); // work
                     break;
                 case 3:
-                    updateTeam();
+                    updateTeam(); // work
                     break;
                 case 4:
                     addStudToTeam();
@@ -81,7 +81,7 @@ public class AssignmentTeamControl {
                     filterTeam();
                     break;
                 case 7:
-                    listTeam();
+                    listTeam(); // work
                     break;
                 case 8:
                     listStudTeam();
@@ -258,7 +258,7 @@ public class AssignmentTeamControl {
         switch (choice) {
             case 1: // generate report for all assignment team
                 for(AssignmentTeam assTeam : assignmentList){
-                    assignmentTeamUI
+                    
                 }
             case 2: // generate report for all the assignment team in a tutorial group
                 

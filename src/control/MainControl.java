@@ -33,7 +33,7 @@ public class MainControl {
                     new CourseControl();
                     break;
                 case 3:
-                    new TutorialGroupControl();
+                    new TutorialGroupControl().runMain();
                     break;
                 case 4:
                     break;

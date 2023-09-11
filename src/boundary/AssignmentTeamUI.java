@@ -108,7 +108,7 @@ public class AssignmentTeamUI {
         Helper.printLine('*', 144);
         for(AssignmentTeam assignmentTeam : assignmentList){
             System.out.printf("%2d%-6s", num, ".");
-            System.out.println(assignmentTeam);//??
+            System.out.printf("%-1s %-15s %-1s %-40s %-1s %-10d %-1s %-10d %-1s %-15s %-1s %-14s %-1s\n", "*", assignmentTeam.getAssignmentTeamId(), "*", assignmentTeam.getAssignmentTitle(), "*", assignmentTeam.getNumOfMembers(), "*", assignmentTeam.getSubmissionWeek(), "*", assignmentTeam.getCourseCode().getCourseCode(), "*", assignmentTeam.getTutorialGroupId().getTutorialGroupId(), "*");//??
             num++;
         }
         Helper.printLine('*', 144);
@@ -227,7 +227,7 @@ public class AssignmentTeamUI {
             System.out.println("");
         }
         public void displayAssignmentTeam(AssignmentTeam assignmentTeam) {
-        System.out.println(assignmentTeam);
+        System.out.printf("%-15s %-1s %-40s %-1s %-10d %-1s %-10d %-1s %-15s %-1s %-14s %-1s\n", assignmentTeam.getAssignmentTeamId(), "*", assignmentTeam.getAssignmentTitle(), "*", assignmentTeam.getNumOfMembers(), "*", assignmentTeam.getSubmissionWeek(), "*", assignmentTeam.getCourseCode().getCourseCode(), "*", assignmentTeam.getTutorialGroupId().getTutorialGroupId(), "*");//??
         displayStopMessage();
     }
         public int getNumOfStudent(){
