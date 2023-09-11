@@ -976,9 +976,4 @@ public class ProgrammeControl {
     private boolean isValidProgrammeCode(String programmeCode) {
         return programmeCode.matches("[A-Za-z]{3}");
     }
-
-    public static void main(String[] args) {
-        ProgrammeControl progControl = new ProgrammeControl();
-        progControl.runProgramme();
-    }
 }

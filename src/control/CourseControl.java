@@ -456,15 +456,4 @@ public class CourseControl {
             courseManageUI.displayCourse(courseList, courseList.getSize()); // display all the courses taken
         }
     }
-
-    public void writeToFile(ListInterface<Course> courseList) {
-        courseDA.writeToFile(courseList);
-    }
-
-    public static void main(String[] args) {
-        CourseControl courseControl = new CourseControl();
-        courseControl.courseMenu();
-//        StartUp startUp = new StartUp();
-//        startUp.init();
-    }
 }

@@ -5,7 +5,6 @@
 package control;
 
 import boundary.MainUI;
-import control.*;
 import utility.Helper;
 /**
  *
@@ -27,15 +26,16 @@ public class MainControl {
             
             switch (choice) {
                 case 1:
-                    new ProgrammeControl();
+                    new ProgrammeControl().runProgramme();
                     break;
                 case 2:
-                    new CourseControl();
+                    new CourseControl().courseMenu();
                     break;
                 case 3:
                     new TutorialGroupControl().runMain();
                     break;
                 case 4:
+                    new AssignmentTeamControl().runMain();
                     break;
                 case 0:
                     break;

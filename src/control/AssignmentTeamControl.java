@@ -358,52 +358,6 @@ public class AssignmentTeamControl {
         courseDA.writeToFile(courseList);
         assignmentDA.writeToFile(assignmentList);
     }
-    
-    public static void main(String args[]){
-        AssignmentTeamControl assignmentTeamControl = new AssignmentTeamControl();
-        assignmentTeamControl.runMain();
-    }
-    /*   public class AssignmentTeamControl {
-        private AssignmentTeamDA assignmentDA = new AssignmentTeamDA();
-        public ListInterface<AssignmentTeam> readFromFile() {
-            return assignmentDA.readFromFile();
-    }
-    
-    public void writeToFile(ListInterface<AssignmentTeam> assignmentTeamList) {
-        assignmentDA.writeToFile(assignmentTeamList);
-    }
-}
-    */
- 
-    /*public AssignmentTeam chooseAssignmentTeam(AssignmentTeam oldAssignmentTeam) {
-        ListInterface<AssignmentTeam> courseAssignmentTeam = new LinkedList<>();
-        
-        do {
-            Course course = chooseCourse();
-
-            // filter the list so that the tutorial group in the programme only will be listed
-            courseAssignmentTeam = assignmentList.filter(assignmentTeam -> assignmentTeam.getCourseCode().equals(course));
-
-            if (courseAssignmentTeam.isEmpty()) {
-                assignmentTeamUI.displayNoTtlGroupMessage(); //*** UI displayNoTtlGroupMessage
-            }
-
-        } while (courseAssignmentTeam.isEmpty());
-
-        AssignmentTeam assignmentTeamChosen = null;
-
-        do {
-            int choice = assignmentTeamUI.getAssignmentTeamChoice(courseAssignmentTeam.getSize()); //*** UI getAssignmentTeamChoice
-
-            assignmentTeamChosen = courseAssignmentTeam.get(choice);
-
-        } while (oldAssignmentTeam != null && !compareAssignmentTeam(oldAssignmentTeam, assignmentTeamChosen)); // if there is old tutorial group, the selected tutorial group cannot be same with the old tutorial group
-
-        return assignmentTeamChosen;
-    }
-*/
-    
-    
 }
 
 
